@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Unprocessed Datasets
+Datasets/news_set_financial/
+Datasets/fake_news_csvs/
