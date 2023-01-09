@@ -131,3 +131,6 @@ dmypy.json
 # Unprocessed Datasets
 Datasets/news_set_financial/
 Datasets/fake_news_csvs/
+
+# Processed Datasets
+Datasets/news_set_financial_preprocessed/
