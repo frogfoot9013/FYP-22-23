@@ -10,19 +10,19 @@ import os
 # 'global' variables
 core_dir = os.getcwd()
 stop_words = set(stopwords.words('english'))
+total_file_count = 306243 # might be useful for sampling the financial news dataset
+punct_list = string.punctuation + '”' + '”' + '’' + '‘' # string.punctuation alone was not entirely satisfactory
 
 # functions to write:
 # read in and pre-process single article
 # write pre-processed article to some format
 # do this across the entire set
-# TODO: two (but possibly one) sets of preprocessing, one for unsupervised learning, one for supervised learning
 def read_in_financial_news_single_article(input_directory, input_file):
-    tgt_directory = os.path.basename(os.path.normpath(input_directory))
     # tgt_file = open(input_directory + "/" + input_file) # the actual path for properly reading in files
     # path for reading in test file
-    tgt_file = open(core_dir + "/Datasets/test_article.json", "r")
-    tgt_json = json_load(tgt_file)
-    tgt_file.close()
+    fptr = open(core_dir + "/Datasets/test_article.json", "r")
+    tgt_json = json_load(fptr)
+    fptr.close()
 
     # read in required data points from json
     article_uuid = tgt_json["uuid"]
@@ -39,20 +39,23 @@ def read_in_financial_news_single_article(input_directory, input_file):
     clean_article = preprocess_text(article_text_not_preprocessed)
     
     # format json for writing to files
-    output_json_classifying = {'uuid': article_uuid, 'site': article_source, 'author': article_author, 'published': article_time, 'entities': article_entities, 'url': article_url, 'title': clean_headline, 'text': clean_article}
-    # TODO: consider if clustering can work with same source data, but only pull necessary columns at run-time
+    output_json = {'uuid': article_uuid, 'site': article_source, 'author': article_author, 'published': article_time, 'entities': article_entities, 'url': article_url, 'title': clean_headline, 'text': clean_article}
 
     # write to files
-    # sentiment analysis classifier
+    # fptr = open(input_directory + "/" + input_file, "w")
     fptr = open(core_dir + "/Datasets/test_article_preprocessed.json", "w")
-    json_dump(output_json_classifying, fptr, ensure_ascii=False)
+    json_dump(output_json, fptr, ensure_ascii=False)
     fptr.close()
 
 # iterating across directories and files of data set
+# TODO: consider the use of sampling
 def preprocess_financial_dataset(input_directory):
+    x = 0
     for subdir, dirs, files in os.walk(input_directory):
         for file in files:
-            read_in_financial_news_single_article(subdir, file)
+            x += 1 # get amount of files; used for creating punct_list
+            #read_in_financial_news_single_article(subdir, file)
+    print(x)
 
 # function for preprocessing, incomplete
 def preprocess_text(input_text):
@@ -66,6 +69,7 @@ def preprocess_text(input_text):
     sentence_words = [word_tokenize(sen, language='english') for sen in sentences]
 
     # part of speech tagging
+    # TODO: consider how improved named-entity-recognition could be applied, i.e. treating '10 Downing Street' as a single entity
     sentences_tagged = [pos_tag(sen) for sen in sentence_words]
 
     # stop-word removal
@@ -82,13 +86,29 @@ def preprocess_text(input_text):
     for sen in sentences_without_stopwords:
         sen_filtered = []
         for word in sen:
-            if word[0] not in string.punctuation:
+            if word[0] not in punct_list:
                 sen_filtered.append(word)
         sentences_without_punctuation.append(sen_filtered)
     
-    # TODO: consider the need for lowercasing
+    # consider the need for lowercasing
+    sentences_lowercased = []
+    for sen in sentences_without_punctuation:
+        sen_lowercased = [word[0].lower() for word in sen]
 
-    return sentences_without_punctuation
+    # consider the need for removing numerals
+    sentences_without_numerals = []
+    for sen in sentences_lowercased:
+        sen_filtered = []
+        for word in sen:
+            if word[1] != "CD": # CD is pos-tag for a cardinal digit
+                sen_filtered.append(word)
+        sentences_without_numerals.append(sen)
+
+    # TODO: consider the need for stemming, even if lemmatisation has proven too time-consuming
+
+    output = sentences_lowercased
+
+    return output
 
 # for testing purposes
 def main():
