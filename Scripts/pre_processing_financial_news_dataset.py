@@ -20,9 +20,9 @@ stemmer = PorterStemmer()
 # write pre-processed article to some format
 # do this across the entire set
 def read_in_financial_news_single_article(input_directory, input_file):
-    # tgt_file = open(input_directory + "/" + input_file) # the actual path for properly reading in files
+    fptr = open(input_directory + "/" + input_file) # the actual path for properly reading in files
     # path for reading in test file
-    fptr = open(core_dir + "/Datasets/test_article.json", "r")
+    # fptr = open(core_dir + "/Datasets/test_article.json", "r")
     tgt_json = json_load(fptr)
     fptr.close()
 
@@ -44,20 +44,13 @@ def read_in_financial_news_single_article(input_directory, input_file):
     output_json = {'uuid': article_uuid, 'site': article_source, 'author': article_author, 'published': article_time, 'entities': article_entities, 'url': article_url, 'title': clean_headline, 'text': clean_article}
 
     # write to files
-    # fptr = open(input_directory + "/" + input_file, "w")
-    fptr = open(core_dir + "/Datasets/test_article_preprocessed.json", "w")
+    # get preprocessed directory
+    directory_no = os.path.basename(os.path.normpath(input_directory))
+    fptr = open(core_dir + "/Datasets/news_set_financial_preprocessed/" + directory_no + "/" + input_file, "w")
+    # for testing
+    # fptr = open(core_dir + "/Datasets/test_article_preprocessed.json", "w")
     json_dump(output_json, fptr, ensure_ascii=False)
     fptr.close()
-
-# iterating across directories and files of data set
-# TODO: consider the use of sampling
-def preprocess_financial_dataset(input_directory):
-    x = 0
-    for subdir, dirs, files in os.walk(input_directory):
-        for file in files:
-            x += 1 # get amount of files; used for creating punct_list
-            #read_in_financial_news_single_article(subdir, file)
-    print(x)
 
 # function for preprocessing, incomplete
 def preprocess_text(input_text):
@@ -125,9 +118,16 @@ def preprocess_text(input_text):
     output = sentences_stemmed
     return output
 
+# iterating across directories and files of data set
+# TODO: consider the use of sampling
+def preprocess_financial_dataset(input_directory):
+    for subdir, dirs, files in os.walk(input_directory):
+        for file in files:
+            read_in_financial_news_single_article(subdir, file)
+
 # for testing purposes
 def main():
-    # preprocess_financial_dataset(core_dir + "/Datasets/news_set_financial")
-    read_in_financial_news_single_article(core_dir, "test_article.json")
+    preprocess_financial_dataset(core_dir + "/Datasets/news_set_financial/directory_1")
+    # read_in_financial_news_single_article(core_dir, "test_article.json")
 
 main()
