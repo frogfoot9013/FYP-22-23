@@ -1,6 +1,7 @@
 from json import load as json_load
 from json import dump as json_dump
 from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk import pos_tag
 import contractions
@@ -11,7 +12,8 @@ import os
 core_dir = os.getcwd()
 stop_words = set(stopwords.words('english'))
 total_file_count = 306243 # might be useful for sampling the financial news dataset
-punct_list = string.punctuation + '”' + '”' + '’' + '‘' # string.punctuation alone was not entirely satisfactory
+punct_list = string.punctuation + '”' + '”' + '“' + '’' + '‘' # string.punctuation alone was not entirely satisfactory
+stemmer = PorterStemmer()
 
 # functions to write:
 # read in and pre-process single article
@@ -72,9 +74,19 @@ def preprocess_text(input_text):
     # TODO: consider how improved named-entity-recognition could be applied, i.e. treating '10 Downing Street' as a single entity
     sentences_tagged = [pos_tag(sen) for sen in sentence_words]
 
+    # consider the need for lowercasing
+    sentences_lowercased = []
+    for sen in sentences_tagged:
+        sen_lowercased = []
+        for word in sen:
+            temp = list(word)
+            temp[0] = temp[0].lower()
+            sen_lowercased.append(tuple(temp))
+        sentences_lowercased.append(sen_lowercased)
+
     # stop-word removal
     sentences_without_stopwords = []
-    for sen in sentences_tagged:
+    for sen in sentences_lowercased:
         sen_filtered = []
         for word in sen:
             if word[0] not in stop_words:
@@ -89,25 +101,28 @@ def preprocess_text(input_text):
             if word[0] not in punct_list:
                 sen_filtered.append(word)
         sentences_without_punctuation.append(sen_filtered)
-    
-    # consider the need for lowercasing
-    sentences_lowercased = []
-    for sen in sentences_without_punctuation:
-        sen_lowercased = [word[0].lower() for word in sen]
 
     # consider the need for removing numerals
     sentences_without_numerals = []
-    for sen in sentences_lowercased:
+    for sen in sentences_without_punctuation:
         sen_filtered = []
         for word in sen:
             if word[1] != "CD": # CD is pos-tag for a cardinal digit
                 sen_filtered.append(word)
-        sentences_without_numerals.append(sen)
+        sentences_without_numerals.append(sen_filtered)
 
-    # TODO: consider the need for stemming, even if lemmatisation has proven too time-consuming
+    # Performing of stemming, because lemmatisation has proven too time-consuming
+    # Stemming being carried out after tagging and stop-word removal so information pertinent to part-of-speech tagging is not lost
+    sentences_stemmed = []
+    for sen in sentences_without_numerals:
+        sen_filtered = []
+        for word in sen:
+            temp = list(word)
+            temp[0] = stemmer.stem(temp[0])
+            sen_filtered.append(tuple(temp))
+        sentences_stemmed.append(sen_filtered)
 
-    output = sentences_lowercased
-
+    output = sentences_stemmed
     return output
 
 # for testing purposes
