@@ -34,7 +34,7 @@ def randomly_sample_from_directory(input_directory):
 
 
 def main():
-    randomly_sample_from_directory(core_dir + "/Datasets/news_set_financial/" + "directory_5")
+    randomly_sample_from_directory(core_dir + "/Datasets/news_set_financial_preprocessed/" + "directory_5")
 
 
 main()
