@@ -134,3 +134,6 @@ Datasets/fake_news_csvs/
 
 # Processed Datasets
 Datasets/news_set_financial_preprocessed/
+
+# The Sample Dataset
+Datasets/news_set_financial_sampled/
