@@ -134,3 +134,7 @@ Datasets/fake_news_csvs/
 
 # Processed Datasets
 Datasets/news_set_financial_preprocessed/
+/Datasets/news_set_financial_preprocessed.tar.xz
+
+# The Sample Dataset
+Datasets/news_set_financial_sampled/
