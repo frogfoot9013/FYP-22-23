@@ -50,11 +50,16 @@ def main():
     model_no_tags_sampled.build_vocab(corpus_iterable=dl_no_tags_sampled)
     model_no_tags_sampled.train(corpus_iterable=dl_no_tags_sampled, epochs=model_no_tags_sampled.epochs, total_examples=model_no_tags_sampled.corpus_count)
     model_no_tags_sampled.save(core_dir+"/Models/sampled_dataset_no_tags.model")'''
-    dl_w_tags_sampled = DataLoaderWithTags(sampled_dir)
+    '''dl_w_tags_sampled = DataLoaderWithTags(sampled_dir)
     model_w_tags_sampled = Word2Vec()
     model_w_tags_sampled.build_vocab(corpus_iterable=dl_w_tags_sampled)
     model_w_tags_sampled.train(corpus_iterable=dl_w_tags_sampled, epochs=model_w_tags_sampled.epochs, total_examples=model_w_tags_sampled.corpus_count)
-    model_w_tags_sampled.save(core_dir+"/Models/sampled_dataset_w_tags.model")
+    model_w_tags_sampled.save(core_dir+"/Models/sampled_dataset_w_tags.model")'''
+    full_dataset_no_tags_dl = DataLoaderNoTags(preprocessed_dir)
+    model_no_tags = Word2Vec()
+    model_no_tags.build_vocab(corpus_iterable=full_dataset_no_tags_dl)
+    model_no_tags.train(corpus_iterable=full_dataset_no_tags_dl, epochs=model_no_tags.epochs, total_examples=model_no_tags.corpus_count)
+    model_no_tags.save(core_dir+"/Models/full_dataset_no_tags_word2vec.model")
 
 
 main()
