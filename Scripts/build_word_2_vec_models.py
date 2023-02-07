@@ -78,7 +78,7 @@ def build_word_to_vec_models():
     model_w_tags.train(corpus_iterable=full_dataset_w_tags_dl, epochs=model_w_tags.epochs, total_examples=model_w_tags.corpus_count)
     model_w_tags.save(core_dir+"/Models/full_dataset_w_tags_word2vec.model")
 
-def main():
+'''def main():
     build_word_to_vec_models()
 
-main()
+main()'''

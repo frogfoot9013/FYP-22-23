@@ -3,6 +3,7 @@ import os
 import json
 from sklearn import svm
 from gensim.models import Word2Vec
+from build_word_2_vec_models import DataLoaderNoTags
 import numpy as np
 
 core_dir = os.getcwd()
@@ -54,18 +55,52 @@ class Sequencer():
         
         return np.asarray(vec).flatten()
 
-def main():
-    w2vmodel = Word2Vec.load(core_dir + "/Models/full_dataset_no_tags_word2vec.model")
-    fptr = open(core_dir + "/Datasets/test_sample_article.json")
-    file_json = json.load(fptr)
-    json_text = file_json["text"]
-    fixed_text = []
-    for sen in json_text:
+def fix_text_no_tags(input_text):
+    output = []
+    for sen in input_text:
+        fixed_sen = []
         for word in sen:
-            fixed_text.append(word[0])
-    fptr.close()
+            fixed_sen.append(word[0])
+        output.append(fixed_sen)
+    return output
 
-    sq = Sequencer(all_words=fixed_text, max_words=1200, seq_len=1000, embedding_matrix=w2vmodel.wv )
+def fix_text_w_tags(input_text):
+    output = []
+    for sen in input_text:
+        fixed_sen = []
+        for word in sen:
+            new_word = word[0]+word[1]
+            fixed_sen.append(new_word)
+        output.append(fixed_sen)
+    return output
+
+def main():
+    w2vmodel = Word2Vec.load(core_dir + "/Models/sampled_dataset_no_tags.model")
+    files_dir = core_dir + "/Datasets/news_set_financial_sampled/"
+
+    # TODO: consider precomputing this, and writing to file serialised
+    dl = list(DataLoaderNoTags(files_dir))
+    fixed_dl = []
+    for sen in dl:
+        for word in sen:
+            fixed_dl.append(word)
+
+    sq = Sequencer(all_words=fixed_dl, max_words=1200, seq_len=50, embedding_matrix=w2vmodel.wv)
+    # TODO: consider reworking for properly sequencing document
+    uuid_col = []
+    title_col = []
+    text_col = []
+    for dirpath, subdirs, files in os.walk(files_dir):
+        for f in files:
+            file_path = os.join(dirpath, f)
+            fptr = open(f_name)
+            file_json = json_load(fptr)
+            fptr.close()
+            uuid_col.append(file_json["uuid"])
+            fixed_title = [sq.textToVector(sen) for sen in file_json["title"]]
+            title_col.append(fixed_title)
+            fixed_text = [sq.textToVector(sen) for sen in file_json["text"]]    
+    print("We have made it this far.")
 
 
 main()
