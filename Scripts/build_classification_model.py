@@ -3,7 +3,7 @@ import os
 import json
 from sklearn import svm
 from gensim.models import Word2Vec
-from build_word_2_vec_models import DataLoaderNoTags
+from DataLoaders import DataLoaderNoTags
 import numpy as np
 
 core_dir = os.getcwd()
@@ -99,7 +99,7 @@ def main():
             uuid_col.append(file_json["uuid"])
             fixed_title = [sq.textToVector(sen) for sen in file_json["title"]]
             title_col.append(fixed_title)
-            fixed_text = [sq.textToVector(sen) for sen in file_json["text"]]    
+            fixed_text = [sq.textToVector(sen) for sen in file_json["text"]]
     print("We have made it this far.")
 
 
