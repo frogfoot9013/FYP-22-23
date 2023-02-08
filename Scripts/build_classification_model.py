@@ -5,6 +5,7 @@ from sklearn import svm
 from gensim.models import Word2Vec
 from DataLoaders import DataLoaderNoTags
 import numpy as np
+import pickle
 
 core_dir = os.getcwd()
 
@@ -19,7 +20,7 @@ class Sequencer():
         self.word_cnts = {}
 
         for word in temp_vocab:
-            count = len([0 for w in all_words if w == word])
+            count = len([0 for w in all_words if w == word]) # the single longest part of the process, seemingly
             self.word_cnts[word] = count
             counts = list(self.word_cnts.values())
             indexes = list(range(len(counts)))
@@ -40,10 +41,9 @@ class Sequencer():
     
     def textToVector(self,text):
         # NOTE: will need to rework to account for my format of word and POS tag
-        tokens = text.split()
-        len_v = len(tokens)-1 if len(tokens) < self.seq_len else self.seq_len-1
+        len_v = len(text)-1 if len(text) < self.seq_len else self.seq_len-1
         vec = []
-        for tok in tokens[:len_v]:
+        for tok in text[:len_v]:
             try:
                 vec.append(self.embed_matrix[tok])
             except Exception as E:
@@ -79,15 +79,36 @@ def main():
     files_dir = core_dir + "/Datasets/news_set_financial_sampled/"
 
     # TODO: consider precomputing this, and writing to file serialised
-    dl = list(DataLoaderNoTags(files_dir))
+    '''dl = list(DataLoaderNoTags(files_dir))
     fixed_dl = []
     for sen in dl:
         for word in sen:
-            fixed_dl.append(word)
+            fixed_dl.append(word)'''
 
-    sq = Sequencer(all_words=fixed_dl, max_words=1200, seq_len=50, embedding_matrix=w2vmodel.wv)
-    # TODO: consider reworking for properly sequencing document
-    uuid_col = []
+    fptr = open(core_dir+"/Datasets/test_sample_article.json")
+    file_json = json.load(fptr)
+    fptr.close()
+    file_title = fix_text_no_tags(file_json["title"])
+    file_text = fix_text_no_tags(file_json["text"])
+    file_content = []
+    for sen in file_title:
+        for word in sen:
+            file_content.append(word)
+    for sen in file_text:
+        for word in sen:
+            file_content.append(word)
+    
+    
+    sq = Sequencer(all_words=file_content, max_words=100, seq_len=50, embedding_matrix=w2vmodel.wv)
+    # pickle.dump(sq, open(core_dir + "/Models/sq_sampled.pkl", 'wb')) //commented out because most recent testing didn't use it
+    # sq = pickle.load(open(core_dir+"/Models/sq_sampled.pkl", "rb"))
+
+    sequenced_title = [sq.textToVector(sen) for sen in file_title]
+
+    sequenced_text = [sq.textToVector(sen) for sen in file_text]
+
+    # Commented out until I can find a way of doing this process quickly
+    '''uuid_col = []
     title_col = []
     text_col = []
     for dirpath, subdirs, files in os.walk(files_dir):
@@ -99,8 +120,7 @@ def main():
             uuid_col.append(file_json["uuid"])
             fixed_title = [sq.textToVector(sen) for sen in file_json["title"]]
             title_col.append(fixed_title)
-            fixed_text = [sq.textToVector(sen) for sen in file_json["text"]]
+            fixed_text = [sq.textToVector(sen) for sen in file_json["text"]]'''
     print("We have made it this far.")
-
 
 main()
