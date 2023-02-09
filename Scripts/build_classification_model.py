@@ -15,8 +15,9 @@ class Sequencer():
     def __init__(self, all_words, max_words, seq_len, embedding_matrix):
         self.seq_len = seq_len
         self.embed_matrix = embedding_matrix
-        temp_vocab = list(set(all_words))
-        self.vocab = []
+        self.vocab = list(set(all_words))
+        # temp_vocab = list(set(all_words))
+        '''self.vocab = []
         self.word_cnts = {}
 
         for word in temp_vocab:
@@ -36,7 +37,7 @@ class Sequencer():
                     cnt += 1
         
         for ind in indexes[:max_words]:
-            self.vocab.append(temp_vocab[ind])
+            self.vocab.append(temp_vocab[ind])'''
         
     
     def textToVector(self,text):
@@ -85,42 +86,26 @@ def main():
         for word in sen:
             fixed_dl.append(word)'''
 
-    fptr = open(core_dir+"/Datasets/test_sample_article.json")
-    file_json = json.load(fptr)
-    fptr.close()
-    file_title = fix_text_no_tags(file_json["title"])
-    file_text = fix_text_no_tags(file_json["text"])
-    file_content = []
-    for sen in file_title:
-        for word in sen:
-            file_content.append(word)
-    for sen in file_text:
-        for word in sen:
-            file_content.append(word)
     
-    
-    sq = Sequencer(all_words=file_content, max_words=100, seq_len=50, embedding_matrix=w2vmodel.wv)
-    # pickle.dump(sq, open(core_dir + "/Models/sq_sampled.pkl", 'wb')) //commented out because most recent testing didn't use it
-    # sq = pickle.load(open(core_dir+"/Models/sq_sampled.pkl", "rb"))
+    # sq = Sequencer(all_words=fixed_dl, max_words=1200, seq_len=50, embedding_matrix=w2vmodel.wv)
+    # pickle.dump(sq, open(core_dir + "/Models/sq_sampled.pkl", 'wb'))
+    sq = pickle.load(open(core_dir+"/Models/sq_sampled.pkl", "rb"))
 
-    sequenced_title = [sq.textToVector(sen) for sen in file_title]
-
-    sequenced_text = [sq.textToVector(sen) for sen in file_text]
-
-    # Commented out until I can find a way of doing this process quickly
-    '''uuid_col = []
+    uuid_col = []
     title_col = []
     text_col = []
     for dirpath, subdirs, files in os.walk(files_dir):
         for f in files:
-            file_path = os.join(dirpath, f)
-            fptr = open(f_name)
-            file_json = json_load(fptr)
+            file_path = os.path.join(dirpath, f)
+            fptr = open(file_path)
+            file_json = json.load(fptr)
             fptr.close()
             uuid_col.append(file_json["uuid"])
-            fixed_title = [sq.textToVector(sen) for sen in file_json["title"]]
+            fixed_title = [sq.textToVector(fix_text_no_tags(sen)) for sen in file_json["title"]]
             title_col.append(fixed_title)
-            fixed_text = [sq.textToVector(sen) for sen in file_json["text"]]'''
+            fixed_text = [sq.textToVector(fix_text_no_tags(sen)) for sen in file_json["text"]]
+            text_col.append(fixed_text)
+
     print("We have made it this far.")
 
 main()
