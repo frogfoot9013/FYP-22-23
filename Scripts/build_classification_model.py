@@ -10,6 +10,7 @@ import pickle
 from sklearn.svm import SVC
 from sklearn.model_selection import cross_validate, GridSearchCV
 from sklearn.multioutput import MultiOutputClassifier
+from sklearn.preprocessing import MultiLabelBinarizer
 
 core_dir = os.getcwd()
 
@@ -78,20 +79,6 @@ def fix_text_w_tags(input_text):
             fixed_sen.append(new_word)
         output.append(fixed_sen)
     return output
-
-# might not be necessary, but it is here in any case
-def process_sentiment(input_str):
-    if input_str == "positive":
-        return 3
-    elif input_str == "neutral":
-        return 2
-    elif input_str == "negative":
-        return 1
-    elif input_str == "none":
-        return 0
-    else:
-        print("Invalid input!")
-        return -2
 
 # Builds sequencer, based on with or without tags, and whether or not it uses the full dataset
 def build_sequencer(use_full_dataset, use_tags):
@@ -203,7 +190,13 @@ def build_dataframes(use_full_dataset, use_tags):
             name_col.append(doc_names)
             sentiment_col.append(doc_sentiments)
 
-    df_dep_cols = pd.DataFrame({'UUID': uuid_col, 'Name': name_col, 'Sentiment': sentiment_col})
+    sentiment_binariser = MultiLabelBinarizer()
+    sentiment_binariser.fit([["positive", "neutral", "negative", "none"]])
+    fixed_sentiment = []
+    for el in sentiment_col:
+        fixed_sentiment.append(sentiment_binariser.fit_transform(el))
+    print("Has this binarisation worked?")
+    df_dep_cols = pd.DataFrame({'UUID': uuid_col, 'Name': name_col, 'Sentiment': fixed_sentiment})
     df_ind_cols = pd.DataFrame({'UUID': uuid_col, 'Author': author_col, 'Title': title_col, 'Text': text_col})
 
     pickle.dump(df_ind_cols, open(ind_cols_df_name, "wb"))
@@ -249,9 +242,9 @@ def main():
     # build_dataframes(True, False)
     # build_dataframes(True, True)
 
-    # build_dataframes(False, False)
+    build_dataframes(False, False)
     # build_dataframes(False, True)
 
-    build_model(False, False)
+    # build_model(False, False)
 
 main()
