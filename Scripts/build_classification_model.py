@@ -178,15 +178,12 @@ def build_dataframes(use_full_dataset, use_tags):
             for en in file_entities["persons"]:
                 doc_names.append(en["name"])
                 doc_sentiments.append(en["sentiment"])
-                # doc_sentiments.append(process_sentiment(en["sentiment"]))
             for en in file_entities["locations"]:
                 doc_names.append(en["name"])
                 doc_sentiments.append(en["sentiment"])
-                # doc_sentiments.append(process_sentiment(en["sentiment"]))
             for en in file_entities["organizations"]:
                 doc_names.append(en["name"])
                 doc_sentiments.append(en["sentiment"])
-                # doc_sentiments.append(process_sentiment(en["sentiment"]))
             name_col.append(doc_names)
             sentiment_col.append(doc_sentiments)
 
