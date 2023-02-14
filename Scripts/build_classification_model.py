@@ -7,6 +7,9 @@ from DataLoaders import DataLoaderNoTags, DataLoaderWithTags
 import numpy as np
 import pandas as pd
 import pickle
+from sklearn.svm import SVC
+from sklearn.model_selection import cross_validate, GridSearchCV
+from sklearn.multioutput import MultiOutputClassifier
 
 core_dir = os.getcwd()
 
@@ -76,6 +79,20 @@ def fix_text_w_tags(input_text):
         output.append(fixed_sen)
     return output
 
+# might not be necessary, but it is here in any case
+def process_sentiment(input_str):
+    if input_str == "positive":
+        return 3
+    elif input_str == "neutral":
+        return 2
+    elif input_str == "negative":
+        return 1
+    elif input_str == "none":
+        return 0
+    else:
+        print("Invalid input!")
+        return -2
+
 # Builds sequencer, based on with or without tags, and whether or not it uses the full dataset
 def build_sequencer(use_full_dataset, use_tags):
 
@@ -118,31 +135,43 @@ def build_sequencer(use_full_dataset, use_tags):
     print("Sequencer built and written to file!")
 
 # Arguments are the same as for build_sequencer, and function more or less identically
-def build_dataframe(use_full_dataset, use_tags):
+def build_dataframes(use_full_dataset, use_tags):
     dataset_dir = ""
     sq_name = core_dir + "/Models/sequencer_"
+    ind_cols_df_name = core_dir + "/Models/df_ind_cols_"
+    dep_cols_df_name = core_dir + "/Models/df_dep_cols_"
     if use_full_dataset == True:
-        dataset_dir = core_dir + "/Datasets/news_set_financial_preprocessed"
+        dataset_dir = core_dir + "/Datasets/news_set_financial_preprocessed/"
         sq_name += "full_dataset_"
+        ind_cols_df_name += "full_dataset_"
+        dep_cols_df_name += "full_dataset_"
     else:
-        dataset_dir = core_dir + "/Datasets/news_set_financial_sampled"
+        dataset_dir = core_dir + "/Datasets/news_set_financial_sampled/"
         sq_name += "sampled_dataset_"
+        ind_cols_df_name += "sampled_dataset_"
+        dep_cols_df_name += "sampled_dataset_"
     if use_tags == True:
         sq_name += "w_tags.pkl"
+        ind_cols_df_name += "w_tags.pkl"
+        dep_cols_df_name += "w_tags.pkl"
     else:
         sq_name += "no_tags.pkl"
+        ind_cols_df_name += "no_tags.pkl"
+        dep_cols_df_name += "no_tags.pkl"
     
     print("Dataset Directory: " + dataset_dir)
     print("Sequencer Directory: " + sq_name)
     sq = pickle.load(open(sq_name, "rb"))
     print("Sequencer successfully loaded!")
 
-    # Note: will remain commented out until I finalise a dataframe structure
-    '''uuid_col = []
+    uuid_col = []
     author_col = []
+    # site_col = []
     title_col = []
     text_col = []
-    for dirpath, subdirs, files in os.walk(files_dir):
+    name_col = []
+    sentiment_col = []
+    for dirpath, subdirs, files in os.walk(dataset_dir):
         for f in files:
             file_path = os.path.join(dirpath, f)
             fptr = open(file_path)
@@ -150,24 +179,79 @@ def build_dataframe(use_full_dataset, use_tags):
             fptr.close()
             uuid_col.append(file_json["uuid"])
             author_col.append(file_json["author"])
+            # site_col.append(file_json["site"]) # Note: consider one-hot encoding this variable
             fixed_title = [sq.textToVector(fix_text_no_tags(sen)) for sen in file_json["title"]]
             title_col.append(fixed_title)
             fixed_text = [sq.textToVector(fix_text_no_tags(sen)) for sen in file_json["text"]]
             text_col.append(fixed_text)
+            file_entities = file_json["entities"]
+            # structure sentiment through this format
+            doc_names = []
+            doc_sentiments = []
+            for en in file_entities["persons"]:
+                doc_names.append(en["name"])
+                doc_sentiments.append(en["sentiment"])
+                # doc_sentiments.append(process_sentiment(en["sentiment"]))
+            for en in file_entities["locations"]:
+                doc_names.append(en["name"])
+                doc_sentiments.append(en["sentiment"])
+                # doc_sentiments.append(process_sentiment(en["sentiment"]))
+            for en in file_entities["organizations"]:
+                doc_names.append(en["name"])
+                doc_sentiments.append(en["sentiment"])
+                # doc_sentiments.append(process_sentiment(en["sentiment"]))
+            name_col.append(doc_names)
+            sentiment_col.append(doc_sentiments)
 
-    df_ind_cols = pd.DataFrame({'UUID': uuid_col, 'Author':author_col, 'Title': title_col, 'Text': text_col})
+    df_dep_cols = pd.DataFrame({'UUID': uuid_col, 'Name': name_col, 'Sentiment': sentiment_col})
+    df_ind_cols = pd.DataFrame({'UUID': uuid_col, 'Author': author_col, 'Title': title_col, 'Text': text_col})
 
-    pickle.dump(df_ind_cols, open(core_dir + "/Models/ind_cols_df_sampled_no_tags.pkl", "wb"))
-    print("We have made it this far.")'''
+    pickle.dump(df_ind_cols, open(ind_cols_df_name, "wb"))
+    pickle.dump(df_dep_cols, open(dep_cols_df_name, "wb"))
+    print("Columns constructed and written!")
+
+def build_model(use_full_dataset, use_tags):
+    ind_cols_df_name = core_dir + "/Models/df_ind_cols_"
+    dep_cols_df_name = core_dir + "/Models/df_dep_cols_"
+    if use_full_dataset == True:
+        ind_cols_df_name += "full_dataset_"
+        dep_cols_df_name += "full_dataset_"
+    else:
+        ind_cols_df_name += "sampled_dataset_"
+        dep_cols_df_name += "sampled_dataset_"
+    if use_tags == True:
+        ind_cols_df_name += "w_tags.pkl"
+        dep_cols_df_name += "w_tags.pkl"
+    else:
+        ind_cols_df_name += "no_tags.pkl"
+        dep_cols_df_name += "no_tags.pkl"
+    print(ind_cols_df_name)
+    print(dep_cols_df_name)
+    
+    df_ind_cols = pickle.load(open(ind_cols_df_name, "rb"))
+    df_dep_cols = pickle.load(open(dep_cols_df_name, "rb"))
+    print("Columns loaded!")
+    dep_cols_names = 'Sentiment'
+    ind_cols_names= ['Title','Text']
+    ind_cols_loc = df_ind_cols.loc[:,ind_cols_names]
+    dep_cols_loc = df_dep_cols.loc[:,dep_cols_names]
+    print("Are we at least getting this far?")
+    
+    multi_output = MultiOutputClassifier(estimator=SVC())
+    crv = cross_validate(estimator=multi_output, cv=10, X=ind_cols_loc, y=dep_cols_loc)
+    print("It's somewhat working!")
 
 def main():
     # build_sequencer(True, False)
     # build_sequencer(True, True)
     # build_sequencer(False, False)
     # build_sequencer(False, True)
-    build_dataframe(True, False)
-    # build_dataframe(True, True)
-    # build_dataframe(False, False)
-    # build_dataframe(False, True)
+    # build_dataframes(True, False)
+    # build_dataframes(True, True)
+
+    # build_dataframes(False, False)
+    # build_dataframes(False, True)
+
+    build_model(False, False)
 
 main()

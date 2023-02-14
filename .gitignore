@@ -141,3 +141,6 @@ Datasets/news_set_financial_sampled/
 
 # Overly large Sequencer for the full dataset with tags
 /Models/sequencer_full_dataset_w_tags.pkl
+
+# Models for dependent and indpendent cols,
+/Models/df_*.pkl
