@@ -11,7 +11,6 @@ from sklearn.svm import SVC
 from sklearn.model_selection import cross_validate, GridSearchCV
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
-
 core_dir = os.getcwd()
 
 
@@ -150,6 +149,7 @@ def build_dataframes(use_full_dataset, use_tags):
     print("Sequencer Directory: " + sq_name)
     sq = pickle.load(open(sq_name, "rb"))
     print("Sequencer successfully loaded!")
+    
 
     uuid_col = []
     author_col = []
@@ -158,6 +158,8 @@ def build_dataframes(use_full_dataset, use_tags):
     text_col = []
     name_col = []
     sentiment_col = []
+    test_sen_col = []
+    i = 0 # use of i is to reduce execution time for my own sanity
     for dirpath, subdirs, files in os.walk(dataset_dir):
         for f in files:
             file_path = os.path.join(dirpath, f)
@@ -165,15 +167,43 @@ def build_dataframes(use_full_dataset, use_tags):
             file_json = json.load(fptr)
             fptr.close()
             uuid_col.append(file_json["uuid"])
-            author_col.append(file_json["author"])
+            # author_col.append(file_json["author"])
             # site_col.append(file_json["site"]) # Note: consider one-hot encoding this variable
-            fixed_title = [sq.textToVector(fix_text_no_tags(sen)) for sen in file_json["title"]]
-            title_col.append(fixed_title)
-            fixed_text = [sq.textToVector(fix_text_no_tags(sen)) for sen in file_json["text"]]
-            text_col.append(fixed_text)
+            fixed_title = []
+            fixed_text = []
+            if use_tags == True:
+                fixed_title = fix_text_w_tags(file_json["title"])
+                fixed_text = fix_text_w_tags(file_json["text"])
+            else:
+                fixed_title = fix_text_no_tags(file_json["title"])
+                fixed_text = fix_text_no_tags(file_json["text"])
+            
+            title_vector = np.asarray([sq.textToVector(" ".join(sen)) for sen in fixed_title]) # structure based off kaggle guide
+            title_col.append(title_vector)
+            text_vector = np.asarray([sq.textToVector(" ".join(sen)) for sen in fixed_text])
+            text_col.append(text_vector)
+
             file_entities = file_json["entities"]
-            # structure sentiment through this format
-            doc_names = []
+            if len(file_entities["persons"]) >= 1:
+                name_col.append(file_entities["persons"][0]["name"])
+                sentiment_col.append(file_entities["persons"][0]["sentiment"])
+            elif len(file_entities["locations"]) >= 1:
+                name_col.append(file_entities["locations"][0]["name"])
+                sentiment_col.append(file_entities["locations"][0]["sentiment"])
+            elif len(file_entities["organizations"]) >= 1:
+                name_col.append(file_entities["organizations"][0]["name"])
+                sentiment_col.append(file_entities["organizations"][0]["sentiment"])
+            else:
+                name_col.append("placeholder")
+                sentiment_col.append("none")
+            i += 1
+            if i > 200:
+                break
+        if i > 200:
+            print("This line of code is being reached!")
+            break
+        # NOTE: commented out until more progress made
+            '''doc_names = []
             doc_sentiments = []
             for en in file_entities["persons"]:
                 doc_names.append(en["name"])
@@ -185,16 +215,15 @@ def build_dataframes(use_full_dataset, use_tags):
                 doc_names.append(en["name"])
                 doc_sentiments.append(en["sentiment"])
             name_col.append(doc_names)
-            sentiment_col.append(doc_sentiments)
-
-    sentiment_binariser = MultiLabelBinarizer()
-    sentiment_binariser.fit([["positive", "neutral", "negative", "none"]])
-    fixed_sentiment = []
-    for el in sentiment_col:
-        fixed_sentiment.append(sentiment_binariser.fit_transform(el))
-    print("Has this binarisation worked?")
-    df_dep_cols = pd.DataFrame({'UUID': uuid_col, 'Name': name_col, 'Sentiment': fixed_sentiment})
-    df_ind_cols = pd.DataFrame({'UUID': uuid_col, 'Author': author_col, 'Title': title_col, 'Text': text_col})
+            sentiment_col.append(doc_sentiments)'''
+    # TODO: Work out a way to properly process the sentiments, separated by article
+    print("We have at least reached this part")
+    
+    # TODO: find a way to get sentiment into data frame
+    print("Lengths:\nUUID: " + str(len(uuid_col)) + "\nSentiment: " + str(len(sentiment_col)) + "\nTitle: " + str(len(title_col)) + "\nText: " + str(len(text_col)) + "\nName: " + str(len(name_col)))
+    df_dep_cols = pd.DataFrame({'UUID': uuid_col, 'Sentiment': sentiment_col})
+    df_ind_cols = pd.DataFrame({'UUID': uuid_col, 'Title': title_col, 'Text': text_col, "Name": name_col})
+    
 
     pickle.dump(df_ind_cols, open(ind_cols_df_name, "wb"))
     pickle.dump(df_dep_cols, open(dep_cols_df_name, "wb"))
@@ -222,13 +251,17 @@ def build_model(use_full_dataset, use_tags):
     df_dep_cols = pickle.load(open(dep_cols_df_name, "rb"))
     print("Columns loaded!")
     dep_cols_names = 'Sentiment'
-    ind_cols_names= ['Title','Text']
+    ind_cols_names = ['Title', 'Text']
     ind_cols_loc = df_ind_cols.loc[:,ind_cols_names]
     dep_cols_loc = df_dep_cols.loc[:,dep_cols_names]
-    print("Are we at least getting this far?")
+    print("This is reached!")
     
-    multi_output = MultiOutputClassifier(estimator=SVC())
-    crv = cross_validate(estimator=multi_output, cv=10, X=ind_cols_loc, y=dep_cols_loc)
+    crude_model = SVC(cache_size=500)
+    crude_model.fit(ind_cols_loc, dep_cols_loc)
+    # NOTE: Commented out until further progress is made
+    # multi_output = MultiOutputClassifier(estimator=SVC())
+    # multi_output.fit(ind_cols_loc, dep_cols_loc)
+    # crv = cross_validate(estimator=multi_output, cv=10, X=ind_cols_loc, y=dep_cols_loc)
     print("It's somewhat working!")
 
 def main():
@@ -242,6 +275,6 @@ def main():
     build_dataframes(False, False)
     # build_dataframes(False, True)
 
-    # build_model(False, False)
+    build_model(False, False)
 
 main()
