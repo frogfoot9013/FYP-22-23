@@ -20,63 +20,38 @@ class Sequencer():
         self.seq_len = seq_len
         self.embed_matrix = embedding_matrix
         self.vocab = list(set(all_words))
-        # temp_vocab = list(set(all_words))
-        '''self.vocab = []
-        self.word_cnts = {}
-
-        for word in temp_vocab:
-            count = len([0 for w in all_words if w == word]) # the single longest part of the process, seemingly
-            self.word_cnts[word] = count
-            counts = list(self.word_cnts.values())
-            indexes = list(range(len(counts)))
-        
-        cnt = 0
-        while cnt + 1 != len(counts):
-            cnt = 0
-            for i in range(len(counts)-1):
-                if counts[i] < counts[i+1]:
-                    counts[i+1],counts[i] = counts[i],counts[i+1]
-                    indexes[i],indexes[i+1] = indexes[i+1],indexes[i]
-                else:
-                    cnt += 1
-        
-        for ind in indexes[:max_words]:
-            self.vocab.append(temp_vocab[ind])'''
-        
     
-    def textToVector(self,text):
-        # NOTE: will need to rework to account for my format of word and POS tag
+    def change_seq_len(self, new_val):
+        self.seq_len = new_val
+        print("New seq_len: " + str(new_val))
+        
+    def text_to_vector(self, text):
+        output_vec = []
         len_v = len(text)-1 if len(text) < self.seq_len else self.seq_len-1
-        vec = []
-        for tok in text[:len_v]:
+        for el in text[:len_v]:
             try:
-                vec.append(self.embed_matrix[tok])
+                output_vec.append(self.embed_matrix[el])
             except Exception as E:
-                pass
+                output_vec.append(np.zeros(100,))
         
-        last_pieces = self.seq_len - len(vec)
+        last_pieces = self.seq_len - len(output_vec)
         for i in range(last_pieces):
-            vec.append(np.zeros(100,))
-        
-        return np.asarray(vec).flatten()
+            output_vec.append(np.zeros(100,))
+        return np.asarray(output_vec).flatten()
 
 def fix_text_no_tags(input_text):
     output = []
     for sen in input_text:
-        fixed_sen = []
         for word in sen:
-            fixed_sen.append(word[0])
-        output.append(fixed_sen)
+            output.append(word[0])
     return output
 
 def fix_text_w_tags(input_text):
     output = []
     for sen in input_text:
-        fixed_sen = []
         for word in sen:
             new_word = word[0]+word[1]
-            fixed_sen.append(new_word)
-        output.append(fixed_sen)
+            output.append(new_word)
     return output
 
 # Builds sequencer, based on with or without tags, and whether or not it uses the full dataset
@@ -149,6 +124,7 @@ def build_dataframes(use_full_dataset, use_tags):
     print("Sequencer Directory: " + sq_name)
     sq = pickle.load(open(sq_name, "rb"))
     print("Sequencer successfully loaded!")
+    sq.change_seq_len(120)
     
 
     uuid_col = []
@@ -178,10 +154,10 @@ def build_dataframes(use_full_dataset, use_tags):
                 fixed_title = fix_text_no_tags(file_json["title"])
                 fixed_text = fix_text_no_tags(file_json["text"])
             
-            title_vector = np.asarray([sq.textToVector(" ".join(sen)) for sen in fixed_title]) # structure based off kaggle guide
-            title_col.append(title_vector)
-            text_vector = np.asarray([sq.textToVector(" ".join(sen)) for sen in fixed_text])
-            text_col.append(text_vector)
+            title_vector = sq.text_to_vector(fixed_title)
+            title_col.append(title_vector.tolist())
+            text_vector = sq.text_to_vector(fixed_text)
+            text_col.append(text_vector.tolist())
 
             file_entities = file_json["entities"]
             if len(file_entities["persons"]) >= 1:
@@ -217,12 +193,13 @@ def build_dataframes(use_full_dataset, use_tags):
             name_col.append(doc_names)
             sentiment_col.append(doc_sentiments)'''
     # TODO: Work out a way to properly process the sentiments, separated by article
-    print("We have at least reached this part")
     
+
     # TODO: find a way to get sentiment into data frame
+    da_data = {'Title': title_col, 'Text': text_col}
     print("Lengths:\nUUID: " + str(len(uuid_col)) + "\nSentiment: " + str(len(sentiment_col)) + "\nTitle: " + str(len(title_col)) + "\nText: " + str(len(text_col)) + "\nName: " + str(len(name_col)))
-    df_dep_cols = pd.DataFrame({'UUID': uuid_col, 'Sentiment': sentiment_col})
-    df_ind_cols = pd.DataFrame({'UUID': uuid_col, 'Title': title_col, 'Text': text_col, "Name": name_col})
+    df_dep_cols = pd.DataFrame(index=uuid_col, data={'Sentiment': sentiment_col})
+    df_ind_cols = pd.DataFrame(index=uuid_col, data=da_data)
     
 
     pickle.dump(df_ind_cols, open(ind_cols_df_name, "wb"))
@@ -255,14 +232,13 @@ def build_model(use_full_dataset, use_tags):
     ind_cols_loc = df_ind_cols.loc[:,ind_cols_names]
     dep_cols_loc = df_dep_cols.loc[:,dep_cols_names]
     print("This is reached!")
-    
+    temp = df_ind_cols.values.tolist()
+    temp = np.array(temp)
+    temp = temp.reshape(temp.shape[0],-1) # is bodge, not sure if scalable at all
     crude_model = SVC(cache_size=500)
-    crude_model.fit(ind_cols_loc, dep_cols_loc)
-    # NOTE: Commented out until further progress is made
-    # multi_output = MultiOutputClassifier(estimator=SVC())
-    # multi_output.fit(ind_cols_loc, dep_cols_loc)
-    # crv = cross_validate(estimator=multi_output, cv=10, X=ind_cols_loc, y=dep_cols_loc)
+    crude_model.fit(temp, list(df_dep_cols["Sentiment"]))
     print("It's somewhat working!")
+
 
 def main():
     # build_sequencer(True, False)
