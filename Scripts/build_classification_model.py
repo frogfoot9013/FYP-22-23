@@ -3,12 +3,12 @@ import os
 import json
 from sklearn import svm
 from gensim.models import Word2Vec
-from DataLoaders import DataLoaderNoTags, DataLoaderWithTags
+import DataLoaders
 import numpy as np
 import pandas as pd
 import pickle
 from sklearn.svm import SVC
-from sklearn.model_selection import cross_validate, GridSearchCV
+from sklearn.model_selection import cross_validate
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
 core_dir = os.getcwd()
@@ -81,10 +81,10 @@ def build_sequencer(use_full_dataset, use_tags):
     fixed_dl = []
     dl = ''
     if use_tags == True:
-        dl = list(DataLoaderWithTags(dataset_directory))
+        dl = list(DataLoaders.DataLoaderWithTags(dataset_directory))
         print("Tags will be used!")
     else:
-        dl = list(DataLoaderNoTags(dataset_directory))
+        dl = list(DataLoaders.DataLoaderNoTags(dataset_directory))
         print("Tags will not be used!")
     for sen in dl:
         for word in sen:
@@ -240,17 +240,86 @@ def build_model(use_full_dataset, use_tags):
     print("It's somewhat working!")
 
 
+def build_w2v_model(dl):
+    w2v = Word2Vec()
+    w2v.build_vocab(corpus_iterable=dl)
+    w2v.train(corpus_iterable=dl, epochs=w2v.epochs, total_examples=w2v.corpus_count)
+    return w2v
+
+# TODO: Work with extrememly small data set to create proof-of-concept for scalable classifier
+# TO-REPRESENT: sparse matrix with entity
+# TODO: Use more extensive model than the previous proof-of-concept
+# TODO: Consider moving to separate file
+# TODO: consider refactoring to reduce function size
+def truncated_model():
+    truncated_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
+    dl_text = DataLoaders.DataLoaderNoTags(truncated_files_dir)
+    w2v_text = build_w2v_model(dl_text)
+
+    dl_lst = list(dl_text)
+    dl_lst_fixed = []
+    for sen in dl_lst:
+        for word in sen:
+            dl_lst_fixed.append(word)
+    sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=50, embedding_matrix=w2v_text.wv)
+
+    dl_entities = DataLoaders.DataLoaderEntities(truncated_files_dir)
+    w2v_entities = build_w2v_model(dl_entities)
+    sq_entities = Sequencer(all_words=list(dl_entities), seq_len=50, embedding_matrix=w2v_entities.wv)
+
+    dl_sites = DataLoaders.DataLoaderGeneric(truncated_files_dir, "site")
+    w2v_sites = build_w2v_model(dl_sites)
+    sq_sites = Sequencer(all_words=list(dl_sites), seq_len=50, embedding_matrix=w2v_sites.wv)
+
+    key_col = []; uuid_col = []; site_col = []; title_col = []; text_col = []; entities_col = []; sentiments_col = []
+    i = 1
+    for dirpath, subdirs, files in os.walk(truncated_files_dir):
+        for f in files:
+            file_path = os.path.join(dirpath, f)
+            fptr = open(file_path)
+            file_json = json.load(fptr)
+            fptr.close()
+            # check if there are entities in document, if not, ignore
+            file_entities = file_json["entities"]
+            fixed_title = fix_text_no_tags(file_json["title"])
+            fixed_text = fix_text_no_tags(file_json["text"])
+            site_vector = sq_sites.text_to_vector(file_json["site"])
+            title_vector = sq_text.text_to_vector(fixed_title)
+            text_vector = sq_text.text_to_vector(fixed_text)
+            for key, value in file_entities.items():
+                if (len(value) < 1):
+                    # print("This is being reached!")
+                    continue
+                else:
+                    for el in value:
+                        key_col.append(i)
+                        i += 1
+                        uuid_col.append(file_json["uuid"])
+                        site_col.append(site_vector)
+                        title_col.append(title_vector)
+                        text_col.append(text_vector)
+                        embedded_entity = sq_entities.text_to_vector(el["name"])
+                        entities_col.append(embedded_entity)
+                        sentiments_col.append(el["sentiment"])
+    
+    ind_col_data = {'Site': site_col, 'Title': title_col, 'Text': text_col, 'Name': entities_col}
+    df_dep_col = pd.DataFrame(index=key_col, data={'Sentiment': sentiments_col})
+    df_ind_cols = pd.DataFrame(index=key_col, data=ind_col_data)
+
+    dep_col_names = 'Sentiment'
+    ind_cols_names = ['Site', 'Title', 'Text', 'Name']
+    ind_cols_loc = df_ind_cols.loc[:,ind_cols_names]
+    dep_col_loc = df_dep_col.loc[:,dep_col_names]
+    temp = df_ind_cols.values.tolist()
+    temp = np.array(temp)
+    temp = temp.reshape(temp.shape[0],-1) # is bodge, not sure if scalable at all
+    crude_model = SVC(cache_size=500)
+    # crude_model.fit(temp, list(df_dep_col["Sentiment"]))
+    cv_results = cross_validate(crude_model, temp, list(df_dep_col["Sentiment"]), cv=3)
+    print("It's somewhat working!")
+    print(cv_results)
+
 def main():
-    # build_sequencer(True, False)
-    # build_sequencer(True, True)
-    # build_sequencer(False, False)
-    # build_sequencer(False, True)
-    # build_dataframes(True, False)
-    # build_dataframes(True, True)
-
-    build_dataframes(False, False)
-    # build_dataframes(False, True)
-
-    build_model(False, False)
+    truncated_model()
 
 main()
