@@ -281,11 +281,14 @@ def build_w2v_model(dl):
 
 # Function does all functionality of constructing elements of model in one go
 # Needs refactoring to be more portable like the functions
-def construct_classifier_model():
-    truncated_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
-    relevant_entities = count_entities(truncated_files_dir, 50)
-
-    dl_text = DataLoaders.DataLoaderNoTags(truncated_files_dir)
+def construct_classifier_model(use_tags):
+    tgt_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
+    relevant_entities = count_entities(tgt_files_dir, 120)
+    dl_text = ''
+    if use_tags == True:
+        dl_text = DataLoaders.DataLoaderWithTags(tgt_files_dir)
+    else:
+        dl_text = DataLoaders.DataLoaderNoTags(tgt_files_dir)
     w2v_text = build_w2v_model(dl_text)
 
     dl_lst = list(dl_text)
@@ -295,17 +298,17 @@ def construct_classifier_model():
             dl_lst_fixed.append(word)
     sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=50, embedding_matrix=w2v_text.wv)
 
-    dl_entities = DataLoaders.DataLoaderEntities(truncated_files_dir)
+    dl_entities = DataLoaders.DataLoaderEntities(tgt_files_dir)
     w2v_entities = build_w2v_model(dl_entities)
     sq_entities = Sequencer(all_words=list(dl_entities), seq_len=50, embedding_matrix=w2v_entities.wv)
 
-    dl_sites = DataLoaders.DataLoaderGeneric(truncated_files_dir, "site")
+    dl_sites = DataLoaders.DataLoaderGeneric(tgt_files_dir, "site")
     w2v_sites = build_w2v_model(dl_sites)
     sq_sites = Sequencer(all_words=list(dl_sites), seq_len=50, embedding_matrix=w2v_sites.wv)
 
     key_col = []; uuid_col = []; site_col = []; title_col = []; text_col = []; entities_col = []; sentiments_col = []
     i = 1
-    for dirpath, subdirs, files in os.walk(truncated_files_dir):
+    for dirpath, subdirs, files in os.walk(tgt_files_dir):
         for f in files:
             file_path = os.path.join(dirpath, f)
             fptr = open(file_path)
@@ -313,8 +316,16 @@ def construct_classifier_model():
             fptr.close()
             # check if there are entities in document, if not, ignore
             file_entities = file_json["entities"]
-            fixed_title = fix_text_no_tags(file_json["title"])
-            fixed_text = fix_text_no_tags(file_json["text"])
+            if len(file_entities.items()) < 1:
+                print("We are now here!")
+            fixed_title = ''
+            tixed_text = ''
+            if use_tags == True:
+                fixed_title = fix_text_w_tags(file_json["title"])
+                fixed_text = fix_text_w_tags(file_json["text"])
+            else:
+                fixed_title = fix_text_no_tags(file_json["title"])
+                fixed_text = fix_text_no_tags(file_json["text"])
             site_vector = sq_sites.text_to_vector(file_json["site"])
             title_vector = sq_text.text_to_vector(fixed_title)
             text_vector = sq_text.text_to_vector(fixed_text)
@@ -343,13 +354,14 @@ def construct_classifier_model():
     temp = df_ind_cols.values.tolist()
     temp = np.array(temp)
     temp = temp.reshape(temp.shape[0],-1) # is bodge, not sure if scalable at all
-    crude_model = SVC(cache_size=500)
+    crude_model = SVC(cache_size=5000)
     crude_model.fit(temp, list(df_dep_col["Sentiment"]))
-    cv_results = cross_validate(crude_model, temp, list(df_dep_col["Sentiment"]), cv=3)
+    cv_results = cross_validate(crude_model, temp, list(df_dep_col["Sentiment"]), cv=2)
     print("It's somewhat working!")
     print(cv_results)
 
 def main():
-    truncated_model()
+    construct_classifier_model(True)
+    construct_classifier_model(False)
 
 main()
