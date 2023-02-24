@@ -13,6 +13,39 @@ from sklearn.multioutput import MultiOutputClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
 core_dir = os.getcwd()
 
+# used to determine x most frequent entities in dataset, and create list of just these entities
+def count_entities(tgt_dir, cutoff_point):
+    ens = {}
+    for dirpath, subdirs, files in os.walk(tgt_dir):
+        for f in files:
+            f_name = os.path.join(dirpath, f)
+            fptr = open(f_name)
+            file_json = json.load(fptr)
+            fptr.close()
+            file_entities = file_json["entities"]
+            if len(file_entities) < 1:
+                print("This line of code is being reached")
+                continue
+            else:
+                for key, value in file_entities.items():
+                    for el in value:
+                        if el["name"] not in ens.keys():
+                            new_item = {el["name"]: 1}
+                            ens.update(new_item)
+                        else:
+                            new_val = ens.get(el["name"]) + 1
+                            ens.update({el["name"]: new_val})
+    
+    ens_sorted = sorted(ens.items(), key=lambda x:x[1], reverse=True)
+    output = []
+    i = 1
+    for el in ens_sorted:
+        temp = list(el)
+        output.append(temp[0])
+        i += 1
+        if i > cutoff_point:
+            break
+    return output
 
 # based off code from https://www.kaggle.com/code/mehmetlaudatekman/tutorial-word-embeddings-with-svm, will probably need additional reworking for completion
 class Sequencer():
@@ -239,20 +272,19 @@ def build_model(use_full_dataset, use_tags):
     crude_model.fit(temp, list(df_dep_cols["Sentiment"]))
     print("It's somewhat working!")
 
-
+# simple function to construct a w2v model
 def build_w2v_model(dl):
     w2v = Word2Vec()
     w2v.build_vocab(corpus_iterable=dl)
     w2v.train(corpus_iterable=dl, epochs=w2v.epochs, total_examples=w2v.corpus_count)
     return w2v
 
-# TODO: Work with extrememly small data set to create proof-of-concept for scalable classifier
-# TO-REPRESENT: sparse matrix with entity
-# TODO: Use more extensive model than the previous proof-of-concept
-# TODO: Consider moving to separate file
-# TODO: consider refactoring to reduce function size
-def truncated_model():
+# Function does all functionality of constructing elements of model in one go
+# Needs refactoring to be more portable like the functions
+def construct_classifier_model():
     truncated_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
+    relevant_entities = count_entities(truncated_files_dir, 50)
+
     dl_text = DataLoaders.DataLoaderNoTags(truncated_files_dir)
     w2v_text = build_w2v_model(dl_text)
 
@@ -287,20 +319,18 @@ def truncated_model():
             title_vector = sq_text.text_to_vector(fixed_title)
             text_vector = sq_text.text_to_vector(fixed_text)
             for key, value in file_entities.items():
-                if (len(value) < 1):
-                    # print("This is being reached!")
-                    continue
-                else:
+                if (len(value) > 1):
                     for el in value:
-                        key_col.append(i)
-                        i += 1
-                        uuid_col.append(file_json["uuid"])
-                        site_col.append(site_vector)
-                        title_col.append(title_vector)
-                        text_col.append(text_vector)
-                        embedded_entity = sq_entities.text_to_vector(el["name"])
-                        entities_col.append(embedded_entity)
-                        sentiments_col.append(el["sentiment"])
+                        if el["sentiment"] != "none" and el["name"] in relevant_entities:
+                            key_col.append(i)
+                            i += 1
+                            uuid_col.append(file_json["uuid"])
+                            site_col.append(site_vector)
+                            title_col.append(title_vector)
+                            text_col.append(text_vector)
+                            embedded_entity = sq_entities.text_to_vector(el["name"])
+                            entities_col.append(embedded_entity)
+                            sentiments_col.append(el["sentiment"])
     
     ind_col_data = {'Site': site_col, 'Title': title_col, 'Text': text_col, 'Name': entities_col}
     df_dep_col = pd.DataFrame(index=key_col, data={'Sentiment': sentiments_col})
@@ -314,7 +344,7 @@ def truncated_model():
     temp = np.array(temp)
     temp = temp.reshape(temp.shape[0],-1) # is bodge, not sure if scalable at all
     crude_model = SVC(cache_size=500)
-    # crude_model.fit(temp, list(df_dep_col["Sentiment"]))
+    crude_model.fit(temp, list(df_dep_col["Sentiment"]))
     cv_results = cross_validate(crude_model, temp, list(df_dep_col["Sentiment"]), cv=3)
     print("It's somewhat working!")
     print(cv_results)
