@@ -9,6 +9,7 @@ import pickle
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.model_selection import cross_validate, GridSearchCV
+import sys
 core_dir = os.getcwd()
 
 # used to determine x most frequent entities in dataset, and create list of just these entities
@@ -48,7 +49,7 @@ def count_entities(tgt_dir, cutoff_point):
 # based off code from https://www.kaggle.com/code/mehmetlaudatekman/tutorial-word-embeddings-with-svm, will probably need additional reworking for completion
 class Sequencer():
     def __init__(self, all_words, seq_len, embedding_matrix):
-        self.seq_len = seq_len
+        self.seq_len = seq_len # no longer to be used
         self.embed_matrix = embedding_matrix
         self.vocab = list(set(all_words))
     
@@ -56,16 +57,16 @@ class Sequencer():
         self.seq_len = new_val
         print("New seq_len: ", new_val)
         
-    def text_to_vector(self, text):
+    def text_to_vector(self, text, s_ln): # reason for having dynamic length is to reduce size of matrix
         output_vec = []
-        len_v = len(text)-1 if len(text) < self.seq_len else self.seq_len-1
+        len_v = len(text)-1 if len(text) < s_ln else s_ln-1
         for el in text[:len_v]:
             try:
                 output_vec.append(self.embed_matrix[el])
             except Exception as E:
                 output_vec.append(np.zeros(100,))
         
-        last_pieces = self.seq_len - len(output_vec)
+        last_pieces = s_ln - len(output_vec)
         for i in range(last_pieces):
             output_vec.append(np.zeros(100,))
         return np.asarray(output_vec).flatten()
@@ -170,8 +171,8 @@ def build_dataframes(tgt_dataset_dir, df_identifier, use_tags, sq_ln, most_ens):
                 fixed_title = fix_text_no_tags(file_json["title"])
                 fixed_text = fix_text_no_tags(file_json["text"])
             site_vector = sq_sites.text_to_vector(file_json["site"])
-            title_vector = sq_text.text_to_vector(fixed_title)
-            text_vector = sq_text.text_to_vector(fixed_text)
+            title_vector = sq_text.text_to_vector(fixed_title, sq_ln)
+            text_vector = sq_text.text_to_vector(fixed_text, sq_ln)
             for key, value in file_entities.items():
                 if (len(value) > 1):
                     for el in value:
@@ -182,7 +183,7 @@ def build_dataframes(tgt_dataset_dir, df_identifier, use_tags, sq_ln, most_ens):
                             site_col.append(site_vector)
                             title_col.append(title_vector)
                             text_col.append(text_vector)
-                            embedded_entity = sq_entities.text_to_vector(el["name"])
+                            embedded_entity = sq_entities.text_to_vector(el["name"], sq_ln)
                             entities_col.append(embedded_entity)
                             sentiments_col.append(el["sentiment"])
     
@@ -222,12 +223,10 @@ def build_model(ind_cols, dep_col):
     ind_cols = ind_cols.loc[:,ind_cols_names]
     ind_cols = ind_cols.values.tolist()
     ind_cols = np.array(ind_cols)
-    print(ind_cols.shape)
     ind_cols = ind_cols.reshape(ind_cols.shape[0],-1) # is bodge, not sure if scalable at all
-    print(ind_cols.shape)
     dep_col = list(dep_col["Sentiment"])
     svc_model = SVC(cache_size=500, kernel='linear', decision_function_shape='ovo')
-    svc_results = cross_validate(svc_model, ind_cols, dep_col, scoring='balanced_accuracy', cv=2)
+    svc_results = cross_validate(svc_model, ind_cols, dep_col, scoring='balanced_accuracy', cv=5)
     # svc_results = GridSearchCV(estimator=svc_model, cv=2, n_jobs=-1, param_grid=[{'kernel':['poly'], 'degree':range(3,5), 'gamma':['scale', 'auto'], 'decision_function_shape':['ovo','ovr']}, {'kernel':['linear'], 'decision_function_shape':['ovo','ovr']}, {'kernel':['rbf', 'sigmoid'], 'degree':range(3,5), 'gamma':['scale','auto'], 'decision_function_shape':['ovo','ovr']}], scoring='balanced_accuracy')
     # svc_results.fit(ind_cols, dep_col)
     print("SVC fitted!")
@@ -258,30 +257,31 @@ def build_large_sequencers():
     pickle.dump(sq_sites, open(core_dir + "/Models/sequencer_sites_full.pkl", "wb"))
     print("Sequencers constructed!")
 
-# This has been used to test on a much smaller scale, pending a reconstruction of earlier functions
-# Needs refactoring to be more portable like the functions
+# This has been used to quickly test data experimentation on a much smaller scale, pending a reconstruction of earlier functions
 def construct_classifier_model(use_tags):
-    tgt_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
+    tgt_files_dir = core_dir + "/Datasets/news_set_financial_sampled/"
     s_len = 120 # Note: all vectors must be of an identical length for SVC
+    t_ln = 50
+    e_ln = 1
     relevant_entities = count_entities(tgt_files_dir, 500)
-    dl_text = ''
+    '''dl_text = ''
     if use_tags == True:
         dl_text = DataLoaders.DataLoaderWithTags(tgt_files_dir)
     else:
         dl_text = DataLoaders.DataLoaderNoTags(tgt_files_dir)
-    w2v_text = build_w2v_model(dl_text)
+    w2v_text = build_w2v_model(dl_text)'''
 
-    dl_lst = list(dl_text)
+    '''dl_lst = list(dl_text)
     dl_lst_fixed = []
     for sen in dl_lst:
         for word in sen:
             dl_lst_fixed.append(word)
-    sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=s_len, embedding_matrix=w2v_text.wv)
-    '''sq_text = ''
+    sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=s_len, embedding_matrix=w2v_text.wv)'''
+    sq_text = ''
     if use_tags == True:
         sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_w_tags.pkl", "rb"))
     else:
-        sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_no_tags.pkl", "rb"))'''
+        sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_no_tags.pkl", "rb"))
 
     '''sq_entities = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
     sq_sites = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
@@ -320,9 +320,9 @@ def construct_classifier_model(use_tags):
             else:
                 fixed_title = fix_text_no_tags(file_json["title"])
                 fixed_text = fix_text_no_tags(file_json["text"])
-            site_vector = sq_sites.text_to_vector(file_json["site"])
-            title_vector = sq_text.text_to_vector(fixed_title)
-            text_vector = sq_text.text_to_vector(fixed_text)
+            site_vector = sq_sites.text_to_vector(file_json["site"], e_ln)
+            title_vector = sq_text.text_to_vector(fixed_title, t_ln)
+            text_vector = sq_text.text_to_vector(fixed_text, s_len)
             for key, value in file_entities.items():
                 if (len(value) > 1):
                     for el in value:
@@ -332,29 +332,43 @@ def construct_classifier_model(use_tags):
                             site_col.append(site_vector)
                             title_col.append(title_vector)
                             text_col.append(text_vector)
-                            embedded_entity = sq_entities.text_to_vector(el["name"])
+                            embedded_entity = sq_entities.text_to_vector(el["name"], e_ln)
                             entities_col.append(embedded_entity)
                             sentiments_col.append(el["sentiment"])
     
+    sq_entities = None; sq_text = None; sq_sites = None # DIY garbage-collection to be sure to be sure
     ind_col_data = {'Site': site_col, 'Title': title_col, 'Text': text_col, 'Name': entities_col}
     # ind_col_data = {'Title': title_col, 'Text': text_col, 'Name': entities_col}
     df_dep_col = pd.DataFrame(index=key_col, data={'Sentiment': sentiments_col})
     df_ind_cols = pd.DataFrame(index=key_col, data=ind_col_data)
+    print("Columns constructed!")
 
     dep_col_names = 'Sentiment'
-    ind_cols_names = ['Site', 'Title', 'Text', 'Name']
-    # ind_cols_names = ['Title', 'Text', 'Name']
-    df_ind_cols = df_ind_cols.loc[:,ind_cols_names]
-    df_ind_cols = df_ind_cols.values.tolist()
-    df_ind_cols = np.array(df_ind_cols)
-    df_ind_cols = df_ind_cols.reshape(df_ind_cols.shape[0],-1) # is bodge, not sure if scalable at all
+    # ind_cols_names = ['Site', 'Title', 'Text', 'Name']
+    ind_cols_names = ['Title', 'Text', 'Name']
+    df_ind_cols = df_ind_cols.loc[:, ind_cols_names]
+    ind_cols_lst = []
+    for col, row in df_ind_cols.iterrows():
+        new_el = []
+        for val in ind_cols_names:
+            for el in row[val]: # one of the kludgiest loops I've ever wrote
+                new_el.append(el)
+        ind_cols_lst.append(new_el)
+    df_ind_cols = None # DIY garbage-collection to be sure to be sure
+    print("Data is ready to pass to model!")
     df_dep_col = list(df_dep_col["Sentiment"])
-    svc_model = SVC(cache_size=500, kernel='linear', decision_function_shape='ovo')
-    svc_results = cross_validate(svc_model, df_ind_cols, df_dep_col, scoring='balanced_accuracy', cv=2)
+    svc_model = SVC(cache_size=4096, kernel='linear', decision_function_shape='ovo')
+    svc_results = cross_validate(estimator=svc_model, X=ind_cols_lst, y=df_dep_col, n_jobs=-1, scoring='balanced_accuracy', cv=5)
     # svc_results = GridSearchCV(estimator=svc_model, cv=2, n_jobs=-1, param_grid={'kernel':['linear', 'poly', 'rbf', 'sigmoid'], 'decision_function_shape':['ovo','ovr']}, scoring='balanced_accuracy')
     # svc_results.fit(df_ind_cols, df_dep_col)
     print("SVC fitted!")
     print(svc_results)
+    fptr = open(core_dir+"/Scores/results.txt", "a")
+    for key, val in svc_results.items():
+        fptr.write(key +  ":" + str(val))
+    fptr.write('\n')
+    fptr.close()
+
     # print("Best score: ", svc_results.best_score_)
     # print("Best params: ", svc_results.best_params_)
     '''tree_model = DecisionTreeClassifier()
