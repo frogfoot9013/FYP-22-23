@@ -1,16 +1,14 @@
 import string
 import os
 import json
-from sklearn import svm
 from gensim.models import Word2Vec
 import DataLoaders
 import numpy as np
 import pandas as pd
 import pickle
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
-from sklearn.model_selection import cross_validate
-from sklearn.multioutput import MultiOutputClassifier
-from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.model_selection import cross_validate, GridSearchCV
 core_dir = os.getcwd()
 
 # used to determine x most frequent entities in dataset, and create list of just these entities
@@ -29,10 +27,10 @@ def count_entities(tgt_dir, cutoff_point):
             else:
                 for key, value in file_entities.items():
                     for el in value:
-                        if el["name"] not in ens.keys():
+                        if el["name"] not in ens.keys() and el["sentiment"] != "none": # disregard 'none' sentiment
                             new_item = {el["name"]: 1}
                             ens.update(new_item)
-                        else:
+                        elif el["name"] in ens.keys() and el["sentiment"] != "none":
                             new_val = ens.get(el["name"]) + 1
                             ens.update({el["name"]: new_val})
     
@@ -56,7 +54,7 @@ class Sequencer():
     
     def change_seq_len(self, new_val):
         self.seq_len = new_val
-        print("New seq_len: " + str(new_val))
+        print("New seq_len: ", new_val)
         
     def text_to_vector(self, text):
         output_vec = []
@@ -129,195 +127,40 @@ def build_sequencer(use_full_dataset, use_tags):
     print("Sequencer built and written to file!")
 
 # Arguments are the same as for build_sequencer, and function more or less identically
-def build_dataframes(use_full_dataset, use_tags):
-    dataset_dir = ""
-    sq_name = core_dir + "/Models/sequencer_"
-    ind_cols_df_name = core_dir + "/Models/df_ind_cols_"
-    dep_cols_df_name = core_dir + "/Models/df_dep_cols_"
-    if use_full_dataset == True:
-        dataset_dir = core_dir + "/Datasets/news_set_financial_preprocessed/"
-        sq_name += "full_dataset_"
-        ind_cols_df_name += "full_dataset_"
-        dep_cols_df_name += "full_dataset_"
+def build_dataframes(tgt_dataset_dir, df_identifier, use_tags, sq_ln, most_ens):
+    ind_cols_df_name = core_dir + "/Models/df_ind_cols_" + df_identifier + "_" + str(most_ens)
+    dep_cols_df_name = core_dir + "/Models/df_dep_col_" + df_identifier + "_" + str(most_ens)
+    sq_txt_name = ''
+    if use_tags:
+        ind_cols_df_name += "_w_tags.pkl"
+        dep_cols_df_name += "_w_tags.pkl"
+        sq_txt_name = core_dir + "/Models/sequencer_full_dataset_w_tags.pkl"
     else:
-        dataset_dir = core_dir + "/Datasets/news_set_financial_sampled/"
-        sq_name += "sampled_dataset_"
-        ind_cols_df_name += "sampled_dataset_"
-        dep_cols_df_name += "sampled_dataset_"
-    if use_tags == True:
-        sq_name += "w_tags.pkl"
-        ind_cols_df_name += "w_tags.pkl"
-        dep_cols_df_name += "w_tags.pkl"
-    else:
-        sq_name += "no_tags.pkl"
-        ind_cols_df_name += "no_tags.pkl"
-        dep_cols_df_name += "no_tags.pkl"
+        ind_cols_df_name += "_no_tags.pkl"
+        dep_cols_df_name += "_no_tags.pkl"
+        sq_txt_name = core_dir + "/Models/sequencer_full_dataset_no_tags.pkl"
     
-    print("Dataset Directory: " + dataset_dir)
-    print("Sequencer Directory: " + sq_name)
-    sq = pickle.load(open(sq_name, "rb"))
-    print("Sequencer successfully loaded!")
-    sq.change_seq_len(120)
-    
+    sq_sites = pickle.load(open(core_dir + "/Models/sequencer_sites_full.pkl", "rb"))
+    sq_entities = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
+    sq_text = pickle.load(open(sq_txt_name, "rb"))
+    sq_entities.change_seq_len(sq_ln)
+    sq_text.change_seq_len(sq_ln)
+    relevant_entities = count_entities(tgt_dataset_dir, most_ens)
+    print("This is working!")
 
-    uuid_col = []
-    author_col = []
-    # site_col = []
-    title_col = []
-    text_col = []
-    name_col = []
-    sentiment_col = []
-    test_sen_col = []
-    i = 0 # use of i is to reduce execution time for my own sanity
-    for dirpath, subdirs, files in os.walk(dataset_dir):
-        for f in files:
-            file_path = os.path.join(dirpath, f)
-            fptr = open(file_path)
-            file_json = json.load(fptr)
-            fptr.close()
-            uuid_col.append(file_json["uuid"])
-            # author_col.append(file_json["author"])
-            # site_col.append(file_json["site"]) # Note: consider one-hot encoding this variable
-            fixed_title = []
-            fixed_text = []
-            if use_tags == True:
-                fixed_title = fix_text_w_tags(file_json["title"])
-                fixed_text = fix_text_w_tags(file_json["text"])
-            else:
-                fixed_title = fix_text_no_tags(file_json["title"])
-                fixed_text = fix_text_no_tags(file_json["text"])
-            
-            title_vector = sq.text_to_vector(fixed_title)
-            title_col.append(title_vector.tolist())
-            text_vector = sq.text_to_vector(fixed_text)
-            text_col.append(text_vector.tolist())
-
-            file_entities = file_json["entities"]
-            if len(file_entities["persons"]) >= 1:
-                name_col.append(file_entities["persons"][0]["name"])
-                sentiment_col.append(file_entities["persons"][0]["sentiment"])
-            elif len(file_entities["locations"]) >= 1:
-                name_col.append(file_entities["locations"][0]["name"])
-                sentiment_col.append(file_entities["locations"][0]["sentiment"])
-            elif len(file_entities["organizations"]) >= 1:
-                name_col.append(file_entities["organizations"][0]["name"])
-                sentiment_col.append(file_entities["organizations"][0]["sentiment"])
-            else:
-                name_col.append("placeholder")
-                sentiment_col.append("none")
-            i += 1
-            if i > 200:
-                break
-        if i > 200:
-            print("This line of code is being reached!")
-            break
-        # NOTE: commented out until more progress made
-            '''doc_names = []
-            doc_sentiments = []
-            for en in file_entities["persons"]:
-                doc_names.append(en["name"])
-                doc_sentiments.append(en["sentiment"])
-            for en in file_entities["locations"]:
-                doc_names.append(en["name"])
-                doc_sentiments.append(en["sentiment"])
-            for en in file_entities["organizations"]:
-                doc_names.append(en["name"])
-                doc_sentiments.append(en["sentiment"])
-            name_col.append(doc_names)
-            sentiment_col.append(doc_sentiments)'''
-    # TODO: Work out a way to properly process the sentiments, separated by article
-    
-
-    # TODO: find a way to get sentiment into data frame
-    da_data = {'Title': title_col, 'Text': text_col}
-    print("Lengths:\nUUID: " + str(len(uuid_col)) + "\nSentiment: " + str(len(sentiment_col)) + "\nTitle: " + str(len(title_col)) + "\nText: " + str(len(text_col)) + "\nName: " + str(len(name_col)))
-    df_dep_cols = pd.DataFrame(index=uuid_col, data={'Sentiment': sentiment_col})
-    df_ind_cols = pd.DataFrame(index=uuid_col, data=da_data)
-    
-
-    pickle.dump(df_ind_cols, open(ind_cols_df_name, "wb"))
-    pickle.dump(df_dep_cols, open(dep_cols_df_name, "wb"))
-    print("Columns constructed and written!")
-
-def build_model(use_full_dataset, use_tags):
-    ind_cols_df_name = core_dir + "/Models/df_ind_cols_"
-    dep_cols_df_name = core_dir + "/Models/df_dep_cols_"
-    if use_full_dataset == True:
-        ind_cols_df_name += "full_dataset_"
-        dep_cols_df_name += "full_dataset_"
-    else:
-        ind_cols_df_name += "sampled_dataset_"
-        dep_cols_df_name += "sampled_dataset_"
-    if use_tags == True:
-        ind_cols_df_name += "w_tags.pkl"
-        dep_cols_df_name += "w_tags.pkl"
-    else:
-        ind_cols_df_name += "no_tags.pkl"
-        dep_cols_df_name += "no_tags.pkl"
-    print(ind_cols_df_name)
-    print(dep_cols_df_name)
-    
-    df_ind_cols = pickle.load(open(ind_cols_df_name, "rb"))
-    df_dep_cols = pickle.load(open(dep_cols_df_name, "rb"))
-    print("Columns loaded!")
-    dep_cols_names = 'Sentiment'
-    ind_cols_names = ['Title', 'Text']
-    ind_cols_loc = df_ind_cols.loc[:,ind_cols_names]
-    dep_cols_loc = df_dep_cols.loc[:,dep_cols_names]
-    print("This is reached!")
-    temp = df_ind_cols.values.tolist()
-    temp = np.array(temp)
-    temp = temp.reshape(temp.shape[0],-1) # is bodge, not sure if scalable at all
-    crude_model = SVC(cache_size=500)
-    crude_model.fit(temp, list(df_dep_cols["Sentiment"]))
-    print("It's somewhat working!")
-
-# simple function to construct a w2v model
-def build_w2v_model(dl):
-    w2v = Word2Vec()
-    w2v.build_vocab(corpus_iterable=dl)
-    w2v.train(corpus_iterable=dl, epochs=w2v.epochs, total_examples=w2v.corpus_count)
-    return w2v
-
-# Function does all functionality of constructing elements of model in one go
-# Needs refactoring to be more portable like the functions
-def construct_classifier_model(use_tags):
-    tgt_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
-    relevant_entities = count_entities(tgt_files_dir, 120)
-    dl_text = ''
-    if use_tags == True:
-        dl_text = DataLoaders.DataLoaderWithTags(tgt_files_dir)
-    else:
-        dl_text = DataLoaders.DataLoaderNoTags(tgt_files_dir)
-    w2v_text = build_w2v_model(dl_text)
-
-    dl_lst = list(dl_text)
-    dl_lst_fixed = []
-    for sen in dl_lst:
-        for word in sen:
-            dl_lst_fixed.append(word)
-    sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=50, embedding_matrix=w2v_text.wv)
-
-    dl_entities = DataLoaders.DataLoaderEntities(tgt_files_dir)
-    w2v_entities = build_w2v_model(dl_entities)
-    sq_entities = Sequencer(all_words=list(dl_entities), seq_len=50, embedding_matrix=w2v_entities.wv)
-
-    dl_sites = DataLoaders.DataLoaderGeneric(tgt_files_dir, "site")
-    w2v_sites = build_w2v_model(dl_sites)
-    sq_sites = Sequencer(all_words=list(dl_sites), seq_len=50, embedding_matrix=w2v_sites.wv)
-
-    key_col = []; uuid_col = []; site_col = []; title_col = []; text_col = []; entities_col = []; sentiments_col = []
+    key_col = []; uuid_col = []; site_col = []; 
+    title_col = []; text_col = []; entities_col = []; sentiments_col = []
     i = 1
-    for dirpath, subdirs, files in os.walk(tgt_files_dir):
+    for dirpath, subdirs, files in os.walk(tgt_dataset_dir):
         for f in files:
             file_path = os.path.join(dirpath, f)
             fptr = open(file_path)
             file_json = json.load(fptr)
             fptr.close()
-            # check if there are entities in document, if not, ignore
             file_entities = file_json["entities"]
-            if len(file_entities.items()) < 1:
-                print("We are now here!")
+            el_count = sum(len(el) for el in file_entities.values())
+            if el_count < 1: # skip document if no entities are present
+                continue
             fixed_title = ''
             tixed_text = ''
             if use_tags == True:
@@ -346,22 +189,187 @@ def construct_classifier_model(use_tags):
     ind_col_data = {'Site': site_col, 'Title': title_col, 'Text': text_col, 'Name': entities_col}
     df_dep_col = pd.DataFrame(index=key_col, data={'Sentiment': sentiments_col})
     df_ind_cols = pd.DataFrame(index=key_col, data=ind_col_data)
+    
+
+    pickle.dump(df_ind_cols, open(ind_cols_df_name, "wb"))
+    pickle.dump(df_dep_col, open(dep_cols_df_name, "wb"))
+    print("Columns constructed and written!")
+
+# Function to load DataFrames that already exist
+def load_dataframes(identifier, use_tags, most_ens):
+    ind_cols_file_name = core_dir + "/Models/df_ind_cols_" + identifier + "_" + str(most_ens)
+    dep_cols_file_name = core_dir + "/Models/df_dep_col_" + identifier + "_" + str(most_ens)
+    if use_tags == True:
+        ind_cols_file_name += "_w_tags.pkl"
+        dep_cols_file_name += "_w_tags.pkl"
+    else:
+        ind_cols_file_name += "_no_tags.pkl"
+        dep_cols_file_name += "_no_tags.pkl"
+    
+    if os.path.isfile(ind_cols_file_name) == False or os.path.isfile(dep_cols_file_name) == False:
+        print("DataFrames don't exist!")
+        return None
+    else:
+        ind_cols_df = pickle.load(open(ind_cols_file_name, "rb"))
+        dep_cols_df = pickle.load(open(dep_cols_file_name, "rb"))
+        return ind_cols_df, dep_cols_df
+
+def build_model(ind_cols, dep_col):
+    dep_col_names = 'Sentiment'
+    # ind_cols_names = ['Site', 'Title', 'Text', 'Name']
+    # ind_cols_names = ['Title', 'Text', 'Name']
+    ind_cols_names = ['Title', 'Text', 'Name']
+    ind_cols = ind_cols.loc[:,ind_cols_names]
+    ind_cols = ind_cols.values.tolist()
+    ind_cols = np.array(ind_cols)
+    print(ind_cols.shape)
+    ind_cols = ind_cols.reshape(ind_cols.shape[0],-1) # is bodge, not sure if scalable at all
+    print(ind_cols.shape)
+    dep_col = list(dep_col["Sentiment"])
+    svc_model = SVC(cache_size=500, kernel='linear', decision_function_shape='ovo')
+    svc_results = cross_validate(svc_model, ind_cols, dep_col, scoring='balanced_accuracy', cv=2)
+    # svc_results = GridSearchCV(estimator=svc_model, cv=2, n_jobs=-1, param_grid=[{'kernel':['poly'], 'degree':range(3,5), 'gamma':['scale', 'auto'], 'decision_function_shape':['ovo','ovr']}, {'kernel':['linear'], 'decision_function_shape':['ovo','ovr']}, {'kernel':['rbf', 'sigmoid'], 'degree':range(3,5), 'gamma':['scale','auto'], 'decision_function_shape':['ovo','ovr']}], scoring='balanced_accuracy')
+    # svc_results.fit(ind_cols, dep_col)
+    print("SVC fitted!")
+    print(svc_results)
+    '''print("Best score: ", svc_results.best_score_)
+    print("Best params: ", svc_results.best_params_)'''
+
+# simple function to construct a w2v model
+def build_w2v_model(dl):
+    w2v = Word2Vec()
+    w2v.build_vocab(corpus_iterable=dl)
+    w2v.train(corpus_iterable=dl, epochs=w2v.epochs, total_examples=w2v.corpus_count)
+    return w2v
+
+# function used to build more sequencers
+def build_large_sequencers():
+    tgt_files_dir = core_dir + "/Datasets/news_set_financial_preprocessed"
+    s_len = 120
+
+    dl_entities = DataLoaders.DataLoaderEntities(tgt_files_dir)
+    w2v_entities = build_w2v_model(dl_entities)
+    sq_entities = Sequencer(all_words=list(dl_entities), seq_len=s_len, embedding_matrix=w2v_entities.wv)
+    pickle.dump(sq_entities, open(core_dir + "/Models/sequencer_entities_full.pkl", "wb"))
+
+    dl_sites = DataLoaders.DataLoaderGeneric(tgt_files_dir, "site")
+    w2v_sites = build_w2v_model(dl_sites)
+    sq_sites = Sequencer(all_words=list(dl_sites), seq_len=s_len, embedding_matrix=w2v_sites.wv)
+    pickle.dump(sq_sites, open(core_dir + "/Models/sequencer_sites_full.pkl", "wb"))
+    print("Sequencers constructed!")
+
+# This has been used to test on a much smaller scale, pending a reconstruction of earlier functions
+# Needs refactoring to be more portable like the functions
+def construct_classifier_model(use_tags):
+    tgt_files_dir = core_dir + "/Datasets/news_set_financial_truncated/"
+    s_len = 120 # Note: all vectors must be of an identical length for SVC
+    relevant_entities = count_entities(tgt_files_dir, 500)
+    dl_text = ''
+    if use_tags == True:
+        dl_text = DataLoaders.DataLoaderWithTags(tgt_files_dir)
+    else:
+        dl_text = DataLoaders.DataLoaderNoTags(tgt_files_dir)
+    w2v_text = build_w2v_model(dl_text)
+
+    dl_lst = list(dl_text)
+    dl_lst_fixed = []
+    for sen in dl_lst:
+        for word in sen:
+            dl_lst_fixed.append(word)
+    sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=s_len, embedding_matrix=w2v_text.wv)
+    '''sq_text = ''
+    if use_tags == True:
+        sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_w_tags.pkl", "rb"))
+    else:
+        sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_no_tags.pkl", "rb"))'''
+
+    '''sq_entities = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
+    sq_sites = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
+    sq_text.change_seq_len(s_len)
+    sq_entities.change_seq_len(s_len)
+    sq_sites.change_seq_len(s_len)'''
+
+    print("Sequencers loaded up!")
+
+    dl_entities = DataLoaders.DataLoaderEntities(tgt_files_dir)
+    w2v_entities = build_w2v_model(dl_entities)
+    sq_entities = Sequencer(all_words=list(dl_entities), seq_len=s_len, embedding_matrix=w2v_entities.wv)
+
+    dl_sites = DataLoaders.DataLoaderGeneric(tgt_files_dir, "site")
+    w2v_sites = build_w2v_model(dl_sites)
+    sq_sites = Sequencer(all_words=list(dl_sites), seq_len=s_len, embedding_matrix=w2v_sites.wv)
+
+    key_col = []; site_col = []; 
+    title_col = []; text_col = []; entities_col = []; sentiments_col = []
+    i = 1
+    for dirpath, subdirs, files in os.walk(tgt_files_dir):
+        for f in files:
+            file_path = os.path.join(dirpath, f)
+            fptr = open(file_path)
+            file_json = json.load(fptr)
+            fptr.close()
+            file_entities = file_json["entities"]
+            el_count = sum(len(el) for el in file_entities.values())
+            if el_count < 1: # skip document if no entities are present
+                continue
+            fixed_title = ''
+            tixed_text = ''
+            if use_tags == True:
+                fixed_title = fix_text_w_tags(file_json["title"])
+                fixed_text = fix_text_w_tags(file_json["text"])
+            else:
+                fixed_title = fix_text_no_tags(file_json["title"])
+                fixed_text = fix_text_no_tags(file_json["text"])
+            site_vector = sq_sites.text_to_vector(file_json["site"])
+            title_vector = sq_text.text_to_vector(fixed_title)
+            text_vector = sq_text.text_to_vector(fixed_text)
+            for key, value in file_entities.items():
+                if (len(value) > 1):
+                    for el in value:
+                        if el["sentiment"] != "none" and el["name"] in relevant_entities:
+                            key_col.append(i)
+                            i += 1
+                            site_col.append(site_vector)
+                            title_col.append(title_vector)
+                            text_col.append(text_vector)
+                            embedded_entity = sq_entities.text_to_vector(el["name"])
+                            entities_col.append(embedded_entity)
+                            sentiments_col.append(el["sentiment"])
+    
+    ind_col_data = {'Site': site_col, 'Title': title_col, 'Text': text_col, 'Name': entities_col}
+    # ind_col_data = {'Title': title_col, 'Text': text_col, 'Name': entities_col}
+    df_dep_col = pd.DataFrame(index=key_col, data={'Sentiment': sentiments_col})
+    df_ind_cols = pd.DataFrame(index=key_col, data=ind_col_data)
 
     dep_col_names = 'Sentiment'
     ind_cols_names = ['Site', 'Title', 'Text', 'Name']
-    ind_cols_loc = df_ind_cols.loc[:,ind_cols_names]
-    dep_col_loc = df_dep_col.loc[:,dep_col_names]
-    temp = df_ind_cols.values.tolist()
-    temp = np.array(temp)
-    temp = temp.reshape(temp.shape[0],-1) # is bodge, not sure if scalable at all
-    crude_model = SVC(cache_size=5000)
-    crude_model.fit(temp, list(df_dep_col["Sentiment"]))
-    cv_results = cross_validate(crude_model, temp, list(df_dep_col["Sentiment"]), cv=2)
-    print("It's somewhat working!")
-    print(cv_results)
+    # ind_cols_names = ['Title', 'Text', 'Name']
+    df_ind_cols = df_ind_cols.loc[:,ind_cols_names]
+    df_ind_cols = df_ind_cols.values.tolist()
+    df_ind_cols = np.array(df_ind_cols)
+    df_ind_cols = df_ind_cols.reshape(df_ind_cols.shape[0],-1) # is bodge, not sure if scalable at all
+    df_dep_col = list(df_dep_col["Sentiment"])
+    svc_model = SVC(cache_size=500, kernel='linear', decision_function_shape='ovo')
+    svc_results = cross_validate(svc_model, df_ind_cols, df_dep_col, scoring='balanced_accuracy', cv=2)
+    # svc_results = GridSearchCV(estimator=svc_model, cv=2, n_jobs=-1, param_grid={'kernel':['linear', 'poly', 'rbf', 'sigmoid'], 'decision_function_shape':['ovo','ovr']}, scoring='balanced_accuracy')
+    # svc_results.fit(df_ind_cols, df_dep_col)
+    print("SVC fitted!")
+    print(svc_results)
+    # print("Best score: ", svc_results.best_score_)
+    # print("Best params: ", svc_results.best_params_)
+    '''tree_model = DecisionTreeClassifier()
+    tree_results = cross_validate(tree_model, df_ind_cols, df_dep_col, scoring='balanced_accuracy', cv=2)
+    tree_results = GridSearchCV(estimator=tree_model, cv=2, n_jobs=2, scoring='balanced_accuracy', param_grid={'criterion':['gini','entropy','log_loss'], 'class_weight':['balanced', None]})
+    tree_results.fit(df_ind_cols, df_dep_col)
+    print("Decision tree fitted!")
+    print("Best score: ", tree_results.best_score_)
+    print("Best params: ", tree_results.best_params_)'''
 
 def main():
+    # build_dataframes(tgt_dataset_dir=core_dir+"/Datasets/news_set_financial_truncated/", df_identifier="truncated", use_tags=True, sq_ln=120, most_ens=500)
+    # ind_cols_df, dep_cols_df = load_dataframes("truncated", True, 500)
+    # build_model(ind_cols_df, dep_cols_df)
     construct_classifier_model(True)
-    construct_classifier_model(False)
+    # construct_classifier_model(False)
 
 main()
