@@ -6,6 +6,7 @@ import DataLoaders
 import numpy as np
 import pandas as pd
 import pickle
+from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.model_selection import cross_validate, GridSearchCV
@@ -149,7 +150,7 @@ def build_dataframes(tgt_dataset_dir, df_identifier, use_tags, sq_ln, most_ens):
     relevant_entities = count_entities(tgt_dataset_dir, most_ens)
     print("This is working!")
 
-    key_col = []; uuid_col = []; site_col = []; 
+    key_col = []; uuid_col = []; site_col = []
     title_col = []; text_col = []; entities_col = []; sentiments_col = []
     i = 1
     for dirpath, subdirs, files in os.walk(tgt_dataset_dir):
@@ -217,9 +218,7 @@ def load_dataframes(identifier, use_tags, most_ens):
 
 def build_model(ind_cols, dep_col):
     dep_col_names = 'Sentiment'
-    # ind_cols_names = ['Site', 'Title', 'Text', 'Name']
-    # ind_cols_names = ['Title', 'Text', 'Name']
-    ind_cols_names = ['Title', 'Text', 'Name']
+    ind_cols_names = ['Site', 'Title', 'Text', 'Name']
     ind_cols = ind_cols.loc[:,ind_cols_names]
     ind_cols = ind_cols.values.tolist()
     ind_cols = np.array(ind_cols)
@@ -258,36 +257,17 @@ def build_large_sequencers():
     print("Sequencers constructed!")
 
 # This has been used to quickly test data experimentation on a much smaller scale, pending a reconstruction of earlier functions
-def construct_classifier_model(use_tags):
-    tgt_files_dir = core_dir + "/Datasets/news_set_financial_sampled/"
+def construct_classifier_model(use_tags, tgt_files_dir):
     s_len = 120 # Note: all vectors must be of an identical length for SVC
     t_ln = 50
     e_ln = 1
     relevant_entities = count_entities(tgt_files_dir, 500)
-    '''dl_text = ''
-    if use_tags == True:
-        dl_text = DataLoaders.DataLoaderWithTags(tgt_files_dir)
-    else:
-        dl_text = DataLoaders.DataLoaderNoTags(tgt_files_dir)
-    w2v_text = build_w2v_model(dl_text)'''
 
-    '''dl_lst = list(dl_text)
-    dl_lst_fixed = []
-    for sen in dl_lst:
-        for word in sen:
-            dl_lst_fixed.append(word)
-    sq_text = Sequencer(all_words=dl_lst_fixed, seq_len=s_len, embedding_matrix=w2v_text.wv)'''
     sq_text = ''
     if use_tags == True:
         sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_w_tags.pkl", "rb"))
     else:
         sq_text = pickle.load(open(core_dir+"/Models/sequencer_full_dataset_no_tags.pkl", "rb"))
-
-    '''sq_entities = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
-    sq_sites = pickle.load(open(core_dir + "/Models/sequencer_entities_full.pkl", "rb"))
-    sq_text.change_seq_len(s_len)
-    sq_entities.change_seq_len(s_len)
-    sq_sites.change_seq_len(s_len)'''
 
     print("Sequencers loaded up!")
 
@@ -338,17 +318,15 @@ def construct_classifier_model(use_tags):
     
     sq_entities = None; sq_text = None; sq_sites = None # DIY garbage-collection to be sure to be sure
     ind_col_data = {'Site': site_col, 'Title': title_col, 'Text': text_col, 'Name': entities_col}
-    # ind_col_data = {'Title': title_col, 'Text': text_col, 'Name': entities_col}
     df_dep_col = pd.DataFrame(index=key_col, data={'Sentiment': sentiments_col})
     df_ind_cols = pd.DataFrame(index=key_col, data=ind_col_data)
     print("Columns constructed!")
 
     dep_col_names = 'Sentiment'
-    # ind_cols_names = ['Site', 'Title', 'Text', 'Name']
     ind_cols_names = ['Title', 'Text', 'Name']
     df_ind_cols = df_ind_cols.loc[:, ind_cols_names]
     ind_cols_lst = []
-    for col, row in df_ind_cols.iterrows():
+    for col, row in df_ind_cols.iterrows(): # To turn everything into one vector, for size reduction
         new_el = []
         for val in ind_cols_names:
             for el in row[val]: # one of the kludgiest loops I've ever wrote
@@ -357,33 +335,21 @@ def construct_classifier_model(use_tags):
     df_ind_cols = None # DIY garbage-collection to be sure to be sure
     print("Data is ready to pass to model!")
     df_dep_col = list(df_dep_col["Sentiment"])
+    df_ind_cols_train, df_ind_cols_test, df_dep_col_train, df_dep_col_test = train_test_split(ind_cols_lst, df_dep_col, test_size=0.33)
     svc_model = SVC(cache_size=4096, kernel='linear', decision_function_shape='ovo')
-    svc_results = cross_validate(estimator=svc_model, X=ind_cols_lst, y=df_dep_col, n_jobs=-1, scoring='balanced_accuracy', cv=5)
-    # svc_results = GridSearchCV(estimator=svc_model, cv=2, n_jobs=-1, param_grid={'kernel':['linear', 'poly', 'rbf', 'sigmoid'], 'decision_function_shape':['ovo','ovr']}, scoring='balanced_accuracy')
-    # svc_results.fit(df_ind_cols, df_dep_col)
+    svc_model.fit(df_ind_cols_train, df_dep_col_train)
+    svc_model.predict(df_ind_cols_test)
+    svc_scores = svc_model.score(df_ind_cols_test, df_dep_col_test)
     print("SVC fitted!")
-    print(svc_results)
-    fptr = open(core_dir+"/Scores/results.txt", "a")
-    for key, val in svc_results.items():
-        fptr.write(key +  ":" + str(val))
-    fptr.write('\n')
+    print("Score: ", svc_scores)
+    fptr = open(core_dir+"/Scores/results_no_tags.txt", "a")
+    fptr.write("Score: " + str(svc_scores) + '\n')
     fptr.close()
-
-    # print("Best score: ", svc_results.best_score_)
-    # print("Best params: ", svc_results.best_params_)
-    '''tree_model = DecisionTreeClassifier()
-    tree_results = cross_validate(tree_model, df_ind_cols, df_dep_col, scoring='balanced_accuracy', cv=2)
-    tree_results = GridSearchCV(estimator=tree_model, cv=2, n_jobs=2, scoring='balanced_accuracy', param_grid={'criterion':['gini','entropy','log_loss'], 'class_weight':['balanced', None]})
-    tree_results.fit(df_ind_cols, df_dep_col)
-    print("Decision tree fitted!")
-    print("Best score: ", tree_results.best_score_)
-    print("Best params: ", tree_results.best_params_)'''
 
 def main():
     # build_dataframes(tgt_dataset_dir=core_dir+"/Datasets/news_set_financial_truncated/", df_identifier="truncated", use_tags=True, sq_ln=120, most_ens=500)
     # ind_cols_df, dep_cols_df = load_dataframes("truncated", True, 500)
     # build_model(ind_cols_df, dep_cols_df)
-    construct_classifier_model(True)
-    # construct_classifier_model(False)
+    construct_classifier_model(False, core_dir + "/Datasets/news_set_financial_preprocessed/directory_1/")
 
 main()
