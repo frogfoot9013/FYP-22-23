@@ -147,9 +147,6 @@ Datasets/news_set_financial_truncated/
 # Models for dependent and indpendent cols,
 /Models/df_*.pkl
 
-# Clustering (provisionally)
-/Scripts/Clustering*.py
-
 # scores (provisionally)
 /Scores/*
 !/Scores/full_results.txt
