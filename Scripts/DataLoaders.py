@@ -84,3 +84,37 @@ class DataLoaderGeneric():
                 fptr.close()
                 tgt_json = file_json[self.tgt_tag]
                 yield tgt_json
+
+# used to determine x most frequent entities in dataset, and create list of just these entities
+def count_entities(tgt_dir, cutoff_point):
+    ens = {}
+    for dirpath, subdirs, files in os.walk(tgt_dir):
+        for f in files:
+            f_name = os.path.join(dirpath, f)
+            fptr = open(f_name)
+            file_json = json.load(fptr)
+            fptr.close()
+            file_entities = file_json["entities"]
+            if len(file_entities) < 1:
+                print("This line of code is being reached")
+                continue
+            else:
+                for key, value in file_entities.items():
+                    for el in value:
+                        if el["name"] not in ens.keys() and el["sentiment"] != "none": # disregard 'none' sentiment
+                            new_item = {el["name"]: 1}
+                            ens.update(new_item)
+                        elif el["name"] in ens.keys() and el["sentiment"] != "none":
+                            new_val = ens.get(el["name"]) + 1
+                            ens.update({el["name"]: new_val})
+    
+    ens_sorted = sorted(ens.items(), key=lambda x:x[1], reverse=True)
+    output = []
+    i = 1
+    for el in ens_sorted:
+        temp = list(el)
+        output.append(temp[0])
+        i += 1
+        if i > cutoff_point:
+            break
+    return output

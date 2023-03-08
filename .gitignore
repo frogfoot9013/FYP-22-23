@@ -133,7 +133,7 @@ Datasets/news_set_financial/
 Datasets/fake_news_csvs/
 
 # Processed Datasets
-Datasets/news_set_financial_preprocessed/
+/Datasets/news_set_financial_preprocessed/
 /Datasets/news_set_financial_preprocessed.tar.xz
 
 # The Sample Dataset
@@ -147,5 +147,12 @@ Datasets/news_set_financial_truncated/
 # Models for dependent and indpendent cols,
 /Models/df_*.pkl
 
+# Clustering (provisionally)
+/Scripts/Clustering*.py
+
 # scores (provisionally)
-/Scores*
+/Scores/*
+!/Scores/full_results.txt
+!/Scores/results_no_tags.txt
+!/Scores/full_results_w_tags.txt
+!/Scores/full_results_no_tags.txt

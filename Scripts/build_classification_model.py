@@ -6,46 +6,13 @@ import DataLoaders
 import numpy as np
 import pandas as pd
 import pickle
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
-from sklearn.model_selection import cross_validate, GridSearchCV
+from sklearn.model_selection import cross_validate, GridSearchCV, train_test_split
 import sys
 core_dir = os.getcwd()
 
-# used to determine x most frequent entities in dataset, and create list of just these entities
-def count_entities(tgt_dir, cutoff_point):
-    ens = {}
-    for dirpath, subdirs, files in os.walk(tgt_dir):
-        for f in files:
-            f_name = os.path.join(dirpath, f)
-            fptr = open(f_name)
-            file_json = json.load(fptr)
-            fptr.close()
-            file_entities = file_json["entities"]
-            if len(file_entities) < 1:
-                print("This line of code is being reached")
-                continue
-            else:
-                for key, value in file_entities.items():
-                    for el in value:
-                        if el["name"] not in ens.keys() and el["sentiment"] != "none": # disregard 'none' sentiment
-                            new_item = {el["name"]: 1}
-                            ens.update(new_item)
-                        elif el["name"] in ens.keys() and el["sentiment"] != "none":
-                            new_val = ens.get(el["name"]) + 1
-                            ens.update({el["name"]: new_val})
-    
-    ens_sorted = sorted(ens.items(), key=lambda x:x[1], reverse=True)
-    output = []
-    i = 1
-    for el in ens_sorted:
-        temp = list(el)
-        output.append(temp[0])
-        i += 1
-        if i > cutoff_point:
-            break
-    return output
 
 # based off code from https://www.kaggle.com/code/mehmetlaudatekman/tutorial-word-embeddings-with-svm, will probably need additional reworking for completion
 class Sequencer():
@@ -147,7 +114,7 @@ def build_dataframes(tgt_dataset_dir, df_identifier, use_tags, sq_ln, most_ens):
     sq_text = pickle.load(open(sq_txt_name, "rb"))
     sq_entities.change_seq_len(sq_ln)
     sq_text.change_seq_len(sq_ln)
-    relevant_entities = count_entities(tgt_dataset_dir, most_ens)
+    relevant_entities = DataLoaders.count_entities(tgt_dataset_dir, most_ens)
     print("This is working!")
 
     key_col = []; uuid_col = []; site_col = []
@@ -257,11 +224,11 @@ def build_large_sequencers():
     print("Sequencers constructed!")
 
 # This has been used to quickly test data experimentation on a much smaller scale, pending a reconstruction of earlier functions
-def construct_classifier_model(use_tags, tgt_files_dir):
+def construct_classifier_model(use_tags, tgt_files_dir, output):
     s_len = 120 # Note: all vectors must be of an identical length for SVC
     t_ln = 50
     e_ln = 1
-    relevant_entities = count_entities(tgt_files_dir, 500)
+    relevant_entities = DataLoaders.count_entities(tgt_files_dir, 500)
 
     sq_text = ''
     if use_tags == True:
@@ -335,21 +302,27 @@ def construct_classifier_model(use_tags, tgt_files_dir):
     df_ind_cols = None # DIY garbage-collection to be sure to be sure
     print("Data is ready to pass to model!")
     df_dep_col = list(df_dep_col["Sentiment"])
-    df_ind_cols_train, df_ind_cols_test, df_dep_col_train, df_dep_col_test = train_test_split(ind_cols_lst, df_dep_col, test_size=0.33)
+    df_ind_cols_train, df_ind_cols_test, df_dep_col_train, df_dep_col_test = train_test_split(ind_cols_lst, df_dep_col, random_state=1024, test_size=0.33)
     svc_model = SVC(cache_size=4096, kernel='linear', decision_function_shape='ovo')
     svc_model.fit(df_ind_cols_train, df_dep_col_train)
-    svc_model.predict(df_ind_cols_test)
-    svc_scores = svc_model.score(df_ind_cols_test, df_dep_col_test)
     print("SVC fitted!")
-    print("Score: ", svc_scores)
-    fptr = open(core_dir+"/Scores/results_no_tags.txt", "a")
-    fptr.write("Score: " + str(svc_scores) + '\n')
+    svc_predictions = svc_model.predict(df_ind_cols_test)
+    print("Predictions made!")
+    svc_report = classification_report(df_dep_col_test, svc_predictions, labels=['positive','neutral', 'negative'])
+    print("Report on predictions:")
+    print(svc_report)
+    fptr = open(core_dir+"/Scores/" + output + ".txt", "a")
+    fptr.write(str(svc_report) + '\n')
     fptr.close()
 
 def main():
     # build_dataframes(tgt_dataset_dir=core_dir+"/Datasets/news_set_financial_truncated/", df_identifier="truncated", use_tags=True, sq_ln=120, most_ens=500)
     # ind_cols_df, dep_cols_df = load_dataframes("truncated", True, 500)
     # build_model(ind_cols_df, dep_cols_df)
-    construct_classifier_model(False, core_dir + "/Datasets/news_set_financial_preprocessed/directory_1/")
+    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_1", "full_results_w_tags")
+    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_2", "full_results_w_tags")
+    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_3", "full_results_w_tags")
+    construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_4", "full_results_w_tags")
+    construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_5", "full_results_w_tags")
 
 main()
