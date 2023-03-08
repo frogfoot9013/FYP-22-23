@@ -10,9 +10,8 @@ core_dir = os.getcwd()
 
 # this mght be a better implementation
 def get_ens_files(tgt_dir, en_amt):
-    output_entities = count_entities(tgt_dir, en_amt)
-    output_files = []
-    output_df = pd.DataFrame(index=output_entities)
+    tgt_entities = count_entities(tgt_dir, en_amt)
+    output_df = pd.DataFrame(index=tgt_entities)
     for dirpath, subdirs, files in os.walk(tgt_dir):
         for f in files:
             file_path = os.path.join(dirpath, f)
@@ -23,10 +22,10 @@ def get_ens_files(tgt_dir, en_amt):
             file_ens = {}
             for key, val in json_ens.items():
                 for el in val:
-                    if el["name"] in output_entities and el["sentiment"] != 'none':
+                    if el["name"] in tgt_entities and el["sentiment"] != 'none':
                         file_ens.update({el["name"]: el["sentiment"]})
-            if len(file_ens) > 0: 
-                file_df = pd.DataFrame(index=output_entities, columns=[file_path])
+            if len(file_ens) > 0: # This whole section might need a different approach
+                file_df = pd.DataFrame(index=tgt_entities, columns=[file_path])
                 file_df.name = file_path
                 for el in file_ens.keys():
                     sen = file_ens.get(el)
@@ -41,8 +40,7 @@ def get_ens_files(tgt_dir, en_amt):
                 if output_df.empty:
                     output_df = file_df
                 else:
-                    output_df = output_df.join(file_df)
-                output_files.append(file_path)
+                    output_df = output_df.join(file_df) # This seems to be rather computationally-expensive
     print(output_df.shape)
     return output_df
             
@@ -123,6 +121,7 @@ def make_cluster():
 
 
 def main():
-    make_cluster()
+    test_frame = get_ens_files(core_dir+"/Datasets/news_set_financial_sampled", 1000)
+    print("This works!")
 
 main()
