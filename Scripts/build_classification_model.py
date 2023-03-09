@@ -5,6 +5,7 @@ from gensim.models import Word2Vec
 import DataLoaders
 import numpy as np
 import pandas as pd
+import polars as pl
 import pickle
 from sklearn.metrics import classification_report
 from sklearn.tree import DecisionTreeClassifier
@@ -322,7 +323,7 @@ def main():
     # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_1", "full_results_w_tags")
     # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_2", "full_results_w_tags")
     # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_3", "full_results_w_tags")
-    construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_4", "full_results_w_tags")
-    construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_5", "full_results_w_tags")
+    construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_sampled", "full_results_w_tags")
+    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_5", "full_results_w_tags")
 
 main()

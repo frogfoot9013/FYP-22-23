@@ -5,110 +5,85 @@ from DataLoaders import count_entities
 import pickle
 import numpy as np
 import pandas as pd
+import polars as pl
 import scipy as sp
 core_dir = os.getcwd()
 
-# this mght be a better implementation
-def get_ens_files(tgt_dir, en_amt):
-    tgt_entities = count_entities(tgt_dir, en_amt)
-    output_df = pd.DataFrame(index=tgt_entities)
-    for dirpath, subdirs, files in os.walk(tgt_dir):
-        for f in files:
-            file_path = os.path.join(dirpath, f)
-            fptr = open(file_path)
-            file_json = json.load(fptr)
-            fptr.close()
-            json_ens = file_json['entities']
-            file_ens = {}
-            for key, val in json_ens.items():
-                for el in val:
-                    if el["name"] in tgt_entities and el["sentiment"] != 'none':
-                        file_ens.update({el["name"]: el["sentiment"]})
-            if len(file_ens) > 0: # This whole section might need a different approach
-                file_df = pd.DataFrame(index=tgt_entities, columns=[file_path])
-                file_df.name = file_path
-                for el in file_ens.keys():
-                    sen = file_ens.get(el)
-                    if sen == 'positive':
-                        file_df.at[el,file_path] = 5
-                    elif sen == 'negative':
-                        file_df.at[el,file_path] = 4
-                    elif sen == 'neutral':
-                        file_df.at[el,file_path] = 1
-                    else:
-                        file_df.at[el,file_path] = -1
-                if output_df.empty:
-                    output_df = file_df
-                else:
-                    output_df = output_df.join(file_df) # This seems to be rather computationally-expensive
-    print(output_df.shape)
-    return output_df
+entities_to_ignore = ["reuters", "trump"] # entities that occur far more than any other entities in the set, excluding them for the sake of efficiency
             
-# NOTE: these two methods are a first pass
-def get_uuids(tgt_dir):
-    output = []
-    duplicates = 0
+def count_ens_files(tgt_dir, cutoff_point):
+    ens = {}
+    output_files = []
     for dirpath, subdirs, files in os.walk(tgt_dir):
         for f in files:
-            file_path = os.path.join(dirpath, f)
-            fptr = open(file_path)
+            f_name = os.path.join(dirpath, f)
+            fptr = open(f_name)
             file_json = json.load(fptr)
             fptr.close()
-            uuid = file_json['uuid']
-            if uuid in output:
-                duplicates += 1
+            file_entities = file_json["entities"]
+            if len(file_entities) < 1:
+                print("This line of code is being reached")
+                continue
             else:
-                output.append(file_json['uuid'])
-    print("Number of duplicates: ", duplicates)
-    return output
+                for key, value in file_entities.items():
+                    for el in value:
+                        if el["name"] not in entities_to_ignore and el["name"] not in ens.keys() and el["sentiment"] != "none": # disregard 'none' sentiment
+                            new_item = {el["name"]: [f_name]}
+                            ens.update(new_item)
+                        elif el["name"] not in entities_to_ignore and el["name"] in ens.keys() and el["sentiment"] != "none":
+                            ens[el["name"]].append(f_name)
+    
+    output_ens = []
+    ens = sorted(ens.items(), key=lambda x: len(x[1]), reverse=True)
+    i = 1
+    for el in ens:
+        output_ens.append(el[0])
+        for fl in el[1]:
+            if fl not in output_files:
+                output_files.append(fl)
+        i += 1
+        if i > cutoff_point:
+            break
+    return output_ens, output_files
 
+def write_ens_files_lists(entities, files, name, amt):
+    pickle.dump(entities, open(core_dir+"/Models/list_"+ name + "_entities_"+str(amt)+".pkl", "wb"))
+    pickle.dump(files, open(core_dir+"/Models/list_" + name + "_files_"+str(amt)+".pkl", "wb"))
+    print("Lists written successfully!")
 
-def build_array(tgt_dir, els_amt):
-    all_entities = count_entities(tgt_dir, els_amt)
-    uuids = get_uuids(tgt_dir, all_entities)
-    cluster_array = pd.DataFrame(index=all_entities, columns=uuids)
-    for dirpath, subdirs, files in os.walk(tgt_dir):
-        for f in files:
-            file_path = os.path.join(dirpath, f)
-            fptr = open(file_path)
-            file_json = json.load(fptr)
-            fptr.close()
-            json_ens = file_json["entities"]
-            file_uuid = file_json["uuid"]
-            file_ens = {}
-            for key, val in json_ens.items():
-                for el in val:
-                    if el["name"] in all_entities and el["sentiment"] != 'none':
-                        file_ens.update({el["name"]: el["sentiment"]})
-            if file_ens:
-                print("We are here!")
-            else:
-                print("Oh no")
-            for el in all_entities: # slow but ensures array has no empty elements
-                if el in file_ens.keys():
-                    sen = file_ens.get(el)
-                    if sen == "positive":
-                        cluster_array.loc[el, file_uuid] = 5
+def read_ens_files_lists(name, amt):
+    output_entities = pickle.load(open(core_dir+"/Models/list_" + name + "_entities_" + str(amt)+".pkl", "rb"))
+    output_files = pickle.load(open(core_dir+"/Models/list_" + name + "_files_" + str(amt) + ".pkl", "rb"))
+    if output_entities != None and output_files != None:
+        print("Loading successful!")
+    return output_entities, output_files
+
+def build_array(entities, files):
+    output_df = pd.DataFrame(index=entities, columns=files)
+    for f in files:
+        fptr = open(f, "r")
+        file_json = json.load(fptr)
+        fptr.close()
+        file_entities = file_json["entities"]
+        for key, val in file_entities.items(): # consider changing to iterate over everything instead of what's in the file
+            for el in val:
+                if el["name"] in entities and el["sentiment"] != 'none':
+                    sen = el["sentiment"]
+                    if sen == 'positive':
+                        output_df.at[el["name"], f] = 5
                     elif sen == "negative":
-                        cluster_array.loc[el, file_uuid] = 4
+                        output_df.at[el["name"], f] = 4
                     elif sen == "neutral":
-                        cluster_array.loc[el, file_uuid] = 1
+                        output_df.at[el["name"], f] = 1
                     else:
-                        cluster_array.loc[el, file_uuid] = 0
-                else:
-                    cluster_array.loc[el, file_uuid] = 0
-    return cluster_array
+                        output_df.at[el["name"], f] = -1
+    output_df.fillna(0, inplace=True)
+    return output_df
 
-# Array composition
-# one dimension corresponding to document, other to entity
-# value is 1 or 0 depending on whether or not an entity is in a given document
-
-def make_cluster():
-    the_frame = get_ens_files(core_dir+"/Datasets/news_set_financial_truncated", 120)
-    # the_frame = build_array(core_dir+"/Datasets/news_set_financial_truncated", 100)
-    keys = the_frame.index
+def make_cluster(input_df):
+    keys = input_df.index
     k_val = 4
-    km = KMeans(n_clusters=k_val, n_init=1, max_iter=100, random_state=1).fit(X=the_frame)
+    km = KMeans(n_clusters=k_val, n_init=1, max_iter=200).fit(X=input_df)
     labels = km.labels_
     clusters = {}
     for i, label in enumerate(labels):
@@ -116,12 +91,16 @@ def make_cluster():
             clusters[label] = [keys[i]]
         else:
             clusters[label].append([keys[i]])
-    print(clusters)
+    for el in clusters:
+        print("Elements in Cluster ", el, ":")
+        print(clusters[el])
     print("This seems to be working.")
 
-
 def main():
-    test_frame = get_ens_files(core_dir+"/Datasets/news_set_financial_sampled", 1000)
-    print("This works!")
+    da_entities, da_files = read_ens_files_lists("full_dataset", 1000)
+    da_array = build_array(da_entities, da_files)
+    make_cluster(da_array)
+    # da_entities, da_files = count_ens_files(core_dir+"/Datasets/news_set_financial_preprocessed", 1000)
+    # write_ens_files_lists(da_entities, da_files, "full_dataset", 1000)
 
 main()
