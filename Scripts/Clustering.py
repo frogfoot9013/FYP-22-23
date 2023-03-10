@@ -1,6 +1,6 @@
 import json
 import os
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, AgglomerativeClustering, BisectingKMeans
 from DataLoaders import count_entities
 import pickle
 import numpy as np
@@ -65,26 +65,28 @@ def build_array(entities, files):
         file_json = json.load(fptr)
         fptr.close()
         file_entities = file_json["entities"]
-        for key, val in file_entities.items(): # consider changing to iterate over everything instead of what's in the file
+        for key, val in file_entities.items():
             for el in val:
                 if el["name"] in entities and el["sentiment"] != 'none':
                     sen = el["sentiment"]
                     if sen == 'positive':
                         output_df.at[el["name"], f] = 5
-                    elif sen == "negative":
+                    elif sen == 'negative':
                         output_df.at[el["name"], f] = 4
-                    elif sen == "neutral":
+                    elif sen == 'neutral':
                         output_df.at[el["name"], f] = 1
                     else:
-                        output_df.at[el["name"], f] = -1
-    output_df.fillna(0, inplace=True)
+                        output_df.at[el["name"], f] = 0
+    output_df.fillna(0, inplace=True) # Consider alternative means of making sparse
     return output_df
 
 def make_cluster(input_df):
     keys = input_df.index
-    k_val = 4
-    km = KMeans(n_clusters=k_val, n_init=1, max_iter=200).fit(X=input_df)
-    labels = km.labels_
+    k_val = 100
+    model = BisectingKMeans(n_clusters=k_val, max_iter=300, n_init=10, bisecting_strategy='largest_cluster').fit(input_df)
+    # model = AgglomerativeClustering(n_clusters=10, metric='minkowski').fit(input_df)
+    # model = KMeans(n_clusters=k_val, n_init=100, max_iter=200).fit(X=input_df)
+    labels = model.labels_
     clusters = {}
     for i, label in enumerate(labels):
         if label not in clusters:
