@@ -151,3 +151,4 @@ Datasets/news_set_financial_truncated/
 /Scores/*
 !/Scores/final_classifier_results_sampled.txt
 !/Scores/elbow_graph*
+!/Scores/Cluster*

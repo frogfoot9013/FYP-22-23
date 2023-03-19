@@ -5,8 +5,6 @@ from DataLoaders import count_entities
 import pickle
 import numpy as np
 import pandas as pd
-import polars as pl
-import scipy as sp
 core_dir = os.getcwd()
 
 entities_to_ignore = ["reuters", "trump"] # entities that occur far more than any other entities in the set, excluding them for the sake of efficiency
@@ -85,17 +83,13 @@ def make_elbow_graph(input_df, model_type):
     file_name = core_dir+"/Scores/elbow_graph_"
     if model_type == "kmeans":
         file_name += "kmeans.csv"
-    elif model_type == "bisecting_kmeans":
-        file_name += "bisecting_kmeans.csv"
     else:
-        file_name += "agglomerative_clustering.csv"
+        file_name += "bisecting_kmeans.csv"
     for i in range(100, 650, 50):
         if model_type == "kmeans":
             model = KMeans(n_clusters=i, max_iter=30, n_init=10).fit(input_df)
-        elif model_type == "bisecting_kmeans":
+        else: # bisecting
             model = BisectingKMeans(n_clusters=i, n_init=10, max_iter=30, bisecting_strategy='largest_cluster').fit(input_df)
-        else:
-            model = AgglomerativeClustering(n_clusters=i, max_iter=30, n_init=10, metric='minkowski').fit(input_df)
         print("Iteration complete!\nInertia: ", model.inertia_)
         inertias[i] = model.inertia_
     print("Writing to file.")
@@ -106,13 +100,17 @@ def make_elbow_graph(input_df, model_type):
     fptr.close()
     print("Successfully written to file!")
 
-def make_cluster(input_df, k_val):
+def make_km_cluster(input_df, k_val, is_bisecting):
     keys = input_df.index
-    model = BisectingKMeans(n_clusters=k_val, max_iter=300, n_init=10, bisecting_strategy='largest_cluster').fit(input_df)
-    # model = AgglomerativeClustering(n_clusters=10, metric='minkowski').fit(input_df)
-    # model = KMeans(n_clusters=k_val, n_init=100, max_iter=200).fit(X=input_df)
+    output_file = core_dir + "/Scores/Clusters"
+    model = ''
+    if is_bisecting == True:
+        output_file += "_bisecting_kmeans_" + str(k_val) + ".txt"
+        model = BisectingKMeans(n_clusters=k_val, max_iter=300, n_init=10, bisecting_strategy='largest_cluster').fit(input_df)
+    else:
+        output_file += "_kmeans_" + str(k_val) + ".txt"
+        model = KMeans(n_clusters=k_val, n_init=10, max_iter=300).fit(X=input_df)
     labels = model.labels_
-    centres = model.cluster_centers_
     clusters = {}
     inertias = np.zeros(k_val)
     tf = model.transform(input_df)
@@ -120,7 +118,7 @@ def make_cluster(input_df, k_val):
         if label not in clusters:
             clusters[label] = [keys[i]] # For creating list of elements in each cluster
         else:
-            clusters[label].append(keys[i]) #
+            clusters[label].append(keys[i])
         inertias[label] += tf[i][label]**2 # for computing inertia of each cluster
     for i, el in enumerate(clusters): # display clusters
         print("Elements in Cluster ", i, ":")
@@ -129,19 +127,44 @@ def make_cluster(input_df, k_val):
         print(inertias[i])
     print("\nDa Whole Inertia: ", model.inertia_)
     print(sum(inertias))
+    fptr = open(output_file, 'w')
+    for i, el in enumerate(clusters):
+        fptr.write("Elements of Cluster " + str(i) + ":\n")
+        fptr.write(str(clusters[i]) + "\n")
+        fptr.write("Inertia of Cluster " + str(i) + ":\n")
+        fptr.write(str(inertias[i]) + "\n")
+    fptr.close()
     print("This seems to be working.")
+
+def make_agglo_cluster(input_df):
+    keys = input_df.index
+    model = AgglomerativeClustering(n_clusters=500).fit(input_df)
+    labels = model.labels_
+    clusters = {}
+    for i, label in enumerate(labels):
+        if label not in clusters:
+            clusters[label] = [keys[i]]
+        else:
+            clusters[label].append(keys[i])
+    for i, el in enumerate(clusters):
+        print("Elements in Cluster", i, ":")
+        print(clusters[i])
+    print("This is concluded.")
+# Observation: use of no limit to clusters results in everything being separated
 
 def main():
     da_entities, da_files = read_ens_files_lists("full_dataset", 1000)
     da_array = build_array(da_entities, da_files)
     print("Beginning clustering!")
+    make_km_cluster(da_array, 600, False)
+    # make_km_cluster(da_array, 600, True)
     # make_elbow_graph(da_array, "kmeans")
     # print("KMeans complete!")
-    make_elbow_graph(da_array, "bisecting_kmeans")
-    print("Bisecting KMeans complete!")
+    # make_elbow_graph(da_array, "bisecting_kmeans")
+    # print("Bisecting KMeans complete!")
     # make_elbow_graph(da_array, "agglo")
     # print("Agglomerating Clustering complete!")
-    # make_cluster(da_array)
+    # make_agglo_cluster(da_array)
     # da_entities, da_files = count_ens_files(core_dir+"/Datasets/news_set_financial_preprocessed", 1000)
     # write_ens_files_lists(da_entities, da_files, "full_dataset", 1000)
 
