@@ -87,6 +87,7 @@ class DataLoaderGeneric():
 
 # used to determine x most frequent entities in dataset, and create list of just these entities
 def count_entities(tgt_dir, cutoff_point):
+    entities_to_ignore = ["reuters", "trump"]
     ens = {}
     for dirpath, subdirs, files in os.walk(tgt_dir):
         for f in files:
@@ -101,10 +102,10 @@ def count_entities(tgt_dir, cutoff_point):
             else:
                 for key, value in file_entities.items():
                     for el in value:
-                        if el["name"] not in ens.keys() and el["sentiment"] != "none": # disregard 'none' sentiment
+                        if el["name"] not in ens.keys() and el["name"] not in entities_to_ignore and el["sentiment"] != "none": # disregard 'none' sentiment
                             new_item = {el["name"]: 1}
                             ens.update(new_item)
-                        elif el["name"] in ens.keys() and el["sentiment"] != "none":
+                        elif el["name"] in ens.keys() and el["name"] not in entities_to_ignore and el["sentiment"] != "none":
                             new_val = ens.get(el["name"]) + 1
                             ens.update({el["name"]: new_val})
     

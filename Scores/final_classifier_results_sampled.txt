@@ -1,0 +1,45 @@
+SVC
+With Tags:
+              precision    recall  f1-score   support
+
+    positive       1.00      0.11      0.20         9
+     neutral       0.65      0.42      0.51        71
+    negative       0.95      0.98      0.97       916
+
+    accuracy                           0.93       996
+   macro avg       0.87      0.51      0.56       996
+weighted avg       0.93      0.93      0.93       996
+
+Without Tags:
+              precision    recall  f1-score   support
+
+    positive       1.00      0.11      0.20         9
+     neutral       0.66      0.41      0.50        71
+    negative       0.95      0.98      0.97       916
+
+    accuracy                           0.93       996
+   macro avg       0.87      0.50      0.56       996
+weighted avg       0.93      0.93      0.93       996
+Decision Tree
+With Tags:
+              precision    recall  f1-score   support
+
+    positive       0.10      0.11      0.11         9
+     neutral       0.46      0.39      0.42        71
+    negative       0.94      0.95      0.95       916
+
+    accuracy                           0.91       996
+   macro avg       0.50      0.49      0.49       996
+weighted avg       0.90      0.91      0.90       996
+
+Without Tags:
+              precision    recall  f1-score   support
+
+    positive       0.14      0.11      0.12         9
+     neutral       0.41      0.41      0.41        71
+    negative       0.95      0.95      0.95       916
+
+    accuracy                           0.90       996
+   macro avg       0.50      0.49      0.49       996
+weighted avg       0.90      0.90      0.90       996
+

@@ -149,7 +149,5 @@ Datasets/news_set_financial_truncated/
 
 # scores (provisionally)
 /Scores/*
-!/Scores/full_results.txt
-!/Scores/results_no_tags.txt
-!/Scores/full_results_w_tags.txt
-!/Scores/full_results_no_tags.txt
+!/Scores/final_classifier_results_sampled.txt
+!/Scores/elbow_graph*

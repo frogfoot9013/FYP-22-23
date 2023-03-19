@@ -225,11 +225,11 @@ def build_large_sequencers():
     print("Sequencers constructed!")
 
 # This has been used to quickly test data experimentation on a much smaller scale, pending a reconstruction of earlier functions
-def construct_classifier_model(use_tags, tgt_files_dir, output):
-    s_len = 120 # Note: all vectors must be of an identical length for SVC
+def construct_classifier_model(use_tags, sq_l, tgt_files_dir, output):
+    s_len = sq_l # Note: all vectors must be of an identical length for SVC
     t_ln = 50
     e_ln = 1
-    relevant_entities = DataLoaders.count_entities(tgt_files_dir, 500)
+    relevant_entities = DataLoaders.count_entities(tgt_files_dir, 1000)
 
     sq_text = ''
     if use_tags == True:
@@ -268,6 +268,8 @@ def construct_classifier_model(use_tags, tgt_files_dir, output):
             else:
                 fixed_title = fix_text_no_tags(file_json["title"])
                 fixed_text = fix_text_no_tags(file_json["text"])
+            '''if len(fixed_text) > s_len: # for documents too big to be ignored
+                continue'''
             site_vector = sq_sites.text_to_vector(file_json["site"], e_ln)
             title_vector = sq_text.text_to_vector(fixed_title, t_ln)
             text_vector = sq_text.text_to_vector(fixed_text, s_len)
@@ -291,7 +293,7 @@ def construct_classifier_model(use_tags, tgt_files_dir, output):
     print("Columns constructed!")
 
     dep_col_names = 'Sentiment'
-    ind_cols_names = ['Title', 'Text', 'Name']
+    ind_cols_names = ['Site', 'Title', 'Text', 'Name']
     df_ind_cols = df_ind_cols.loc[:, ind_cols_names]
     ind_cols_lst = []
     for col, row in df_ind_cols.iterrows(): # To turn everything into one vector, for size reduction
@@ -303,27 +305,33 @@ def construct_classifier_model(use_tags, tgt_files_dir, output):
     df_ind_cols = None # DIY garbage-collection to be sure to be sure
     print("Data is ready to pass to model!")
     df_dep_col = list(df_dep_col["Sentiment"])
-    df_ind_cols_train, df_ind_cols_test, df_dep_col_train, df_dep_col_test = train_test_split(ind_cols_lst, df_dep_col, random_state=1024, test_size=0.33)
-    svc_model = SVC(cache_size=4096, kernel='linear', decision_function_shape='ovo')
-    svc_model.fit(df_ind_cols_train, df_dep_col_train)
-    print("SVC fitted!")
-    svc_predictions = svc_model.predict(df_ind_cols_test)
+    df_ind_cols_train, df_ind_cols_test, df_dep_col_train, df_dep_col_test = train_test_split(ind_cols_lst, df_dep_col, random_state=1024, test_size=0.1)
+    '''the_tree = GridSearchCV(DecisionTreeClassifier(), cv=2, param_grid={'criterion': ['gini', 'entropy', 'log_loss'], 'max_features': [None, 'sqrt', 'log2'], 'class_weight': [None, 'balanced']})
+    the_tree.fit(ind_cols_lst, df_dep_col)
+    print("Grid Search done!")
+    print("Best score: ", the_tree.best_score_)
+    print("Best params: ", the_tree.best_params_)'''
+
+    the_model = DecisionTreeClassifier(criterion='log_loss', max_features='log2')
+    # the_model = SVC(cache_size=4096, kernel='linear', decision_function_shape='ovo')
+    the_model.fit(df_ind_cols_train, df_dep_col_train)
+    print("Model fitted!")
+    the_predictions = the_model.predict(df_ind_cols_test)
     print("Predictions made!")
-    svc_report = classification_report(df_dep_col_test, svc_predictions, labels=['positive','neutral', 'negative'])
+    the_report = classification_report(df_dep_col_test, the_predictions, labels=['positive','neutral', 'negative'])
     print("Report on predictions:")
-    print(svc_report)
-    fptr = open(core_dir+"/Scores/" + output + ".txt", "a")
-    fptr.write(str(svc_report) + '\n')
+    print(the_report)
+    fptr = open(core_dir + "/Scores/" + output + ".txt", "a")
+    if use_tags == True:
+        fptr.write("With Tags:\n")
+    else:
+        fptr.write("Without Tags:\n")
+    fptr.write(str(the_report) + '\n')
     fptr.close()
 
 def main():
-    # build_dataframes(tgt_dataset_dir=core_dir+"/Datasets/news_set_financial_truncated/", df_identifier="truncated", use_tags=True, sq_ln=120, most_ens=500)
-    # ind_cols_df, dep_cols_df = load_dataframes("truncated", True, 500)
-    # build_model(ind_cols_df, dep_cols_df)
-    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_1", "full_results_w_tags")
-    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_2", "full_results_w_tags")
-    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_3", "full_results_w_tags")
-    construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_sampled", "full_results_w_tags")
-    # construct_classifier_model(True, core_dir + "/Datasets/news_set_financial_preprocessed/directory_5", "full_results_w_tags")
+    construct_classifier_model(True, 350, core_dir + "/Datasets/news_set_financial_sampled", "final_classifier_results_sampled")
+    construct_classifier_model(False, 350, core_dir + "/Datasets/news_set_financial_sampled", "final_classifier_results_sampled")
+
 
 main()
