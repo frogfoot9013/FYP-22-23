@@ -146,6 +146,8 @@ Datasets/news_set_financial_truncated/
 
 # Models for dependent and indpendent cols,
 /Models/df_*.pkl
+/Models/SVC*
+/Scripts/Model/
 
 # scores (provisionally)
 /Scores/*

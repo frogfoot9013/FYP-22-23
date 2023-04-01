@@ -1,6 +1,9 @@
 import json
 import os
 from sklearn.cluster import KMeans, AgglomerativeClustering, BisectingKMeans
+from sklearn.metrics import silhouette_samples, silhouette_score
+from scipy.cluster import hierarchy
+import matplotlib.pyplot as plt
 from DataLoaders import count_entities
 import pickle
 import numpy as np
@@ -106,7 +109,7 @@ def make_km_cluster(input_df, k_val, is_bisecting):
     model = ''
     if is_bisecting == True:
         output_file += "_bisecting_kmeans_" + str(k_val) + ".txt"
-        model = BisectingKMeans(n_clusters=k_val, max_iter=300, n_init=10, bisecting_strategy='largest_cluster').fit(input_df)
+        model = BisectingKMeans(n_clusters=k_val, max_iter=300, n_init=1, bisecting_strategy='largest_cluster').fit(input_df)
     else:
         output_file += "_kmeans_" + str(k_val) + ".txt"
         model = KMeans(n_clusters=k_val, n_init=10, max_iter=300).fit(X=input_df)
@@ -136,9 +139,10 @@ def make_km_cluster(input_df, k_val, is_bisecting):
     fptr.close()
     print("This seems to be working.")
 
-def make_agglo_cluster(input_df):
+def make_agglo_cluster(input_df, threshold, link):
     keys = input_df.index
-    model = AgglomerativeClustering(n_clusters=500).fit(input_df)
+    model = AgglomerativeClustering(n_clusters=None, compute_full_tree=True, distance_threshold=threshold, linkage=link).fit(input_df)
+    print("Clustering complete!")
     labels = model.labels_
     clusters = {}
     for i, label in enumerate(labels):
@@ -147,24 +151,92 @@ def make_agglo_cluster(input_df):
         else:
             clusters[label].append(keys[i])
     for i, el in enumerate(clusters):
-        print("Elements in Cluster", i, ":")
+        print("Elements in Cluster ", i, ":")
         print(clusters[i])
-    print("This is concluded.")
-# Observation: use of no limit to clusters results in everything being separated
+    one_els, many_els = count_cluster_distribution(clusters)
+    if one_els + many_els == model.n_clusters_:
+        print("This sanity check has passed.")
+    else:
+        print("This is a problem.")
+    print("Number of clusters with one element: ", one_els)
+    print("Number of clusters with more than one element: ", many_els)
+    fptr = open(core_dir+"/Scores/Clusters/counts.csv", "a")
+    fptr.write(str(one_els) + "," + str(many_els) + "\n")
+    fptr.close()
+    fptr = open(core_dir + "/Scores/Clusters_Agglomerative.txt", "w")
+    for i, el in enumerate(clusters):
+        fptr.write("Elements of Cluster " + str(i) + ":\n")
+        fptr.write(str(clusters[i]) + "\n")
+    fptr.close()
+
+
+def agglo_cluster_scoring(input_df, threshold, link):
+    model = AgglomerativeClustering(n_clusters=None, compute_full_tree=True, distance_threshold=threshold, linkage=link).fit(input_df)
+    labels = model.labels_
+    clusters = model.n_clusters_
+    sil_coef = 0
+    if clusters > 1 and clusters < len(input_df.index):
+        sil_coef = silhouette_score(input_df, labels)
+    else:
+        print("Silhouette coefficient inapplicable!")
+    print("Clustering complete!")
+    return sil_coef, clusters
+
+def count_cluster_distribution(input_clusters):
+    one_el_clusters = 0
+    many_el_clusters = 0
+    for i, el in enumerate(input_clusters):
+        if len(input_clusters[i]) == 1:
+            one_el_clusters += 1
+        else: 
+            many_el_clusters += 1
+    return one_el_clusters, many_el_clusters
+
+def silhouette_analysis():
+    da_entities, da_files = read_ens_files_lists("full_dataset", 1000)
+    da_array = build_array(da_entities, da_files)
+    print("Beginning clustering!")
+    linkages = ['ward', 'average', 'single', 'complete']
+    thresholds = range(0, 330, 30)
+    sils = [[0 for x in thresholds] for y in linkages]
+    cluster_counts = [[0 for x in thresholds] for y in linkages]
+    for i, el in enumerate(linkages):
+        for j, val in enumerate(thresholds):
+            sils[i][j], cluster_counts[i][j] = agglo_cluster_scoring(da_array, val, el)
+    fptr = open(core_dir+"/Scores/agg_silhouette.csv", "w")
+    fptr.write("Linkage,Distance Threshold,\nLinkage,")
+    for i, el in enumerate(thresholds):
+        fptr.write(str(el) + ",")
+    fptr.write('\n')
+    for i, el in enumerate(linkages):
+        fptr.write(el + ",")
+        for j, val in enumerate(thresholds):
+            fptr.write(str(sils[i][j]) + ",")
+        fptr.write("\n")
+    fptr.close()
+    fptr = open(core_dir + "/Scores/agg_cluster_counts.csv", "w")
+    fptr.write("Linkage,Distance Threshold,\nLinkage,")
+    for i, el in enumerate(thresholds):
+        fptr.write(str(el) + ",")
+    fptr.write('\n')
+    for i, el in enumerate(linkages):
+        fptr.write(el + ",")
+        for j, val in enumerate(thresholds):
+            fptr.write(str(cluster_counts[i][j]) + ",")
+        fptr.write('\n')
+    fptr.close()
 
 def main():
     da_entities, da_files = read_ens_files_lists("full_dataset", 1000)
     da_array = build_array(da_entities, da_files)
     print("Beginning clustering!")
-    make_km_cluster(da_array, 600, False)
-    # make_km_cluster(da_array, 600, True)
+    # make_agglo_cluster(da_array, 60, 'ward')
+    # make_km_cluster(da_array, 600, False)
+    make_km_cluster(da_array, 500, True)
     # make_elbow_graph(da_array, "kmeans")
     # print("KMeans complete!")
     # make_elbow_graph(da_array, "bisecting_kmeans")
     # print("Bisecting KMeans complete!")
-    # make_elbow_graph(da_array, "agglo")
-    # print("Agglomerating Clustering complete!")
-    # make_agglo_cluster(da_array)
     # da_entities, da_files = count_ens_files(core_dir+"/Datasets/news_set_financial_preprocessed", 1000)
     # write_ens_files_lists(da_entities, da_files, "full_dataset", 1000)
 
