@@ -1,0 +1,450 @@
+Elements of Cluster 0:
+['levi & korsinsky', 'pomerantz llp', 'merck', 'chris morris', 'un', 'modi', 'duterte', 'fitch', 'nassar', 'new york stock exchange', 'assad', 'fifa', 'bannon', 'rigrodsky & long', 'lula', 'bmw', 'afrin', 'bp', 'bank of america', 'cisco', 'diary-emerging markets economic events', 'david z. morris', 'nasa', 'bob pisani', 'tesco', 'donald', 'barcelona', 'ryan', 'hezbollah', 'bbc', 'berlusconi', 'wilbur ross', 'jerome powell', 'trudeau', 'saudi aramco', 'hamilton', 'ramaphosa', 'gazprom', 'glencore', 'allergan', 'bill gates', 'marketwatch', 'steinhoff', 'rex tillerson', 'tesla inc', 'irs', 'douma', 'financial times', 'time', 'thomson reuters', 'gsk', 'nse', 'natasha bach', 'j&j', 'manafort', 'apple inc', 'caterpillar', 'halep', 'reuters health', 'lavrov', 'kroger', 'chi', 'motor', 'washington post', 'bill cosby', 'lowe', 'us treasury', 'nasda', 'celgene', 'abc', 'cnbc interview', 'robert mueller', 'mcgeever', 'sony', 'doj', 'astrazeneca', 'metlife', 'u.s. food and drug administration', 'comey', 'russell', 'jordan', 'tayyip erdogan', 'kirsten korosec', 'don reisinger', 'amazon.com inc', 'steven mnuchin', 'fcc', 'steve liesman', 'nadal', 'sou', 'p&g', 'amd', 'rouhani', 'united airlines', 'equifax', 'nokia', 'embraer', 'federer', 'vodafone', 'twitter', 'julia boorstin', 'wta international', 'barca', 'phil lebeau', 'tase', 'general motors', 'sears', 'cftc', 'cnn', 'kayla tausche', 'nasd', 'carney', 'smith', 'delta', 'sap', 'ria', 'paypal', 'vincent wong', 'u.n. security council', 'sisi', 'musk', 'verizon', 'icc', 'chicago mercantile exchange', 'cvs', 'william', 'gm korea', 'john', 'shinzo abe', 'kpmg', 'u.s. house', 'arsenal', 'wenger', 'rea', 'u.s. treasury department', 'cashin', 'feb', 'woods', 'conte', 'li', 'alexa', 'southwest airlines', 'orban', 'ericsson', 'pope francis', 'carrefour', 'cnbc markets now', 'siemens', 'aig', 'steve bannon', 'hammond', 'wsj city', 'robbins arroyo llp', 'kushner', 'peugeot', 'wozniacki', 'boko haram', 'oxfam', 'investment information, inc.', 'wall street', 'macy', 'uber', 'kahn swick & foti', 'adam jeffery', 'carillion', 'samsung electronics', 'novo nordisk', 'iag', 'moon', 'bronstein', 'james comey', 'bombardier', 'cbi', 'teva', 'pruitt', 'wsj dow jones', 'toshiba', 'ntsb', 'amazon.com', 'elizabeth', 'iea', 'weisslaw llp', 'hyundai', 'mcilroy', 'audi', 'state department', 'jeff sessions', 'cdc', 'hilton', 'mike pence', 'rosneft', 'kkr', 'djokovic', 'north', 'everton', 'martin sorrell', 'philip morris', 'andrew harrer', 'mike santoli', 'ftc', 'foreign ministry', 'house of representatives', 'boeing co', 'oprah winfrey', 'espn', 'airasia', 'cio', 'micron', 'exxonmobil', 'takata', 'bunge', 'gewirtz & grossman', 'cigna', 'trump administration', 'fox news', 'axa', 'usda', 'jonathan vanian', 'labour', 'eia', 'logistics news from - wsj', 'cme', 'lufthansa', 'brower piven', 'jay leno', 'juncker', 'noble group', 'rohingya', 'usgs', 'johnson & johnson', 'holdings', 'jacob zuma', 'hna group', 'eni', 'psg', 'nhl', 'andy', 'zte', 'dow', 'bitcoin', 'andrew cuomo', 'american airlines', 'sarah gray', 'justin trudeau', 'moon jae-in', 'rolls-royce', 'mylan', 'puigdemont', 'ncaa', 'iss', 'waymo', 'santos', 'cosby', 'mclaren', 'j.p. morgan', 'kaplan', 'bnp paribas', 'tottenham', 'mins ago cnbc', 'nikkei', 'vmware', 'commonwealth', 'adm', 'daca', 'fca', 'serena', 'manchester united', 'murdoch', 'lvmh', 'ross', 'ups', 'medicare', 'thyssenkrupp', 'lee', 'billi', 'qualcomm inc', 'bill', 'rbc', 'scott pruitt', 'amgen', 'red sox', 'sharapova', 'astros', 'sorrell', 'ylan mui', 'republican', 'foxconn', 'ford motor co', 'faa', 'perc', 'world bank', 'air france', 'unitedhealth', 'adidas', 'guardiola', 'yankees', 'weinstein company', 'dick', 'h&m', 'corbyn', 'tass', 'gilead', 'u.s. fda', 'dominic chu', 'temer', 'mourinho', 'richard branson', 'commerce', 'ferrari', 'bhp', 'valentina zarya', 'coca-cola', 'barack obama', 'fortis', 'yonhap', 'u.s. navy', 'jamie dimon', 'biogen', 'sergei skripal', 'barbara bush', 'wall st', 'shiffrin', 'cas', 'honda', 'arcelormittal', 'nordstrom', 'company', 'sensex', 'sberbank', 'klopp', 'lagarde', 'shenzhen stock exchange', 'walmart inc', 'hasbro', 'bank of canada', 'weinstein co', 'hbo', 'energy', "kevin o'leary", 'exxon mobil', 'paul', 'santelli', 'kate', 'boris johnson', 'honeywell', 'messi', 'rangers', 'sergei lavrov', 'buhari', 'mariners', 'yulia skripal', 'tokyo stock exchange', 'barnier', 'super league', 'juan monteverde', 'pepsico', 'lme', 'ellen mcgirt', 'delta air lines', 'kobe steel', 'stormy daniels', 'facebook inc.', 'giuliani', 'james', 'deason', 'vtb', 'benjamin netanyahu', 'harvard', 'mattel', 'david a. grogan', 'alwaleed', 'warner', 'dell', 'purcell julie & lefkowitz llp', 'mohammed bin salman', 'kiev', 'sha', 'serena williams', 'moody’s', 'kohl', 'navalny', 'pdvsa', 'fortis healthcare ltd', 'allianz', 'central bank', 'janet yellen', 'xinhua', 'richard beales', 'volkswagen ag', 'jo', 'reds', 'cto', 'monaco', 'nairobi', 'who', 'braves', 'm&s', 'hyundai motor', 'davis', 'nas', 'jones', 'cyril ramaphosa', 'grossman', 'sanchez', 'deutsche telekom', 'southampton', 'international monetary fund', 'pemex', 'glaxosmithkline', 'opel', 'psa', 'nintendo', 'lloyd blankfein', 'kcna', 'xi', 'walgreens', 'bosch', 'nlrb', 'ikea', 'deripaska', 'puma', 'gewirtz', 'fina', 'sourc', 'buenos aires', 'david faber', 'hamas', 'niki', 'world', 'volvo', 'atletico', 'stephen hawking', 'giants', 'mccabe', 'lloyds', 'airbnb', 'leslie picker', 'euronext', 'symantec', 'martin shkreli', 'continental', 'porsche', 'emea', 'rowley law pllc', 'fortune', 'hillary clinton', 'padres', 'lisa rapaport', 'abbas', 'amtrak', 'melania trump', 'george soros', 'kristen bellstrom', 'mercedes', 'enel', 'et sun', 'duke', 'jonathan ernst', 'gibson', 'donald tr', 'jaguar land rover', 'united states', 'reuters) - telecom italia', 'aetna', 'lockheed martin', 'aramco', 'pboc', 'roseanne barr', 'at&t inc', 'odebrecht', 'billy graham', 'busi', 'llp', 'fortis healthcare', 'wedn', 'alphabet', 'john kelly', 'scott mlyn', 'toyota motor corp', 'abb', 'pimco', 'time inc', 'conocophillips', 'david paul morris', 'soros', 'statoil', 'league', 'peter thiel', 'schlumberger', 'prince harry', 'zverev', 'philadelphia eagles', 'finan', 'cavs', 'pandora', 'falcon', 'nsa', 'board', 'alitalia', 'bruins', 'cboe', 'lima', 'premier league', 'athletics', 'hallie detrick', 'clinton', 'basf', 'russ', 'blankfein', 'environmental protection agency', 'schumer', 'bolton', 'francis', 'michael nagle', 'nomura', 'rio tinto', 'editors choice pictures pictures', 'intesa sanpaolo', 'monteverde & associates', 'ebay', 'monteverde', 'vonn', 'bofa', 'jared kushner', 'zte corp', 'u.s. state department', 'donald t', 'xiaomi', 'christine lagarde', 'securities and exchange commission', 'msci', 'melrose', 'salah', 'josh lipton', 'bullard', 'fang', 'b. riley', 'john williams', 'ricciardo', 'tiffany', 'redstone', 'dodgers', 'lebron james', 'yellen', 'fintech', 'david', 'anderson', 'flipkart', 'factbox', 'baker hughes', 'mcmaster', 'celtics', 'newell', 'lockheed', 'huddersfield', 'larry nassar', 'jan', 'xerox corp', 'roma', 'rupert murdoch', 'chung', 'tech', 'donald trum', 'amazon.com inc.', 'rosenstein', 'ocado', 'ahold delhaize', 'dudley', 'humana', 'mets', 'white sox', 'opcw', 'kraft heinz', 'nda', 'edf', 'phillips', 'rockets', 'dimitrov', 'holdings ltd', 'sheryl sandberg', 'pirates', 'ja', 'u.s. justice department', 'instagram', 'marc', 'andy home', 'rome', 'usa gymnastics', 'jeff john roberts', 'vettel', 'csx', 'oprah', 'va', 'starbucks corp', 'sy mukherjee', 'major league baseball', 'orioles', 'tigers', 'augusta', 'cbs corp', 'communist party', 'booker', 'jay-z', 'courtney reagan', 'tom huddleston jr.', 'kahn swick', 'foti', 'spurs', 'mcconnell', 'pence', 'kessler topaz meltzer & check', 'dana', 'meredith', 'bo', 'deutsche bank ag', 'u.', 'russi', 'kabila', 'donal', 'air india', 'michael wolff', 'markle', 'del potro', 'invesco', 'eik', 'ronaldo', 'medicaid', 'apple inc.', 'kvitova', 'mitch mcconnell', 'eiko', 'philips', 'ei', 'shark tank', 'cma', 'crypto', 'phillies', 'burnley', 'tom lee', 'national labor relations board', 'punjab national bank', 'pfizer inc', 'min rea', 'anz', 'art cashin', 'newell brands', 'u.s. federal reserve', 'exxon mobil corp', 'bill de blasio', 'ivanka trump', 'mark', 'prudential', 'robert hackett', 'chuck schumer', 'lilly', 'furth', 'skanska', 'regeneron', 'standard chartered', 'don', 'didi', 'bragar eagel & squire', 'eunice yoon', 'yale', 'tim seymour', 'vatican', 'mugabe', 'mahathir mohamad', 'alphabet inc', 'u.s. securities and exchange commission', 'macquarie', 'gucci', 'kalanick', 'willie briscoe', 'willie br', 'united states securities and exchange commission', 'fidelity', 'healthcare', 'hughes', 'kfc', 'rick santelli', 'u.s. commerce department', 'hollywood', 'boe', 'home depot', 'frida', 'piper jaffray', 'tel aviv', 'stifel', 'united nations security council', 'bayern', 'eletrobras', 'mark carney', 'viktor orban', 'hou', 'babis', 'energy journal', 'john bolton', 'castro', 'standard life aberdeen', 'unicredit', 'mcdermott', 'ray dalio', 'wti', 'novartis ag', 'philip', 'clifton leaf', 'deutsche', 'bri', 'weinstein co.', 'icici bank', 'lyft', 'gupta', 'gmp', 'kane', 'bezos', 'aviva', 'kellogg', 'fa', 'nbc news', 'watson', 'alonso', 'qatar airways', 'kevin lamarque', 'trum', 'infosys', 'polina marinova', 'jackson', 'cardinals', 'rudy giuliani', 'bulls', 'simon', 'labour party', 'mitt romney', 'bill ackman', 'reckitt', 'houston rockets', 'sruthi shankar', 'travis kalanick', 'david davis', 'columbia']
+Elements of Cluster 1:
+['cohn', 'kudlow', 'larry kudlow', 'gary cohn']
+Elements of Cluster 2:
+['buffett', 'berkshire']
+Elements of Cluster 3:
+['opta', 'ipl', 'ipl scoreboard reuters staff']
+Elements of Cluster 4:
+['exxon', 'chevron']
+Elements of Cluster 5:
+['citigroup', 'citi']
+Elements of Cluster 6:
+['state', 'mike pompeo']
+Elements of Cluster 7:
+['harry', 'meghan']
+Elements of Cluster 8:
+['bank of japan', 'kuroda', 'haruhiko kuroda']
+Elements of Cluster 9:
+['cbs', 'viacom']
+Elements of Cluster 10:
+['xerox', 'fujifilm']
+Elements of Cluster 11:
+['cohen', 'daniels']
+Elements of Cluster 12:
+['abu dhabi', 'uae']
+Elements of Cluster 13:
+['draghi']
+Elements of Cluster 14:
+['takeda', 'shire']
+Elements of Cluster 15:
+['daimler', 'geely']
+Elements of Cluster 16:
+['gkn']
+Elements of Cluster 17:
+['ltd']
+Elements of Cluster 18:
+['sainsbury', 'asda']
+Elements of Cluster 19:
+['bayer', 'monsanto']
+Elements of Cluster 20:
+['cia', 'gina haspel']
+Elements of Cluster 21:
+['aaron pressman', 'adam lashinsky']
+Elements of Cluster 22:
+['mattis', 'defense', 'jim mattis']
+Elements of Cluster 23:
+['zuma', 'anc']
+Elements of Cluster 24:
+['icahn', 'carl icahn']
+Elements of Cluster 25:
+['telecom italia', 'vivendi']
+Elements of Cluster 26:
+['najib', 'mahathir', 'kuala lumpur']
+Elements of Cluster 27:
+['taliban']
+Elements of Cluster 28:
+['nfl']
+Elements of Cluster 29:
+['pope']
+Elements of Cluster 30:
+['johnson']
+Elements of Cluster 31:
+['kemp', 'john kemp']
+Elements of Cluster 32:
+['united']
+Elements of Cluster 33:
+['justice department']
+Elements of Cluster 34:
+['hsbc']
+Elements of Cluster 35:
+['reuters st']
+Elements of Cluster 36:
+['toyota']
+Elements of Cluster 37:
+['u.s. supreme court']
+Elements of Cluster 38:
+['oslo']
+Elements of Cluster 39:
+['xi jinping']
+Elements of Cluster 40:
+['ioc']
+Elements of Cluster 41:
+['jpmorgan']
+Elements of Cluster 42:
+['southwest']
+Elements of Cluster 43:
+['t-mobile', 'sprint']
+Elements of Cluster 44:
+['jp morgan']
+Elements of Cluster 45:
+['ifr']
+Elements of Cluster 46:
+['time warner']
+Elements of Cluster 47:
+['nvidia']
+Elements of Cluster 48:
+['fiat chrysler']
+Elements of Cluster 49:
+['nissan', 'renault']
+Elements of Cluster 50:
+['harvey weinstein', 'weinstein']
+Elements of Cluster 51:
+['general electric']
+Elements of Cluster 52:
+['steve wynn', 'wynn resorts', 'wynn']
+Elements of Cluster 53:
+['nbc']
+Elements of Cluster 54:
+['unilever']
+Elements of Cluster 55:
+['nestle']
+Elements of Cluster 56:
+['meghan markle']
+Elements of Cluster 57:
+['epa']
+Elements of Cluster 58:
+['reuters sta']
+Elements of Cluster 59:
+['erdogan']
+Elements of Cluster 60:
+['ibm']
+Elements of Cluster 61:
+['wpp']
+Elements of Cluster 62:
+['ipo']
+Elements of Cluster 63:
+['boj']
+Elements of Cluster 64:
+['moody']
+Elements of Cluster 65:
+['credit suisse']
+Elements of Cluster 66:
+['united nations']
+Elements of Cluster 67:
+['brief-india']
+Elements of Cluster 68:
+['jeff bezos']
+Elements of Cluster 69:
+['blackrock']
+Elements of Cluster 70:
+['nasdaq']
+Elements of Cluster 71:
+['starbucks']
+Elements of Cluster 72:
+['angela merkel']
+Elements of Cluster 73:
+['blackstone']
+Elements of Cluster 74:
+['youtube']
+Elements of Cluster 75:
+['european central bank']
+Elements of Cluster 76:
+['nra']
+Elements of Cluster 77:
+['spotify']
+Elements of Cluster 78:
+['rbs']
+Elements of Cluster 79:
+['cambridge analytica']
+Elements of Cluster 80:
+['eamon javers']
+Elements of Cluster 81:
+['novartis']
+Elements of Cluster 82:
+['pfizer']
+Elements of Cluster 83:
+['gracenote']
+Elements of Cluster 84:
+['liverpool']
+Elements of Cluster 85:
+['european commission']
+Elements of Cluster 86:
+['abe']
+Elements of Cluster 87:
+['berkshire hathaway']
+Elements of Cluster 88:
+['global']
+Elements of Cluster 89:
+['reuters breakingviews']
+Elements of Cluster 90:
+['ryanair']
+Elements of Cluster 91:
+['mnuchin']
+Elements of Cluster 92:
+['chelsea']
+Elements of Cluster 93:
+['maduro']
+Elements of Cluster 94:
+['pnb']
+Elements of Cluster 95:
+['barclays']
+Elements of Cluster 96:
+['nike']
+Elements of Cluster 97:
+['ebitda']
+Elements of Cluster 98:
+['sanofi']
+Elements of Cluster 99:
+['petrobras']
+Elements of Cluster 100:
+['tencent']
+Elements of Cluster 101:
+['vladimir putin']
+Elements of Cluster 102:
+['gaap']
+Elements of Cluster 103:
+['spd']
+Elements of Cluster 104:
+['williams']
+Elements of Cluster 105:
+['tim cook']
+Elements of Cluster 106:
+['bank']
+Elements of Cluster 107:
+['morgan stanley']
+Elements of Cluster 108:
+['huawei']
+Elements of Cluster 109:
+['hna']
+Elements of Cluster 110:
+['jim cramer cramer']
+Elements of Cluster 111:
+['kim']
+Elements of Cluster 112:
+['zuckerberg']
+Elements of Cluster 113:
+['senate']
+Elements of Cluster 114:
+['powell']
+Elements of Cluster 115:
+['bst']
+Elements of Cluster 116:
+['airbus']
+Elements of Cluster 117:
+['wsj']
+Elements of Cluster 118:
+['qualcomm']
+Elements of Cluster 119:
+['bloomberg']
+Elements of Cluster 120:
+['ford']
+Elements of Cluster 121:
+['boeing']
+Elements of Cluster 122:
+['emmanuel macron']
+Elements of Cluster 123:
+['european union']
+Elements of Cluster 124:
+['ge']
+Elements of Cluster 125:
+['news corp']
+Elements of Cluster 126:
+['fox']
+Elements of Cluster 127:
+['nyse']
+Elements of Cluster 128:
+['congress']
+Elements of Cluster 129:
+['tesla']
+Elements of Cluster 130:
+['bank of england']
+Elements of Cluster 131:
+['reuters staff']
+Elements of Cluster 132:
+['elon musk']
+Elements of Cluster 133:
+['opec']
+Elements of Cluster 134:
+['tsx']
+Elements of Cluster 135:
+['fed']
+Elements of Cluster 136:
+['federal reserve']
+Elements of Cluster 137:
+['putin']
+Elements of Cluster 138:
+['shell']
+Elements of Cluster 139:
+['s&p']
+Elements of Cluster 140:
+['reut']
+Elements of Cluster 141:
+['wells fargo']
+Elements of Cluster 142:
+['volkswagen']
+Elements of Cluster 143:
+['eu']
+Elements of Cluster 144:
+['walmart']
+Elements of Cluster 145:
+['macron']
+Elements of Cluster 146:
+['reuters staf']
+Elements of Cluster 147:
+['ecb']
+Elements of Cluster 148:
+['imf']
+Elements of Cluster 149:
+['mueller']
+Elements of Cluster 150:
+['kim jong']
+Elements of Cluster 151:
+['google']
+Elements of Cluster 152:
+['gop']
+Elements of Cluster 153:
+['brexit']
+Elements of Cluster 154:
+['comcast']
+Elements of Cluster 155:
+['house']
+Elements of Cluster 156:
+['intel']
+Elements of Cluster 157:
+['theresa may']
+Elements of Cluster 158:
+['spacex']
+Elements of Cluster 159:
+['cnbc']
+Elements of Cluster 160:
+['treasury']
+Elements of Cluster 161:
+['reu']
+Elements of Cluster 162:
+['kim jong un']
+Elements of Cluster 163:
+['thomson reuters foundation']
+Elements of Cluster 164:
+['llc']
+Elements of Cluster 165:
+['deutsche bank']
+Elements of Cluster 166:
+['new york times']
+Elements of Cluster 167:
+['amazon']
+Elements of Cluster 168:
+['supreme court']
+Elements of Cluster 169:
+['globe newswire']
+Elements of Cluster 170:
+['sao paulo']
+Elements of Cluster 171:
+['cramer']
+Elements of Cluster 172:
+['softbank']
+Elements of Cluster 173:
+['goldman']
+Elements of Cluster 174:
+['reute']
+Elements of Cluster 175:
+['apple']
+Elements of Cluster 176:
+['gm']
+Elements of Cluster 177:
+['fbi']
+Elements of Cluster 178:
+['facebook inc']
+Elements of Cluster 179:
+['fda']
+Elements of Cluster 180:
+['goldman sachs']
+Elements of Cluster 181:
+['inc']
+Elements of Cluster 182:
+['mcdonald']
+Elements of Cluster 183:
+['u.n.']
+Elements of Cluster 184:
+['disney']
+Elements of Cluster 185:
+['netflix']
+Elements of Cluster 186:
+['michael cohen']
+Elements of Cluster 187:
+['mark zuckerberg']
+Elements of Cluster 188:
+['islamic state']
+Elements of Cluster 189:
+['kremlin']
+Elements of Cluster 190:
+['david meyer']
+Elements of Cluster 191:
+['donald trump']
+Elements of Cluster 192:
+['samsung']
+Elements of Cluster 193:
+['merkel']
+Elements of Cluster 194:
+['elliott']
+Elements of Cluster 195:
+['sec']
+Elements of Cluster 196:
+['alibaba']
+Elements of Cluster 197:
+['vw']
+Elements of Cluster 198:
+['davos']
+Elements of Cluster 199:
+['white house']
+Elements of Cluster 200:
+['wto']
+Elements of Cluster 201:
+['eikon']
+Elements of Cluster 202:
+['paul ryan']
+Elements of Cluster 203:
+['microsoft']
+Elements of Cluster 204:
+['pompeo']
+Elements of Cluster 205:
+['u.s. treasury']
+Elements of Cluster 206:
+['nba']
+Elements of Cluster 207:
+['ap']
+Elements of Cluster 208:
+['tillerson']
+Elements of Cluster 209:
+['wall street journal']
+Elements of Cluster 210:
+['roche']
+Elements of Cluster 211:
+['jim cramer']
+Elements of Cluster 212:
+['ubs']
+Elements of Cluster 213:
+['pentagon']
+Elements of Cluster 214:
+['nato']
+Elements of Cluster 215:
+['nafta']
+Elements of Cluster 216:
+['netanyahu']
+Elements of Cluster 217:
+['inc.']
+Elements of Cluster 218:
+['at&t']
+Elements of Cluster 219:
+['warren buffett']
+Elements of Cluster 220:
+['u.s. senate']
+Elements of Cluster 221:
+['broadcom']
+Elements of Cluster 222:
+['obama']
+Elements of Cluster 223:
+['facebook']
+Elements of Cluster 224:
+['reuter']

@@ -133,8 +133,24 @@ Datasets/news_set_financial/
 Datasets/fake_news_csvs/
 
 # Processed Datasets
-Datasets/news_set_financial_preprocessed/
+/Datasets/news_set_financial_preprocessed/
 /Datasets/news_set_financial_preprocessed.tar.xz
 
 # The Sample Dataset
 Datasets/news_set_financial_sampled/
+Datasets/news_set_financial_truncated/
+
+# Overly large Sequencer for the full dataset with tags
+/Models/sequencer_full_dataset_w_tags.pkl
+/Models/sequencer_*.pkl
+
+# Models for dependent and indpendent cols,
+/Models/df_*.pkl
+/Models/SVC*
+/Scripts/Model/
+
+# scores (provisionally)
+/Scores/*
+!/Scores/final_classifier_results_sampled.txt
+!/Scores/elbow_graph*
+!/Scores/Cluster*

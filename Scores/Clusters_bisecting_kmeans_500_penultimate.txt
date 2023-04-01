@@ -1,0 +1,2000 @@
+Elements of Cluster 0:
+['t-mobile', 'sprint']
+Inertia of Cluster 0:
+741.4999999999999
+Elements of Cluster 1:
+['nfl', 'john']
+Inertia of Cluster 1:
+1912.0
+Elements of Cluster 2:
+['nasd']
+Inertia of Cluster 2:
+0.0
+Elements of Cluster 3:
+['unilever']
+Inertia of Cluster 3:
+0.0
+Elements of Cluster 4:
+['toshiba']
+Inertia of Cluster 4:
+0.0
+Elements of Cluster 5:
+['rbs']
+Inertia of Cluster 5:
+0.0
+Elements of Cluster 6:
+['cnbc', 'donald trump', 'ap', 'white house', 'cramer', 'jim cramer']
+Inertia of Cluster 6:
+131545.33333333043
+Elements of Cluster 7:
+['u.s. treasury']
+Inertia of Cluster 7:
+0.0
+Elements of Cluster 8:
+['treasury', 'mnuchin']
+Inertia of Cluster 8:
+4173.499999999999
+Elements of Cluster 9:
+['steinhoff']
+Inertia of Cluster 9:
+0.0
+Elements of Cluster 10:
+['moon jae-in']
+Inertia of Cluster 10:
+0.0
+Elements of Cluster 11:
+['nestle']
+Inertia of Cluster 11:
+0.0
+Elements of Cluster 12:
+['abu dhabi']
+Inertia of Cluster 12:
+0.0
+Elements of Cluster 13:
+['bp']
+Inertia of Cluster 13:
+0.0
+Elements of Cluster 14:
+['fed']
+Inertia of Cluster 14:
+0.0
+Elements of Cluster 15:
+['deutsche bank']
+Inertia of Cluster 15:
+0.0
+Elements of Cluster 16:
+['gm korea']
+Inertia of Cluster 16:
+0.0
+Elements of Cluster 17:
+['u.s. senate']
+Inertia of Cluster 17:
+0.0
+Elements of Cluster 18:
+['allergan']
+Inertia of Cluster 18:
+0.0
+Elements of Cluster 19:
+['modi']
+Inertia of Cluster 19:
+0.0
+Elements of Cluster 20:
+['nasdaq']
+Inertia of Cluster 20:
+0.0
+Elements of Cluster 21:
+['lme']
+Inertia of Cluster 21:
+0.0
+Elements of Cluster 22:
+['lavrov', 'sergei lavrov']
+Inertia of Cluster 22:
+722.0
+Elements of Cluster 23:
+['kpmg']
+Inertia of Cluster 23:
+0.0
+Elements of Cluster 24:
+['carillion']
+Inertia of Cluster 24:
+0.0
+Elements of Cluster 25:
+['anz']
+Inertia of Cluster 25:
+0.0
+Elements of Cluster 26:
+['opec']
+Inertia of Cluster 26:
+0.0
+Elements of Cluster 27:
+['news corp']
+Inertia of Cluster 27:
+0.0
+Elements of Cluster 28:
+['opta', 'ipl', 'ipl scoreboard reuters staff']
+Inertia of Cluster 28:
+1803.3333333333273
+Elements of Cluster 29:
+['warren buffett', 'buffett']
+Inertia of Cluster 29:
+3452.5
+Elements of Cluster 30:
+['rangers']
+Inertia of Cluster 30:
+0.0
+Elements of Cluster 31:
+['house']
+Inertia of Cluster 31:
+0.0
+Elements of Cluster 32:
+['temer']
+Inertia of Cluster 32:
+0.0
+Elements of Cluster 33:
+['cnbc markets now']
+Inertia of Cluster 33:
+0.0
+Elements of Cluster 34:
+['abe']
+Inertia of Cluster 34:
+0.0
+Elements of Cluster 35:
+['teva']
+Inertia of Cluster 35:
+0.0
+Elements of Cluster 36:
+['kim jong un', 'kim jong']
+Inertia of Cluster 36:
+2446.5000000000005
+Elements of Cluster 37:
+['jonathan vanian']
+Inertia of Cluster 37:
+0.0
+Elements of Cluster 38:
+['mins ago cnbc']
+Inertia of Cluster 38:
+0.0
+Elements of Cluster 39:
+['zuma']
+Inertia of Cluster 39:
+0.0
+Elements of Cluster 40:
+['juncker']
+Inertia of Cluster 40:
+0.0
+Elements of Cluster 41:
+['amazon']
+Inertia of Cluster 41:
+0.0
+Elements of Cluster 42:
+['emmanuel macron']
+Inertia of Cluster 42:
+0.0
+Elements of Cluster 43:
+['liverpool', 'wenger', 'klopp', 'salah']
+Inertia of Cluster 43:
+3357.0
+Elements of Cluster 44:
+['microsoft']
+Inertia of Cluster 44:
+0.0
+Elements of Cluster 45:
+['maduro']
+Inertia of Cluster 45:
+0.0
+Elements of Cluster 46:
+['southwest airlines']
+Inertia of Cluster 46:
+0.0
+Elements of Cluster 47:
+['cbs', 'viacom']
+Inertia of Cluster 47:
+1353.4999999999998
+Elements of Cluster 48:
+['cisco']
+Inertia of Cluster 48:
+0.0
+Elements of Cluster 49:
+['boj', 'bank of japan']
+Inertia of Cluster 49:
+2492.5
+Elements of Cluster 50:
+['doj']
+Inertia of Cluster 50:
+0.0
+Elements of Cluster 51:
+['red sox', 'astros', 'yankees', 'jones', 'white sox', 'orioles', 'tigers']
+Inertia of Cluster 51:
+4185.999999999998
+Elements of Cluster 52:
+['william', 'kate']
+Inertia of Cluster 52:
+447.00000000000006
+Elements of Cluster 53:
+['mattel']
+Inertia of Cluster 53:
+0.0
+Elements of Cluster 54:
+['tesco', 'booker']
+Inertia of Cluster 54:
+692.5
+Elements of Cluster 55:
+['kushner']
+Inertia of Cluster 55:
+0.0
+Elements of Cluster 56:
+['european union']
+Inertia of Cluster 56:
+0.0
+Elements of Cluster 57:
+['reute']
+Inertia of Cluster 57:
+0.0
+Elements of Cluster 58:
+['continental']
+Inertia of Cluster 58:
+0.0
+Elements of Cluster 59:
+['s&p']
+Inertia of Cluster 59:
+0.0
+Elements of Cluster 60:
+['supreme court']
+Inertia of Cluster 60:
+0.0
+Elements of Cluster 61:
+['cia', 'gina haspel']
+Inertia of Cluster 61:
+817.5
+Elements of Cluster 62:
+['toyota']
+Inertia of Cluster 62:
+0.0
+Elements of Cluster 63:
+['sisi']
+Inertia of Cluster 63:
+0.0
+Elements of Cluster 64:
+['blackrock']
+Inertia of Cluster 64:
+0.0
+Elements of Cluster 65:
+['wall street journal']
+Inertia of Cluster 65:
+0.0
+Elements of Cluster 66:
+['james', 'cavs']
+Inertia of Cluster 66:
+491.49999999999994
+Elements of Cluster 67:
+['bbc']
+Inertia of Cluster 67:
+0.0
+Elements of Cluster 68:
+['mike pence']
+Inertia of Cluster 68:
+0.0
+Elements of Cluster 69:
+['martin sorrell', 'sorrell']
+Inertia of Cluster 69:
+770.5
+Elements of Cluster 70:
+['jeff sessions']
+Inertia of Cluster 70:
+0.0
+Elements of Cluster 71:
+['wall st']
+Inertia of Cluster 71:
+0.0
+Elements of Cluster 72:
+['nvidia']
+Inertia of Cluster 72:
+0.0
+Elements of Cluster 73:
+['holdings ltd']
+Inertia of Cluster 73:
+0.0
+Elements of Cluster 74:
+['merkel', 'spd']
+Inertia of Cluster 74:
+4468.5
+Elements of Cluster 75:
+['cigna']
+Inertia of Cluster 75:
+0.0
+Elements of Cluster 76:
+['lufthansa']
+Inertia of Cluster 76:
+0.0
+Elements of Cluster 77:
+['metlife']
+Inertia of Cluster 77:
+0.0
+Elements of Cluster 78:
+['ebitda']
+Inertia of Cluster 78:
+0.0
+Elements of Cluster 79:
+['hna', 'hna group']
+Inertia of Cluster 79:
+1146.0000000000002
+Elements of Cluster 80:
+['u.s. treasury department']
+Inertia of Cluster 80:
+0.0
+Elements of Cluster 81:
+['barclays']
+Inertia of Cluster 81:
+0.0
+Elements of Cluster 82:
+['foxconn']
+Inertia of Cluster 82:
+0.0
+Elements of Cluster 83:
+['nra', 'delta']
+Inertia of Cluster 83:
+1635.5000000000002
+Elements of Cluster 84:
+['bank of england', 'carney']
+Inertia of Cluster 84:
+1675.5
+Elements of Cluster 85:
+['reuters health']
+Inertia of Cluster 85:
+0.0
+Elements of Cluster 86:
+['ford']
+Inertia of Cluster 86:
+0.0
+Elements of Cluster 87:
+['bank of america']
+Inertia of Cluster 87:
+0.0
+Elements of Cluster 88:
+['douma', 'foreign ministry', 'opcw']
+Inertia of Cluster 88:
+1899.999999999999
+Elements of Cluster 89:
+['super league']
+Inertia of Cluster 89:
+0.0
+Elements of Cluster 90:
+['andy']
+Inertia of Cluster 90:
+0.0
+Elements of Cluster 91:
+['sberbank']
+Inertia of Cluster 91:
+0.0
+Elements of Cluster 92:
+['ncaa']
+Inertia of Cluster 92:
+0.0
+Elements of Cluster 93:
+['carl icahn', 'vmware', 'dell']
+Inertia of Cluster 93:
+1777.3333333333314
+Elements of Cluster 94:
+['tayyip erdogan']
+Inertia of Cluster 94:
+0.0
+Elements of Cluster 95:
+['cto']
+Inertia of Cluster 95:
+0.0
+Elements of Cluster 96:
+['fca']
+Inertia of Cluster 96:
+0.0
+Elements of Cluster 97:
+['shenzhen stock exchange']
+Inertia of Cluster 97:
+0.0
+Elements of Cluster 98:
+['kuala lumpur']
+Inertia of Cluster 98:
+0.0
+Elements of Cluster 99:
+['amd']
+Inertia of Cluster 99:
+0.0
+Elements of Cluster 100:
+['jpmorgan']
+Inertia of Cluster 100:
+0.0
+Elements of Cluster 101:
+['cboe']
+Inertia of Cluster 101:
+0.0
+Elements of Cluster 102:
+['cnbc interview']
+Inertia of Cluster 102:
+0.0
+Elements of Cluster 103:
+['ups']
+Inertia of Cluster 103:
+0.0
+Elements of Cluster 104:
+['european central bank']
+Inertia of Cluster 104:
+0.0
+Elements of Cluster 105:
+['jo']
+Inertia of Cluster 105:
+0.0
+Elements of Cluster 106:
+['reut']
+Inertia of Cluster 106:
+0.0
+Elements of Cluster 107:
+['amazon.com inc']
+Inertia of Cluster 107:
+0.0
+Elements of Cluster 108:
+['ibm']
+Inertia of Cluster 108:
+0.0
+Elements of Cluster 109:
+['nasa']
+Inertia of Cluster 109:
+0.0
+Elements of Cluster 110:
+['duterte']
+Inertia of Cluster 110:
+0.0
+Elements of Cluster 111:
+['steve wynn', 'wynn']
+Inertia of Cluster 111:
+1257.5000000000002
+Elements of Cluster 112:
+['ikea']
+Inertia of Cluster 112:
+0.0
+Elements of Cluster 113:
+['daniels']
+Inertia of Cluster 113:
+0.0
+Elements of Cluster 114:
+['boko haram']
+Inertia of Cluster 114:
+0.0
+Elements of Cluster 115:
+['jordan']
+Inertia of Cluster 115:
+0.0
+Elements of Cluster 116:
+['gsk']
+Inertia of Cluster 116:
+0.0
+Elements of Cluster 117:
+['obama']
+Inertia of Cluster 117:
+0.0
+Elements of Cluster 118:
+['billi']
+Inertia of Cluster 118:
+0.0
+Elements of Cluster 119:
+['davos']
+Inertia of Cluster 119:
+0.0
+Elements of Cluster 120:
+['opel', 'psa']
+Inertia of Cluster 120:
+597.5
+Elements of Cluster 121:
+['vivendi']
+Inertia of Cluster 121:
+0.0
+Elements of Cluster 122:
+['pimco']
+Inertia of Cluster 122:
+0.0
+Elements of Cluster 123:
+['united nations']
+Inertia of Cluster 123:
+0.0
+Elements of Cluster 124:
+['crypto', 'polina marinova']
+Inertia of Cluster 124:
+537.5
+Elements of Cluster 125:
+['barnier']
+Inertia of Cluster 125:
+0.0
+Elements of Cluster 126:
+['mylan']
+Inertia of Cluster 126:
+0.0
+Elements of Cluster 127:
+['who']
+Inertia of Cluster 127:
+0.0
+Elements of Cluster 128:
+['exxon']
+Inertia of Cluster 128:
+0.0
+Elements of Cluster 129:
+['philip']
+Inertia of Cluster 129:
+0.0
+Elements of Cluster 130:
+['european commission', 'arcelormittal']
+Inertia of Cluster 130:
+1490.5000000000002
+Elements of Cluster 131:
+['kemp', 'john kemp']
+Inertia of Cluster 131:
+364.5
+Elements of Cluster 132:
+['kremlin']
+Inertia of Cluster 132:
+0.0
+Elements of Cluster 133:
+['dick']
+Inertia of Cluster 133:
+0.0
+Elements of Cluster 134:
+['nike', 'philip morris', 'u.s. fda']
+Inertia of Cluster 134:
+2439.333333333332
+Elements of Cluster 135:
+['hezbollah']
+Inertia of Cluster 135:
+0.0
+Elements of Cluster 136:
+['j.p. morgan']
+Inertia of Cluster 136:
+0.0
+Elements of Cluster 137:
+['berkshire']
+Inertia of Cluster 137:
+0.0
+Elements of Cluster 138:
+['uber']
+Inertia of Cluster 138:
+0.0
+Elements of Cluster 139:
+['united airlines']
+Inertia of Cluster 139:
+0.0
+Elements of Cluster 140:
+['angela merkel']
+Inertia of Cluster 140:
+0.0
+Elements of Cluster 141:
+['chevron']
+Inertia of Cluster 141:
+0.0
+Elements of Cluster 142:
+['harry', 'meghan']
+Inertia of Cluster 142:
+1330.4999999999998
+Elements of Cluster 143:
+['boe']
+Inertia of Cluster 143:
+0.0
+Elements of Cluster 144:
+['air france']
+Inertia of Cluster 144:
+0.0
+Elements of Cluster 145:
+['celgene', 'gilead', 'biogen']
+Inertia of Cluster 145:
+1907.9999999999977
+Elements of Cluster 146:
+['gop']
+Inertia of Cluster 146:
+0.0
+Elements of Cluster 147:
+['google', 'goldman sachs']
+Inertia of Cluster 147:
+9252.000000000002
+Elements of Cluster 148:
+['commonwealth']
+Inertia of Cluster 148:
+0.0
+Elements of Cluster 149:
+['daimler', 'assad', 'geely', 'shinzo abe']
+Inertia of Cluster 149:
+4762.5
+Elements of Cluster 150:
+['benjamin netanyahu']
+Inertia of Cluster 150:
+0.0
+Elements of Cluster 151:
+['vincent wong']
+Inertia of Cluster 151:
+0.0
+Elements of Cluster 152:
+['logistics news from - wsj']
+Inertia of Cluster 152:
+0.0
+Elements of Cluster 153:
+['shiffrin', 'vonn']
+Inertia of Cluster 153:
+662.0000000000001
+Elements of Cluster 154:
+['vw']
+Inertia of Cluster 154:
+0.0
+Elements of Cluster 155:
+['adam jeffery', 'lloyd blankfein', 'blankfein']
+Inertia of Cluster 155:
+1437.3333333333328
+Elements of Cluster 156:
+['u.s. navy']
+Inertia of Cluster 156:
+0.0
+Elements of Cluster 157:
+['hamas']
+Inertia of Cluster 157:
+0.0
+Elements of Cluster 158:
+['time']
+Inertia of Cluster 158:
+0.0
+Elements of Cluster 159:
+['cftc']
+Inertia of Cluster 159:
+0.0
+Elements of Cluster 160:
+['takata']
+Inertia of Cluster 160:
+0.0
+Elements of Cluster 161:
+['pope francis']
+Inertia of Cluster 161:
+0.0
+Elements of Cluster 162:
+['messi']
+Inertia of Cluster 162:
+0.0
+Elements of Cluster 163:
+['ltd']
+Inertia of Cluster 163:
+0.0
+Elements of Cluster 164:
+['bank', 'sears', 'richard beales', 'redstone']
+Inertia of Cluster 164:
+3201.75
+Elements of Cluster 165:
+['george soros', 'soros']
+Inertia of Cluster 165:
+537.0000000000001
+Elements of Cluster 166:
+['robert mueller']
+Inertia of Cluster 166:
+0.0
+Elements of Cluster 167:
+['rosneft', 'russi']
+Inertia of Cluster 167:
+755.0000000000001
+Elements of Cluster 168:
+['pentagon']
+Inertia of Cluster 168:
+0.0
+Elements of Cluster 169:
+['santelli', 'rick santelli']
+Inertia of Cluster 169:
+539.5
+Elements of Cluster 170:
+['davis']
+Inertia of Cluster 170:
+0.0
+Elements of Cluster 171:
+['sensex']
+Inertia of Cluster 171:
+0.0
+Elements of Cluster 172:
+['reuters sta']
+Inertia of Cluster 172:
+0.0
+Elements of Cluster 173:
+['serena', 'serena williams']
+Inertia of Cluster 173:
+707.0000000000001
+Elements of Cluster 174:
+['nasda']
+Inertia of Cluster 174:
+0.0
+Elements of Cluster 175:
+['wozniacki']
+Inertia of Cluster 175:
+0.0
+Elements of Cluster 176:
+['sec']
+Inertia of Cluster 176:
+0.0
+Elements of Cluster 177:
+['weinstein', 'weinstein company', 'weinstein co', 'weinstein co.']
+Inertia of Cluster 177:
+2588.75
+Elements of Cluster 178:
+['disney']
+Inertia of Cluster 178:
+0.0
+Elements of Cluster 179:
+['general electric']
+Inertia of Cluster 179:
+0.0
+Elements of Cluster 180:
+['bo']
+Inertia of Cluster 180:
+0.0
+Elements of Cluster 181:
+['barcelona', 'roma', 'vatican', 'bayern', 'qatar airways']
+Inertia of Cluster 181:
+3051.2000000000007
+Elements of Cluster 182:
+['schlumberger']
+Inertia of Cluster 182:
+0.0
+Elements of Cluster 183:
+['dominic chu']
+Inertia of Cluster 183:
+0.0
+Elements of Cluster 184:
+['orban', 'viktor orban']
+Inertia of Cluster 184:
+624.5
+Elements of Cluster 185:
+['kuroda', 'haruhiko kuroda']
+Inertia of Cluster 185:
+784.0
+Elements of Cluster 186:
+['facebook inc.']
+Inertia of Cluster 186:
+0.0
+Elements of Cluster 187:
+['alibaba']
+Inertia of Cluster 187:
+0.0
+Elements of Cluster 188:
+['rex tillerson']
+Inertia of Cluster 188:
+0.0
+Elements of Cluster 189:
+['embraer']
+Inertia of Cluster 189:
+0.0
+Elements of Cluster 190:
+['nlrb', 'national labor relations board']
+Inertia of Cluster 190:
+180.5
+Elements of Cluster 191:
+['ylan mui']
+Inertia of Cluster 191:
+0.0
+Elements of Cluster 192:
+['nato']
+Inertia of Cluster 192:
+0.0
+Elements of Cluster 193:
+['alwaleed']
+Inertia of Cluster 193:
+0.0
+Elements of Cluster 194:
+['barbara bush']
+Inertia of Cluster 194:
+0.0
+Elements of Cluster 195:
+['kraft heinz']
+Inertia of Cluster 195:
+0.0
+Elements of Cluster 196:
+['kfc']
+Inertia of Cluster 196:
+0.0
+Elements of Cluster 197:
+['rea']
+Inertia of Cluster 197:
+0.0
+Elements of Cluster 198:
+['daca']
+Inertia of Cluster 198:
+0.0
+Elements of Cluster 199:
+['kroger']
+Inertia of Cluster 199:
+0.0
+Elements of Cluster 200:
+['willie briscoe', 'willie br', 'united states securities and exchange commission']
+Inertia of Cluster 200:
+0.0
+Elements of Cluster 201:
+['southwest', 'tesla inc', 'kirsten korosec', 'ntsb', 'faa']
+Inertia of Cluster 201:
+5384.799999999996
+Elements of Cluster 202:
+['wynn resorts', 'llp', 'kessler topaz meltzer & check']
+Inertia of Cluster 202:
+1312.0
+Elements of Cluster 203:
+['rbc']
+Inertia of Cluster 203:
+0.0
+Elements of Cluster 204:
+['bosch']
+Inertia of Cluster 204:
+0.0
+Elements of Cluster 205:
+['nhl']
+Inertia of Cluster 205:
+0.0
+Elements of Cluster 206:
+['jared kushner', 'ivanka trump']
+Inertia of Cluster 206:
+457.00000000000006
+Elements of Cluster 207:
+['chelsea']
+Inertia of Cluster 207:
+0.0
+Elements of Cluster 208:
+['iea']
+Inertia of Cluster 208:
+0.0
+Elements of Cluster 209:
+['micron']
+Inertia of Cluster 209:
+0.0
+Elements of Cluster 210:
+['levi & korsinsky']
+Inertia of Cluster 210:
+0.0
+Elements of Cluster 211:
+['juan monteverde', 'monteverde & associates', 'monteverde']
+Inertia of Cluster 211:
+341.9999999999999
+Elements of Cluster 212:
+['state department']
+Inertia of Cluster 212:
+0.0
+Elements of Cluster 213:
+['mcconnell', 'mitch mcconnell']
+Inertia of Cluster 213:
+432.49999999999994
+Elements of Cluster 214:
+['gaap']
+Inertia of Cluster 214:
+0.0
+Elements of Cluster 215:
+['jacob zuma']
+Inertia of Cluster 215:
+0.0
+Elements of Cluster 216:
+['fox']
+Inertia of Cluster 216:
+0.0
+Elements of Cluster 217:
+['hammond']
+Inertia of Cluster 217:
+0.0
+Elements of Cluster 218:
+['medicare', 'melania trump', 'medicaid', 'kevin lamarque']
+Inertia of Cluster 218:
+1902.2500000000002
+Elements of Cluster 219:
+['renault']
+Inertia of Cluster 219:
+0.0
+Elements of Cluster 220:
+['fox news']
+Inertia of Cluster 220:
+0.0
+Elements of Cluster 221:
+['gm', 'eikon', 'powell', 'brief-india', 'comcast', 'softbank', 'gracenote', 'wto', 'moody', 'justice department', 'spacex', 'new york times', 'oslo', 'ryanair', 'williams', 'ifr', 'tim cook', 'fiat chrysler', 'tencent', 'huawei', 'pomerantz llp', 'time warner', 'chris morris', 'nassar', 'rigrodsky & long', 'diary-emerging markets economic events', 'donald', 'jerome powell', 'saudi aramco', 'marketwatch', 'irs', 'gary cohn', 'anc', 'motor', 'bill cosby', 'lowe', 'astrazeneca', 'u.s. food and drug administration', 'russell', 'don reisinger', 'steven mnuchin', 'fcc', 'nadal', 'sou', 'rouhani', 'nokia', 'general motors', 'kayla tausche', 'u.n. security council', 'musk', 'icc', 'u.s. house', 'woods', 'conte', 'alexa', 'siemens', 'aig', 'investment information, inc.', 'macy', 'kahn swick & foti', 'novo nordisk', 'bronstein', 'james comey', 'cbi', 'wsj dow jones', 'amazon.com', 'weisslaw llp', 'mcilroy', 'audi', 'cdc', 'hilton', 'kkr', 'north', 'mike santoli', 'exxonmobil', 'gewirtz & grossman', 'axa', 'brower piven', 'noble group', 'rohingya', 'johnson & johnson', 'holdings', 'zte', 'dow', 'andrew cuomo', 'rolls-royce', 'iss', 'waymo', 'santos', 'cosby', 'bnp paribas', 'murdoch', 'lvmh', 'bill', 'amgen', 'sharapova', 'ford motor co', 'world bank', 'h&m', 'mourinho', 'richard branson', 'ferrari', 'coca-cola', 'jamie dimon', 'sergei skripal', 'cas', 'honda', 'nordstrom', 'company', "kevin o'leary", 'exxon mobil', 'buhari', 'mariners', 'tokyo stock exchange', 'ellen mcgirt', 'delta air lines', 'stormy daniels', 'harvard', 'david a. grogan', 'purcell julie & lefkowitz llp', 'mohammed bin salman', 'moody’s', 'kohl', 'navalny', 'janet yellen', 'monaco', 'braves', 'm&s', 'hyundai motor', 'nas', 'grossman', 'southampton', 'pemex', 'nintendo', 'kcna', 'xi', 'puma', 'gewirtz', 'fina', 'david faber', 'niki', 'volvo', 'stephen hawking', 'mccabe', 'lloyds', 'airbnb', 'symantec', 'martin shkreli', 'porsche', 'emea', 'rowley law pllc', 'fortune', 'padres', 'lisa rapaport', 'abbas', 'amtrak', 'mercedes', 'enel', 'et sun', 'duke', 'jonathan ernst', 'jaguar land rover', 'united states', 'reuters) - telecom italia', 'lockheed martin', 'aramco', 'pboc', 'at&t inc', 'odebrecht', 'busi', 'alphabet', 'scott mlyn', 'abb', 'david paul morris', 'statoil', 'peter thiel', 'prince harry', 'philadelphia eagles', 'pandora', 'falcon', 'nsa', 'board', 'alitalia', 'lima', 'hallie detrick', 'clinton', 'basf', 'russ', 'schumer', 'bolton', 'nomura', 'rio tinto', 'intesa sanpaolo', 'ebay', 'bofa', 'zte corp', 'u.s. state department', 'donald t', 'xiaomi', 'securities and exchange commission', 'msci', 'josh lipton', 'bullard', 'b. riley', 'john williams', 'ricciardo', 'tiffany', 'dodgers', 'yellen', 'fintech', 'flipkart', 'factbox', 'baker hughes', 'mcmaster', 'newell', 'lockheed', 'larry nassar', 'jan', 'rupert murdoch', 'donald trum', 'rosenstein', 'ocado', 'dudley', 'humana', 'mets', 'nda', 'edf', 'phillips', 'ja', 'u.s. justice department', 'instagram', 'marc', 'usa gymnastics', 'jeff john roberts', 'csx', 'starbucks corp', 'sy mukherjee', 'major league baseball', 'cbs corp', 'communist party', 'jay-z', 'courtney reagan', 'kahn swick', 'foti', 'dana', 'deutsche bank ag', 'u.', 'donal', 'air india', 'michael wolff', 'markle', 'del potro', 'eik', 'ronaldo', 'apple inc.', 'kvitova', 'eiko', 'ei', 'shark tank', 'phillies', 'burnley', 'tom lee', 'punjab national bank', 'pfizer inc', 'min rea', 'u.s. federal reserve', 'exxon mobil corp', 'bill de blasio', 'mark', 'robert hackett', 'chuck schumer', 'lilly', 'furth', 'skanska', 'regeneron', 'standard chartered', 'don', 'didi', 'bragar eagel & squire', 'eunice yoon', 'yale', 'tim seymour', 'mugabe', 'mahathir mohamad', 'alphabet inc', 'u.s. securities and exchange commission', 'macquarie', 'gucci', 'kalanick', 'fidelity', 'healthcare', 'hughes', 'u.s. commerce department', 'hollywood', 'home depot', 'frida', 'tel aviv', 'stifel', 'united nations security council', 'eletrobras', 'mark carney', 'hou', 'babis', 'john bolton', 'castro', 'standard life aberdeen', 'unicredit', 'mcdermott', 'wti', 'novartis ag', 'clifton leaf', 'deutsche', 'bri', 'icici bank', 'lyft', 'gupta', 'gmp', 'aviva', 'kellogg', 'nbc news', 'watson', 'trum', 'infosys', 'bulls', 'labour party', 'mitt romney', 'reckitt', 'sruthi shankar', 'david davis', 'columbia']
+Inertia of Cluster 221:
+279100.69393939344
+Elements of Cluster 222:
+['huddersfield']
+Inertia of Cluster 222:
+0.0
+Elements of Cluster 223:
+['bombardier']
+Inertia of Cluster 223:
+0.0
+Elements of Cluster 224:
+['julia boorstin', 'kristen bellstrom', 'sheryl sandberg', 'tom huddleston jr.', 'travis kalanick']
+Inertia of Cluster 224:
+2832.8
+Elements of Cluster 225:
+['airasia']
+Inertia of Cluster 225:
+0.0
+Elements of Cluster 226:
+['donald tr']
+Inertia of Cluster 226:
+0.0
+Elements of Cluster 227:
+['pence']
+Inertia of Cluster 227:
+0.0
+Elements of Cluster 228:
+['paul ryan', 'house of representatives']
+Inertia of Cluster 228:
+1330.0
+Elements of Cluster 229:
+['ross', 'commerce']
+Inertia of Cluster 229:
+662.0000000000001
+Elements of Cluster 230:
+['cio']
+Inertia of Cluster 230:
+0.0
+Elements of Cluster 231:
+['manafort']
+Inertia of Cluster 231:
+0.0
+Elements of Cluster 232:
+['new york stock exchange', 'kaplan', 'unitedhealth', 'michael nagle']
+Inertia of Cluster 232:
+2998.25
+Elements of Cluster 233:
+['hasbro']
+Inertia of Cluster 233:
+0.0
+Elements of Cluster 234:
+['pdvsa', 'conocophillips']
+Inertia of Cluster 234:
+608.5000000000001
+Elements of Cluster 235:
+['qualcomm inc']
+Inertia of Cluster 235:
+0.0
+Elements of Cluster 236:
+['energy journal']
+Inertia of Cluster 236:
+0.0
+Elements of Cluster 237:
+['barack obama']
+Inertia of Cluster 237:
+0.0
+Elements of Cluster 238:
+['wedn']
+Inertia of Cluster 238:
+0.0
+Elements of Cluster 239:
+['philips']
+Inertia of Cluster 239:
+0.0
+Elements of Cluster 240:
+['volkswagen ag']
+Inertia of Cluster 240:
+0.0
+Elements of Cluster 241:
+['ramaphosa', 'cyril ramaphosa']
+Inertia of Cluster 241:
+722.0
+Elements of Cluster 242:
+['financial times']
+Inertia of Cluster 242:
+0.0
+Elements of Cluster 243:
+['kudlow', 'zverev', 'david', 'anderson', 'dimitrov', 'augusta', 'fa', 'simon']
+Inertia of Cluster 243:
+4772.0
+Elements of Cluster 244:
+['eamon javers']
+Inertia of Cluster 244:
+0.0
+Elements of Cluster 245:
+['federer']
+Inertia of Cluster 245:
+0.0
+Elements of Cluster 246:
+['glencore']
+Inertia of Cluster 246:
+0.0
+Elements of Cluster 247:
+['sanofi']
+Inertia of Cluster 247:
+0.0
+Elements of Cluster 248:
+['cma']
+Inertia of Cluster 248:
+0.0
+Elements of Cluster 249:
+['va', 'jackson']
+Inertia of Cluster 249:
+513.5000000000001
+Elements of Cluster 250:
+['mattis', 'defense', 'jim mattis']
+Inertia of Cluster 250:
+1296.666666666664
+Elements of Cluster 251:
+['finan']
+Inertia of Cluster 251:
+0.0
+Elements of Cluster 252:
+['nbc']
+Inertia of Cluster 252:
+0.0
+Elements of Cluster 253:
+['piper jaffray', 'bezos']
+Inertia of Cluster 253:
+497.50000000000006
+Elements of Cluster 254:
+['lula']
+Inertia of Cluster 254:
+0.0
+Elements of Cluster 255:
+['walmart inc']
+Inertia of Cluster 255:
+0.0
+Elements of Cluster 256:
+['facebook inc']
+Inertia of Cluster 256:
+0.0
+Elements of Cluster 257:
+['giuliani', 'rudy giuliani']
+Inertia of Cluster 257:
+443.50000000000006
+Elements of Cluster 258:
+['halep']
+Inertia of Cluster 258:
+0.0
+Elements of Cluster 259:
+['verizon']
+Inertia of Cluster 259:
+0.0
+Elements of Cluster 260:
+['paypal']
+Inertia of Cluster 260:
+0.0
+Elements of Cluster 261:
+['morgan stanley']
+Inertia of Cluster 261:
+0.0
+Elements of Cluster 262:
+['tsx']
+Inertia of Cluster 262:
+0.0
+Elements of Cluster 263:
+['cashin', 'art cashin']
+Inertia of Cluster 263:
+563.5000000000001
+Elements of Cluster 264:
+['buenos aires']
+Inertia of Cluster 264:
+0.0
+Elements of Cluster 265:
+['apple inc']
+Inertia of Cluster 265:
+0.0
+Elements of Cluster 266:
+['hillary clinton']
+Inertia of Cluster 266:
+0.0
+Elements of Cluster 267:
+['citigroup']
+Inertia of Cluster 267:
+0.0
+Elements of Cluster 268:
+['lebron james', 'celtics']
+Inertia of Cluster 268:
+532.0
+Elements of Cluster 269:
+['bob pisani']
+Inertia of Cluster 269:
+0.0
+Elements of Cluster 270:
+['francis', 'editors choice pictures pictures']
+Inertia of Cluster 270:
+616.5000000000001
+Elements of Cluster 271:
+['wta international']
+Inertia of Cluster 271:
+0.0
+Elements of Cluster 272:
+['kiev']
+Inertia of Cluster 272:
+0.0
+Elements of Cluster 273:
+['espn']
+Inertia of Cluster 273:
+0.0
+Elements of Cluster 274:
+['lee', 'yonhap']
+Inertia of Cluster 274:
+767.5
+Elements of Cluster 275:
+['novartis']
+Inertia of Cluster 275:
+0.0
+Elements of Cluster 276:
+['blackstone']
+Inertia of Cluster 276:
+0.0
+Elements of Cluster 277:
+['thomson reuters']
+Inertia of Cluster 277:
+0.0
+Elements of Cluster 278:
+['central bank']
+Inertia of Cluster 278:
+0.0
+Elements of Cluster 279:
+['nba']
+Inertia of Cluster 279:
+0.0
+Elements of Cluster 280:
+['global']
+Inertia of Cluster 280:
+0.0
+Elements of Cluster 281:
+['afrin']
+Inertia of Cluster 281:
+0.0
+Elements of Cluster 282:
+['pnb']
+Inertia of Cluster 282:
+0.0
+Elements of Cluster 283:
+['comey']
+Inertia of Cluster 283:
+0.0
+Elements of Cluster 284:
+['fang']
+Inertia of Cluster 284:
+0.0
+Elements of Cluster 285:
+['tase']
+Inertia of Cluster 285:
+0.0
+Elements of Cluster 286:
+['nse']
+Inertia of Cluster 286:
+0.0
+Elements of Cluster 287:
+['tass']
+Inertia of Cluster 287:
+0.0
+Elements of Cluster 288:
+['berlusconi']
+Inertia of Cluster 288:
+0.0
+Elements of Cluster 289:
+['congress']
+Inertia of Cluster 289:
+0.0
+Elements of Cluster 290:
+['najib']
+Inertia of Cluster 290:
+0.0
+Elements of Cluster 291:
+['mark zuckerberg']
+Inertia of Cluster 291:
+0.0
+Elements of Cluster 292:
+['j&j']
+Inertia of Cluster 292:
+0.0
+Elements of Cluster 293:
+['billy graham']
+Inertia of Cluster 293:
+0.0
+Elements of Cluster 294:
+['bitcoin']
+Inertia of Cluster 294:
+0.0
+Elements of Cluster 295:
+['adidas']
+Inertia of Cluster 295:
+0.0
+Elements of Cluster 296:
+['kabila']
+Inertia of Cluster 296:
+0.0
+Elements of Cluster 297:
+['ryan', 'paul', 'rockets', 'houston rockets']
+Inertia of Cluster 297:
+2227.25
+Elements of Cluster 298:
+['kim']
+Inertia of Cluster 298:
+0.0
+Elements of Cluster 299:
+['newell brands']
+Inertia of Cluster 299:
+0.0
+Elements of Cluster 300:
+['time inc', 'meredith']
+Inertia of Cluster 300:
+433.5
+Elements of Cluster 301:
+['hbo']
+Inertia of Cluster 301:
+0.0
+Elements of Cluster 302:
+['netflix']
+Inertia of Cluster 302:
+0.0
+Elements of Cluster 303:
+['labour', 'corbyn']
+Inertia of Cluster 303:
+585.0000000000001
+Elements of Cluster 304:
+['everton', 'tottenham', 'guardiola', 'bruins', 'spurs', 'kane']
+Inertia of Cluster 304:
+3499.666666666665
+Elements of Cluster 305:
+['sha']
+Inertia of Cluster 305:
+0.0
+Elements of Cluster 306:
+['icahn', 'deason', 'xerox corp']
+Inertia of Cluster 306:
+1420.6666666666654
+Elements of Cluster 307:
+['nissan']
+Inertia of Cluster 307:
+0.0
+Elements of Cluster 308:
+['fbi']
+Inertia of Cluster 308:
+0.0
+Elements of Cluster 309:
+['sao paulo']
+Inertia of Cluster 309:
+0.0
+Elements of Cluster 310:
+['sarah gray']
+Inertia of Cluster 310:
+0.0
+Elements of Cluster 311:
+['deripaska']
+Inertia of Cluster 311:
+0.0
+Elements of Cluster 312:
+['cnn']
+Inertia of Cluster 312:
+0.0
+Elements of Cluster 313:
+['carrefour']
+Inertia of Cluster 313:
+0.0
+Elements of Cluster 314:
+['andy home']
+Inertia of Cluster 314:
+0.0
+Elements of Cluster 315:
+['gazprom']
+Inertia of Cluster 315:
+0.0
+Elements of Cluster 316:
+['equifax']
+Inertia of Cluster 316:
+0.0
+Elements of Cluster 317:
+['scott pruitt', 'environmental protection agency']
+Inertia of Cluster 317:
+504.49999999999994
+Elements of Cluster 318:
+['american airlines']
+Inertia of Cluster 318:
+0.0
+Elements of Cluster 319:
+['thyssenkrupp', 'deutsche telekom']
+Inertia of Cluster 319:
+766.5
+Elements of Cluster 320:
+['cardinals']
+Inertia of Cluster 320:
+0.0
+Elements of Cluster 321:
+['taliban']
+Inertia of Cluster 321:
+0.0
+Elements of Cluster 322:
+['allianz']
+Inertia of Cluster 322:
+0.0
+Elements of Cluster 323:
+['puigdemont']
+Inertia of Cluster 323:
+0.0
+Elements of Cluster 324:
+['premier league']
+Inertia of Cluster 324:
+0.0
+Elements of Cluster 325:
+['boeing co']
+Inertia of Cluster 325:
+0.0
+Elements of Cluster 326:
+['sony']
+Inertia of Cluster 326:
+0.0
+Elements of Cluster 327:
+['draghi']
+Inertia of Cluster 327:
+0.0
+Elements of Cluster 328:
+['bayer', 'monsanto']
+Inertia of Cluster 328:
+1096.5
+Elements of Cluster 329:
+['bill gates']
+Inertia of Cluster 329:
+0.0
+Elements of Cluster 330:
+['athletics']
+Inertia of Cluster 330:
+0.0
+Elements of Cluster 331:
+['un']
+Inertia of Cluster 331:
+0.0
+Elements of Cluster 332:
+['honeywell']
+Inertia of Cluster 332:
+0.0
+Elements of Cluster 333:
+['nairobi']
+Inertia of Cluster 333:
+0.0
+Elements of Cluster 334:
+['invesco']
+Inertia of Cluster 334:
+0.0
+Elements of Cluster 335:
+['mueller']
+Inertia of Cluster 335:
+0.0
+Elements of Cluster 336:
+['michael cohen']
+Inertia of Cluster 336:
+0.0
+Elements of Cluster 337:
+['cohen']
+Inertia of Cluster 337:
+0.0
+Elements of Cluster 338:
+['mclaren', 'alonso']
+Inertia of Cluster 338:
+526.0
+Elements of Cluster 339:
+['usgs']
+Inertia of Cluster 339:
+0.0
+Elements of Cluster 340:
+['oprah winfrey', 'oprah']
+Inertia of Cluster 340:
+612.5
+Elements of Cluster 341:
+['vtb']
+Inertia of Cluster 341:
+0.0
+Elements of Cluster 342:
+['ray dalio']
+Inertia of Cluster 342:
+0.0
+Elements of Cluster 343:
+['ftc']
+Inertia of Cluster 343:
+0.0
+Elements of Cluster 344:
+['xerox', 'fujifilm']
+Inertia of Cluster 344:
+990.0
+Elements of Cluster 345:
+['reuters st']
+Inertia of Cluster 345:
+0.0
+Elements of Cluster 346:
+['vodafone']
+Inertia of Cluster 346:
+0.0
+Elements of Cluster 347:
+['roche']
+Inertia of Cluster 347:
+0.0
+Elements of Cluster 348:
+['john kelly']
+Inertia of Cluster 348:
+0.0
+Elements of Cluster 349:
+['spotify']
+Inertia of Cluster 349:
+0.0
+Elements of Cluster 350:
+['toyota motor corp']
+Inertia of Cluster 350:
+0.0
+Elements of Cluster 351:
+['pfizer', 'glaxosmithkline']
+Inertia of Cluster 351:
+1443.5
+Elements of Cluster 352:
+['mcdonald']
+Inertia of Cluster 352:
+0.0
+Elements of Cluster 353:
+['steve bannon']
+Inertia of Cluster 353:
+0.0
+Elements of Cluster 354:
+['senate']
+Inertia of Cluster 354:
+0.0
+Elements of Cluster 355:
+['kobe steel']
+Inertia of Cluster 355:
+0.0
+Elements of Cluster 356:
+['cambridge analytica']
+Inertia of Cluster 356:
+0.0
+Elements of Cluster 357:
+['wells fargo']
+Inertia of Cluster 357:
+0.0
+Elements of Cluster 358:
+['jp morgan']
+Inertia of Cluster 358:
+0.0
+Elements of Cluster 359:
+['trump administration']
+Inertia of Cluster 359:
+0.0
+Elements of Cluster 360:
+['wall street']
+Inertia of Cluster 360:
+0.0
+Elements of Cluster 361:
+['u.n.']
+Inertia of Cluster 361:
+0.0
+Elements of Cluster 362:
+['apple']
+Inertia of Cluster 362:
+0.0
+Elements of Cluster 363:
+['jeff bezos']
+Inertia of Cluster 363:
+0.0
+Elements of Cluster 364:
+['gibson']
+Inertia of Cluster 364:
+0.0
+Elements of Cluster 365:
+['uae']
+Inertia of Cluster 365:
+0.0
+Elements of Cluster 366:
+['credit suisse']
+Inertia of Cluster 366:
+0.0
+Elements of Cluster 367:
+['federal reserve']
+Inertia of Cluster 367:
+0.0
+Elements of Cluster 368:
+['bannon']
+Inertia of Cluster 368:
+0.0
+Elements of Cluster 369:
+['usda']
+Inertia of Cluster 369:
+0.0
+Elements of Cluster 370:
+['eni']
+Inertia of Cluster 370:
+0.0
+Elements of Cluster 371:
+['smith', 'warner']
+Inertia of Cluster 371:
+833.5000000000001
+Elements of Cluster 372:
+['erdogan']
+Inertia of Cluster 372:
+0.0
+Elements of Cluster 373:
+['harvey weinstein']
+Inertia of Cluster 373:
+0.0
+Elements of Cluster 374:
+['brexit']
+Inertia of Cluster 374:
+0.0
+Elements of Cluster 375:
+['euronext']
+Inertia of Cluster 375:
+0.0
+Elements of Cluster 376:
+['zuckerberg']
+Inertia of Cluster 376:
+0.0
+Elements of Cluster 377:
+['world']
+Inertia of Cluster 377:
+0.0
+Elements of Cluster 378:
+['thomson reuters foundation']
+Inertia of Cluster 378:
+0.0
+Elements of Cluster 379:
+['david z. morris']
+Inertia of Cluster 379:
+0.0
+Elements of Cluster 380:
+['leslie picker', 'bill ackman']
+Inertia of Cluster 380:
+530.4999999999999
+Elements of Cluster 381:
+['wsj']
+Inertia of Cluster 381:
+0.0
+Elements of Cluster 382:
+['yulia skripal']
+Inertia of Cluster 382:
+0.0
+Elements of Cluster 383:
+['ge']
+Inertia of Cluster 383:
+0.0
+Elements of Cluster 384:
+['reuter']
+Inertia of Cluster 384:
+0.0
+Elements of Cluster 385:
+['amazon.com inc.']
+Inertia of Cluster 385:
+0.0
+Elements of Cluster 386:
+['state', 'pompeo', 'tillerson', 'mike pompeo']
+Inertia of Cluster 386:
+6707.0
+Elements of Cluster 387:
+['perc']
+Inertia of Cluster 387:
+0.0
+Elements of Cluster 388:
+['llc']
+Inertia of Cluster 388:
+0.0
+Elements of Cluster 389:
+['lagarde', 'international monetary fund', 'christine lagarde']
+Inertia of Cluster 389:
+1109.999999999999
+Elements of Cluster 390:
+['petrobras']
+Inertia of Cluster 390:
+0.0
+Elements of Cluster 391:
+['berkshire hathaway']
+Inertia of Cluster 391:
+0.0
+Elements of Cluster 392:
+['wsj city']
+Inertia of Cluster 392:
+0.0
+Elements of Cluster 393:
+['reds', 'giants', 'pirates']
+Inertia of Cluster 393:
+1249.3333333333321
+Elements of Cluster 394:
+['meghan markle']
+Inertia of Cluster 394:
+0.0
+Elements of Cluster 395:
+['washington post']
+Inertia of Cluster 395:
+0.0
+Elements of Cluster 396:
+['trudeau', 'justin trudeau']
+Inertia of Cluster 396:
+702.5000000000001
+Elements of Cluster 397:
+['energy']
+Inertia of Cluster 397:
+0.0
+Elements of Cluster 398:
+['p&g']
+Inertia of Cluster 398:
+0.0
+Elements of Cluster 399:
+['iag']
+Inertia of Cluster 399:
+0.0
+Elements of Cluster 400:
+['elizabeth']
+Inertia of Cluster 400:
+0.0
+Elements of Cluster 401:
+['islamic state']
+Inertia of Cluster 401:
+0.0
+Elements of Cluster 402:
+['telecom italia']
+Inertia of Cluster 402:
+0.0
+Elements of Cluster 403:
+['hsbc']
+Inertia of Cluster 403:
+0.0
+Elements of Cluster 404:
+['robbins arroyo llp']
+Inertia of Cluster 404:
+0.0
+Elements of Cluster 405:
+['phil lebeau']
+Inertia of Cluster 405:
+0.0
+Elements of Cluster 406:
+['qualcomm', 'broadcom']
+Inertia of Cluster 406:
+3048.0000000000005
+Elements of Cluster 407:
+['sainsbury', 'asda']
+Inertia of Cluster 407:
+360.5
+Elements of Cluster 408:
+['sap']
+Inertia of Cluster 408:
+0.0
+Elements of Cluster 409:
+['feb']
+Inertia of Cluster 409:
+0.0
+Elements of Cluster 410:
+['ericsson']
+Inertia of Cluster 410:
+0.0
+Elements of Cluster 411:
+['shell']
+Inertia of Cluster 411:
+0.0
+Elements of Cluster 412:
+['psg']
+Inertia of Cluster 412:
+0.0
+Elements of Cluster 413:
+['cvs', 'aetna']
+Inertia of Cluster 413:
+800.4999999999999
+Elements of Cluster 414:
+['u.s. supreme court']
+Inertia of Cluster 414:
+0.0
+Elements of Cluster 415:
+['prudential']
+Inertia of Cluster 415:
+0.0
+Elements of Cluster 416:
+['goldman']
+Inertia of Cluster 416:
+0.0
+Elements of Cluster 417:
+['hamilton', 'vettel']
+Inertia of Cluster 417:
+732.0000000000001
+Elements of Cluster 418:
+['fitch']
+Inertia of Cluster 418:
+0.0
+Elements of Cluster 419:
+['pope']
+Inertia of Cluster 419:
+0.0
+Elements of Cluster 420:
+['netanyahu']
+Inertia of Cluster 420:
+0.0
+Elements of Cluster 421:
+['epa', 'pruitt']
+Inertia of Cluster 421:
+1409.4999999999998
+Elements of Cluster 422:
+['nikkei']
+Inertia of Cluster 422:
+0.0
+Elements of Cluster 423:
+['volkswagen']
+Inertia of Cluster 423:
+0.0
+Elements of Cluster 424:
+['walgreens']
+Inertia of Cluster 424:
+0.0
+Elements of Cluster 425:
+['globe newswire']
+Inertia of Cluster 425:
+0.0
+Elements of Cluster 426:
+['nyse']
+Inertia of Cluster 426:
+0.0
+Elements of Cluster 427:
+['abc', 'roseanne barr']
+Inertia of Cluster 427:
+818.0
+Elements of Cluster 428:
+['gkn', 'melrose']
+Inertia of Cluster 428:
+1055.0
+Elements of Cluster 429:
+['wilbur ross']
+Inertia of Cluster 429:
+0.0
+Elements of Cluster 430:
+['eu']
+Inertia of Cluster 430:
+0.0
+Elements of Cluster 431:
+['tesla']
+Inertia of Cluster 431:
+0.0
+Elements of Cluster 432:
+['pepsico']
+Inertia of Cluster 432:
+0.0
+Elements of Cluster 433:
+['republican']
+Inertia of Cluster 433:
+0.0
+Elements of Cluster 434:
+['nafta']
+Inertia of Cluster 434:
+0.0
+Elements of Cluster 435:
+['valentina zarya']
+Inertia of Cluster 435:
+0.0
+Elements of Cluster 436:
+['elon musk']
+Inertia of Cluster 436:
+0.0
+Elements of Cluster 437:
+['merck']
+Inertia of Cluster 437:
+0.0
+Elements of Cluster 438:
+['inc']
+Inertia of Cluster 438:
+0.0
+Elements of Cluster 439:
+['jay leno']
+Inertia of Cluster 439:
+0.0
+Elements of Cluster 440:
+['bunge', 'adm']
+Inertia of Cluster 440:
+673.4999999999999
+Elements of Cluster 441:
+['eia']
+Inertia of Cluster 441:
+0.0
+Elements of Cluster 442:
+['chicago mercantile exchange', 'cme']
+Inertia of Cluster 442:
+800.0
+Elements of Cluster 443:
+['twitter']
+Inertia of Cluster 443:
+0.0
+Elements of Cluster 444:
+['caterpillar']
+Inertia of Cluster 444:
+0.0
+Elements of Cluster 445:
+['mahathir']
+Inertia of Cluster 445:
+0.0
+Elements of Cluster 446:
+['reuters staff']
+Inertia of Cluster 446:
+0.0
+Elements of Cluster 447:
+['ria']
+Inertia of Cluster 447:
+0.0
+Elements of Cluster 448:
+['walmart']
+Inertia of Cluster 448:
+0.0
+Elements of Cluster 449:
+['peugeot']
+Inertia of Cluster 449:
+0.0
+Elements of Cluster 450:
+['andrew harrer']
+Inertia of Cluster 450:
+0.0
+Elements of Cluster 451:
+['ubs']
+Inertia of Cluster 451:
+0.0
+Elements of Cluster 452:
+['starbucks']
+Inertia of Cluster 452:
+0.0
+Elements of Cluster 453:
+['bhp']
+Inertia of Cluster 453:
+0.0
+Elements of Cluster 454:
+['wpp']
+Inertia of Cluster 454:
+0.0
+Elements of Cluster 455:
+['fda']
+Inertia of Cluster 455:
+0.0
+Elements of Cluster 456:
+['bmw']
+Inertia of Cluster 456:
+0.0
+Elements of Cluster 457:
+['united', 'manchester united', 'sanchez']
+Inertia of Cluster 457:
+2386.6666666666656
+Elements of Cluster 458:
+['sourc']
+Inertia of Cluster 458:
+0.0
+Elements of Cluster 459:
+['citi']
+Inertia of Cluster 459:
+0.0
+Elements of Cluster 460:
+['takeda', 'shire']
+Inertia of Cluster 460:
+758.0
+Elements of Cluster 461:
+['xinhua']
+Inertia of Cluster 461:
+0.0
+Elements of Cluster 462:
+['cohn']
+Inertia of Cluster 462:
+0.0
+Elements of Cluster 463:
+['inc.']
+Inertia of Cluster 463:
+0.0
+Elements of Cluster 464:
+['chi', 'tech']
+Inertia of Cluster 464:
+925.9999999999999
+Elements of Cluster 465:
+['oxfam']
+Inertia of Cluster 465:
+0.0
+Elements of Cluster 466:
+['reuters breakingviews']
+Inertia of Cluster 466:
+0.0
+Elements of Cluster 467:
+['facebook']
+Inertia of Cluster 467:
+0.0
+Elements of Cluster 468:
+['xi jinping']
+Inertia of Cluster 468:
+0.0
+Elements of Cluster 469:
+['fortis', 'fortis healthcare ltd', 'fortis healthcare']
+Inertia of Cluster 469:
+1217.3333333333326
+Elements of Cluster 470:
+['ahold delhaize']
+Inertia of Cluster 470:
+0.0
+Elements of Cluster 471:
+['putin', 'vladimir putin']
+Inertia of Cluster 471:
+3675.5
+Elements of Cluster 472:
+['elliott', 'hyundai']
+Inertia of Cluster 472:
+1663.0
+Elements of Cluster 473:
+['league', 'rome']
+Inertia of Cluster 473:
+529.0
+Elements of Cluster 474:
+['bank of canada']
+Inertia of Cluster 474:
+0.0
+Elements of Cluster 475:
+['larry kudlow']
+Inertia of Cluster 475:
+0.0
+Elements of Cluster 476:
+['macron']
+Inertia of Cluster 476:
+0.0
+Elements of Cluster 477:
+['steve liesman']
+Inertia of Cluster 477:
+0.0
+Elements of Cluster 478:
+['mcgeever']
+Inertia of Cluster 478:
+0.0
+Elements of Cluster 479:
+['natasha bach']
+Inertia of Cluster 479:
+0.0
+Elements of Cluster 480:
+['ioc']
+Inertia of Cluster 480:
+0.0
+Elements of Cluster 481:
+['at&t']
+Inertia of Cluster 481:
+0.0
+Elements of Cluster 482:
+['jim cramer cramer']
+Inertia of Cluster 482:
+0.0
+Elements of Cluster 483:
+['youtube']
+Inertia of Cluster 483:
+0.0
+Elements of Cluster 484:
+['bst']
+Inertia of Cluster 484:
+0.0
+Elements of Cluster 485:
+['li']
+Inertia of Cluster 485:
+0.0
+Elements of Cluster 486:
+['ecb']
+Inertia of Cluster 486:
+0.0
+Elements of Cluster 487:
+['reu']
+Inertia of Cluster 487:
+0.0
+Elements of Cluster 488:
+['david meyer']
+Inertia of Cluster 488:
+0.0
+Elements of Cluster 489:
+['fifa', 'moon', 'djokovic', 'chung']
+Inertia of Cluster 489:
+3196.5
+Elements of Cluster 490:
+['barca', 'arsenal', 'atletico']
+Inertia of Cluster 490:
+2008.6666666666656
+Elements of Cluster 491:
+['aaron pressman', 'adam lashinsky']
+Inertia of Cluster 491:
+863.0000000000001
+Elements of Cluster 492:
+['bloomberg', 'boeing', 'airbus', 'intel']
+Inertia of Cluster 492:
+25217.499999999996
+Elements of Cluster 493:
+['reuters staf']
+Inertia of Cluster 493:
+0.0
+Elements of Cluster 494:
+['imf']
+Inertia of Cluster 494:
+0.0
+Elements of Cluster 495:
+['ipo']
+Inertia of Cluster 495:
+0.0
+Elements of Cluster 496:
+['theresa may']
+Inertia of Cluster 496:
+0.0
+Elements of Cluster 497:
+['us treasury']
+Inertia of Cluster 497:
+0.0
+Elements of Cluster 498:
+['johnson', 'boris johnson']
+Inertia of Cluster 498:
+1448.4999999999998
+Elements of Cluster 499:
+['samsung', 'samsung electronics']
+Inertia of Cluster 499:
+2035.5

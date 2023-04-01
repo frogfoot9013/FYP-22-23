@@ -1,0 +1,4 @@
+Clustering Type,Single-Element Clusters, Multi-Element Clusters
+Agglomerative,196,29
+Bisecting K-Means,397,103
+K-Means,444,6

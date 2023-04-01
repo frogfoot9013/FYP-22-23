@@ -4,9 +4,8 @@ from pathlib import Path
 import random
 
 core_dir = os.getcwd()
-sample_size = 5_000
 
-def randomly_sample_from_directory(input_directory):
+def randomly_sample_from_directory(input_directory, output_directory, sample_size):
     tgt_files = []
     targ_path = Path(input_directory).glob("**/*.json")
     for k, path in enumerate(targ_path):
@@ -20,7 +19,7 @@ def randomly_sample_from_directory(input_directory):
     # write files
     for f_path in tgt_files:
         file_name = os.path.basename(os.path.normpath(f_path))
-        dest_path = core_dir + "/Datasets/news_set_financial_sampled/" + file_name
+        dest_path = output_directory + file_name
         if ( os.path.exists(dest_path)): # consider the fact that there are identically-named files in different directories
             dest_path_without_extension, extension = os.path.splitext((dest_path))
             i = 1
@@ -34,7 +33,7 @@ def randomly_sample_from_directory(input_directory):
 
 
 def main():
-    randomly_sample_from_directory(core_dir + "/Datasets/news_set_financial_preprocessed/" + "directory_5")
-
+    # randomly_sample_from_directory(core_dir + "/Datasets/news_set_financial_preprocessed/" + "directory_5", core_dir + "/Datasets/news_set_financial_sampled/", 5000)
+    randomly_sample_from_directory(core_dir + "/Datasets/news_set_financial_preprocessed/directory_1", core_dir + "/Datasets/news_set_financial_truncated/", 500)
 
 main()
